@@ -42,6 +42,8 @@ export interface HeroContent {
   subhead: string;
   description: string;
   launchDate: string;
+  /** Full-bleed background image path. */
+  bgImage?: string;
 }
 
 export interface Capability {

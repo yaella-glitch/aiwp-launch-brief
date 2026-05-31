@@ -1,43 +1,54 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ImageIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ScrollExpandHeroProps {
-  /** Foreground image that starts small and expands to fill the viewport. */
-  imageSrc: string;
-  imageAlt?: string;
-  /** Optional ambient background image behind everything. Falls back to mesh. */
-  bgImageSrc?: string;
-  /** Hero title/eyebrow/badge content rendered above the expanding image. */
-  title: ReactNode;
-  /** Hint text shown under the image while it's small. */
+  /** Foreground "lens" image that starts small in the center and expands. */
+  mediaSrc: string;
+  mediaAlt?: string;
+  /** Full-bleed background image — fades as the foreground media expands. */
+  bgImageSrc: string;
+  /** Two-line title: first line sits above the card, rest below. */
+  titleFirstLine: string;
+  titleRestLine: string;
+  /** Small text below the card (eyebrow / date). */
+  subtitle?: string;
+  /** Smaller hint string ("Scroll to expand"). */
   scrollHint?: string;
+  /** When true, title uses mix-blend-difference for the knockout look. */
+  textBlend?: boolean;
   className?: string;
 }
 
 /**
- * Pattern adapted from Magic MCP's "Scroll Media Expansion Hero":
- * - A foreground image (or video) starts small (~300px wide).
- * - Wheel/touch scroll grows it to fullscreen instead of scrolling the page.
- * - Once fully expanded, the page resumes normal scroll.
- * - Background fades + foreground darkening lifts as the image grows.
+ * Pattern adapted faithfully from Magic MCP (arunachalam0606/scroll-expansion-hero).
  *
- * Adapted to dark theme + reduce-motion friendly.
+ *  - Full-bleed background image, fades as user scrolls.
+ *  - Foreground media card in the absolute center, starts ~300x400 and grows
+ *    to fill the viewport on wheel/touch.
+ *  - Title sits in two lines that visually wrap around the card; with
+ *    `textBlend`, mix-blend-difference makes them feel like the card is a
+ *    lens cutting through the title.
+ *  - Each title line translates horizontally as scroll progresses (the
+ *    signature move).
+ *  - When fully expanded, the page resumes normal scroll.
  */
 export function ScrollExpandHero({
-  imageSrc,
-  imageAlt = 'Hero visual',
+  mediaSrc,
+  mediaAlt = 'Hero visual',
   bgImageSrc,
-  title,
-  scrollHint = 'Scroll to expand',
+  titleFirstLine,
+  titleRestLine,
+  subtitle,
+  scrollHint,
+  textBlend = true,
   className,
 }: ScrollExpandHeroProps) {
   const reduce = useReducedMotion();
-  const [progress, setProgress] = useState(0); // 0 → 1
+  const [progress, setProgress] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const sectionRef = useRef<HTMLDivElement | null>(null);
   const touchStartY = useRef(0);
 
   useEffect(() => {
@@ -47,7 +58,6 @@ export function ScrollExpandHero({
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // If reduce-motion is on, skip the interaction lock — just show fully expanded immediately.
   useEffect(() => {
     if (reduce) {
       setProgress(1);
@@ -60,17 +70,14 @@ export function ScrollExpandHero({
 
     function onWheel(e: WheelEvent) {
       if (expanded) {
-        // Already expanded — only swallow upward scroll past the top to re-collapse.
         if (e.deltaY < 0 && window.scrollY <= 4) {
           setExpanded(false);
-          setProgress((p) => Math.max(0.85, p));
           e.preventDefault();
         }
         return;
       }
-      // Lock page scroll while the image grows.
       e.preventDefault();
-      const delta = e.deltaY * 0.00075;
+      const delta = e.deltaY * 0.0009;
       setProgress((p) => {
         const next = Math.min(Math.max(p + delta, 0), 1);
         if (next >= 1) setExpanded(true);
@@ -94,7 +101,7 @@ export function ScrollExpandHero({
       }
       e.preventDefault();
       setProgress((p) => {
-        const next = Math.min(Math.max(p + dy * 0.005, 0), 1);
+        const next = Math.min(Math.max(p + dy * 0.006, 0), 1);
         if (next >= 1) setExpanded(true);
         return next;
       });
@@ -118,70 +125,91 @@ export function ScrollExpandHero({
     };
   }, [expanded, reduce]);
 
-  // Geometry — derived from progress (0..1).
+  // Geometry — matches the reference pattern (start 300x400, expand to ~85vw)
   const mediaWidth = 300 + progress * (isMobile ? 600 : 1100);
-  const mediaHeight = 200 + progress * (isMobile ? 280 : 480);
+  const mediaHeight = 400 + progress * (isMobile ? 200 : 380);
+  const textTranslateX = progress * (isMobile ? 180 : 130);
 
   return (
     <section
-      ref={sectionRef}
       className={cn(
-        'relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden',
+        'relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-canvas',
         className,
       )}
     >
-      {/* Background — ambient image (fades as image expands) */}
-      {bgImageSrc && (
-        <motion.div
-          aria-hidden="true"
-          className="absolute inset-0 z-0"
-          style={{ opacity: reduce ? 0.35 : 1 - progress * 0.65 }}
-        >
-          <img src={bgImageSrc} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-canvas/70" />
-        </motion.div>
-      )}
-
-      {/* Title block — fades + scales out as image grows */}
+      {/* Background image */}
       <motion.div
-        className="pointer-events-none absolute inset-x-0 top-0 z-20 mx-auto flex flex-col items-center px-6 pt-24 text-center md:pt-32"
-        style={{ opacity: 1 - progress * 0.9, transform: `translateY(${-progress * 30}px)` }}
+        aria-hidden="true"
+        className="absolute inset-0 z-0"
+        style={{ opacity: reduce ? 0.4 : 1 - progress * 0.85 }}
       >
-        {title}
+        <FullBleedImage src={bgImageSrc} alt="" />
+        <div className="absolute inset-0 bg-canvas/40" />
       </motion.div>
 
-      {/* Expanding image card */}
-      <motion.div
-        className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+      {/* Foreground "lens" image card — absolute center */}
+      <div
+        className="absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
         style={{
           width: `${mediaWidth}px`,
           height: `${mediaHeight}px`,
           maxWidth: '95vw',
           maxHeight: '85vh',
         }}
-        transition={{ type: 'tween', duration: 0 }}
       >
-        <FrameImage src={imageSrc} alt={imageAlt} />
+        <FullBleedImage src={mediaSrc} alt={mediaAlt} />
         <motion.div
           aria-hidden="true"
-          className="absolute inset-0 bg-canvas"
+          className="absolute inset-0 bg-black"
           style={{ opacity: 0.55 - progress * 0.55 }}
         />
-      </motion.div>
+      </div>
 
-      {/* Hint below the image, while small */}
-      <motion.p
-        aria-hidden={progress > 0.5}
-        className="absolute bottom-16 left-1/2 z-20 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.25em] text-white/70"
-        style={{ opacity: 1 - progress * 1.2 }}
+      {/* Subtitle below the card — eyebrow + hint, translate horizontally on scroll */}
+      <div className="pointer-events-none absolute bottom-[18%] left-0 right-0 z-[2] flex flex-col items-center text-center md:bottom-[15%]">
+        {subtitle && (
+          <p
+            className="text-xs font-medium uppercase tracking-[0.22em] text-white/90 transition-none"
+            style={{ transform: `translateX(-${textTranslateX}vw)` }}
+          >
+            {subtitle}
+          </p>
+        )}
+        {scrollHint && (
+          <p
+            className="mt-2 text-[10px] uppercase tracking-[0.28em] text-white/70 transition-none"
+            style={{ transform: `translateX(${textTranslateX}vw)`, opacity: 1 - progress }}
+          >
+            {scrollHint}
+          </p>
+        )}
+      </div>
+
+      {/* Title — sits around the card, mix-blend-difference for the "knockout" effect */}
+      <div
+        className={cn(
+          'pointer-events-none relative z-[3] flex w-full flex-col items-center justify-center gap-2 px-6 text-center md:gap-4',
+          textBlend ? 'mix-blend-difference' : '',
+        )}
       >
-        {scrollHint}
-      </motion.p>
+        <motion.h1
+          className="font-display text-[clamp(40px,8vw,108px)] font-bold leading-[0.95] tracking-tight text-[#e5e7ff] transition-none"
+          style={{ transform: `translateX(-${textTranslateX}vw)` }}
+        >
+          {titleFirstLine}
+        </motion.h1>
+        <motion.h1
+          className="font-display text-[clamp(40px,8vw,108px)] font-bold leading-[0.95] tracking-tight text-[#e5e7ff] transition-none"
+          style={{ transform: `translateX(${textTranslateX}vw)` }}
+        >
+          {titleRestLine}
+        </motion.h1>
+      </div>
     </section>
   );
 }
 
-function FrameImage({ src, alt }: { src: string; alt: string }) {
+function FullBleedImage({ src, alt }: { src: string; alt: string }) {
   const [ok, setOk] = useState<boolean | null>(null);
   if (ok === false) {
     return (
