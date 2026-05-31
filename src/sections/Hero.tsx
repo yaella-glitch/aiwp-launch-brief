@@ -61,7 +61,7 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
           {hero.eyebrow}
         </motion.p>
 
-        <h1 className="mt-4 font-display text-[clamp(40px,7vw,80px)] font-bold leading-[0.98] tracking-[-0.03em] text-ink">
+        <h1 className="mt-4 font-display text-[clamp(40px,7vw,80px)] font-bold leading-[1.0] tracking-[-0.02em] text-ink">
           <KineticHeadline text={hero.headline} delay={0.2} stagger={0.06} />{' '}
           <KineticHeadline
             text={hero.highlight}

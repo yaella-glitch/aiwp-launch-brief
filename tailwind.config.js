@@ -14,15 +14,18 @@ export default {
         border: 'rgb(var(--border) / <alpha-value>)',
       },
       fontFamily: {
-        display: ['"Space Grotesk"', 'sans-serif'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        // monday.com uses Figtree as their primary brand font.
+        // One-font system: display + body both Figtree at different weights.
+        display: ['Figtree', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Figtree', 'system-ui', '-apple-system', 'sans-serif'],
       },
       fontSize: {
-        'display-xl': ['clamp(56px, 9vw, 132px)', { lineHeight: '0.95', letterSpacing: '-0.035em', fontWeight: '700' }],
-        'display-lg': ['clamp(40px, 6vw, 72px)', { lineHeight: '1.0', letterSpacing: '-0.025em', fontWeight: '600' }],
-        'display-md': ['clamp(28px, 3.5vw, 40px)', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '600' }],
-        eyebrow: ['14px', { lineHeight: '1', letterSpacing: '0.08em', fontWeight: '500' }],
-        lead: ['clamp(18px, 1.4vw, 22px)', { lineHeight: '1.5', fontWeight: '400' }],
+        // Tracking eased for Figtree — monday uses near-neutral letter-spacing.
+        'display-xl': ['clamp(56px, 9vw, 132px)', { lineHeight: '0.98', letterSpacing: '-0.02em', fontWeight: '700' }],
+        'display-lg': ['clamp(40px, 6vw, 72px)', { lineHeight: '1.04', letterSpacing: '-0.015em', fontWeight: '700' }],
+        'display-md': ['clamp(28px, 3.5vw, 40px)', { lineHeight: '1.15', letterSpacing: '-0.01em', fontWeight: '600' }],
+        eyebrow: ['12px', { lineHeight: '1', letterSpacing: '0.1em', fontWeight: '600' }],
+        lead: ['clamp(17px, 1.3vw, 20px)', { lineHeight: '1.5', fontWeight: '400' }],
       },
       maxWidth: {
         content: '1240px',

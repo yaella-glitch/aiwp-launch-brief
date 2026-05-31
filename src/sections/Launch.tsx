@@ -45,7 +45,7 @@ export function Launch() {
               whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-4 font-display text-[clamp(48px,9vw,128px)] font-bold leading-none tracking-tighter text-ink"
+              className="mt-4 font-display text-[clamp(48px,9vw,128px)] font-bold leading-none tracking-[-0.02em] text-ink"
             >
               <span className="bg-gradient-to-br from-violet-200 via-indigo-200 to-sky-300 bg-clip-text text-transparent">
                 {launch.launchDate}
