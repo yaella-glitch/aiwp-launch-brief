@@ -3,6 +3,7 @@ import { Play, ImageIcon } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
+import { CapabilityShowcase } from '@/components/CapabilityShowcase';
 import { FlipCard } from '@/components/FlipCard';
 import { productOverview } from '@/content';
 import { cn } from '@/lib/utils';
@@ -27,50 +28,12 @@ export function ProductOverview() {
           lede={productOverview.lede}
         />
 
-        {/* Capabilities — asymmetric alternating rows */}
-        <div className="mt-24 space-y-24 md:space-y-32">
-          {productOverview.capabilities.map((c, i) => {
-            const reversed = i % 2 === 1;
-            return (
-              <ScrollReveal key={c.id} delay={0.05}>
-                <article
-                  className={cn(
-                    'grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16',
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'lg:col-span-7',
-                      reversed && 'lg:order-2',
-                    )}
-                  >
-                    <SpotlightCard className="overflow-hidden">
-                      <div className="aspect-[16/10] w-full">
-                        <MediaSlot src={c.media.src} alt={c.media.alt} />
-                      </div>
-                    </SpotlightCard>
-                  </div>
-                  <div
-                    className={cn(
-                      'lg:col-span-5',
-                      reversed && 'lg:order-1',
-                    )}
-                  >
-                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-                      {(i + 1).toString().padStart(2, '0')} · capability
-                    </p>
-                    <h3 className="mt-5 font-display text-[clamp(32px,4.5vw,56px)] font-semibold leading-[1.05] tracking-tight text-ink">
-                      {c.title}
-                    </h3>
-                    <p className="mt-5 text-lead leading-relaxed text-muted">
-                      {c.description}
-                    </p>
-                  </div>
-                </article>
-              </ScrollReveal>
-            );
-          })}
-        </div>
+        {/* Capabilities — Feature108-style tabs + preview */}
+        <ScrollReveal delay={0.05}>
+          <div className="mt-24">
+            <CapabilityShowcase capabilities={productOverview.capabilities} />
+          </div>
+        </ScrollReveal>
 
         {/* Demo */}
         <ScrollReveal delay={0.1}>
