@@ -15,7 +15,7 @@ export function Market() {
     <section
       id="market"
       data-section="market"
-      className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40"
+      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -27,15 +27,12 @@ export function Market() {
         {/* Market context + Quadrant — two columns on desktop */}
         <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
-            <div>
+            <div className="max-w-md">
               <p className="text-eyebrow uppercase text-muted">Market context</p>
-              <p className="mt-4 text-lead leading-relaxed text-ink/85">{market.marketContext}</p>
-              <div className="mt-8 max-w-xs">
-                <p className="text-eyebrow uppercase text-accent">Where we sit</p>
-                <p className="mt-2 text-sm text-muted">
-                  Plotted on {market.quadrant.xAxis.label.toLowerCase()} × {market.quadrant.yAxis.label.toLowerCase()}.
-                </p>
-              </div>
+              <p className="mt-5 text-lead leading-relaxed text-ink/85">{market.marketContext}</p>
+              <p className="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-muted/70">
+                {market.quadrant.xAxis.label} × {market.quadrant.yAxis.label}
+              </p>
             </div>
           </ScrollReveal>
 
@@ -82,24 +79,25 @@ export function Market() {
           </ScrollReveal>
         </div>
 
-        {/* Differentiators — 4 spotlight cards */}
+        {/* Differentiators — 4 spotlight cards with subtle numerals */}
         <ScrollReveal delay={0.15}>
-          <div className="mt-32 flex items-end justify-between gap-6">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
-              Why we win.
-            </h3>
-          </div>
+          <h3 className="mt-40 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            Why we win.
+          </h3>
         </ScrollReveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {market.differentiators.map((d, i) => (
             <ScrollReveal key={d.title} delay={0.04 * i}>
-              <SpotlightCard className="h-full" spotlightColor="rgba(165, 138, 255, 0.22)">
-                <div className="p-7">
+              <SpotlightCard className="h-full">
+                <div className="flex h-full flex-col gap-5 p-7">
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70">
+                    {(i + 1).toString().padStart(2, '0')}
+                  </span>
                   <h4 className="font-display text-xl font-semibold leading-tight text-ink">
                     {d.title}
                   </h4>
-                  <p className="mt-4 text-sm leading-relaxed text-muted">{d.description}</p>
+                  <p className="text-sm leading-relaxed text-muted">{d.description}</p>
                 </div>
               </SpotlightCard>
             </ScrollReveal>

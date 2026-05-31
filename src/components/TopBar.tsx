@@ -5,6 +5,10 @@ interface TopBarProps {
   presentMode: boolean;
   externalPreview: boolean;
   audioAvailable: boolean;
+  /** Current visible section index (1-based). */
+  currentIndex?: number;
+  /** Total number of sections in the rail. */
+  totalIndex?: number;
   onTogglePresent: () => void;
   onToggleExternal: () => void;
   onPlayAudio: () => void;
@@ -20,6 +24,8 @@ export function TopBar({
   presentMode,
   externalPreview,
   audioAvailable,
+  currentIndex,
+  totalIndex,
   onTogglePresent,
   onToggleExternal,
   onPlayAudio,
@@ -40,10 +46,19 @@ export function TopBar({
         />
         <span className="hidden sm:inline">monday</span>
         <span className="hidden text-muted sm:inline">·</span>
-        <span className="hidden text-muted md:inline">AI Work Platform</span>
-        <span className="hidden text-muted md:inline">·</span>
         <span className="text-muted">Launch Brief</span>
       </a>
+
+      {/* Center: running section index */}
+      {typeof currentIndex === 'number' && typeof totalIndex === 'number' && totalIndex > 0 && (
+        <div className="pointer-events-none absolute left-1/2 -translate-x-1/2">
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
+            <span className="text-ink">{currentIndex.toString().padStart(2, '0')}</span>
+            <span className="mx-2 text-muted/50">/</span>
+            <span>{totalIndex.toString().padStart(2, '0')}</span>
+          </p>
+        </div>
+      )}
 
       <div className="flex items-center gap-1.5 md:gap-2">
         {audioAvailable && (

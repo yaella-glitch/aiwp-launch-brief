@@ -18,7 +18,7 @@ export function Positioning() {
     <section
       id="positioning"
       data-section="positioning"
-      className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40"
+      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -27,19 +27,27 @@ export function Positioning() {
           lede={positioning.lede}
         />
 
-        {/* Vision — bold statement, no parts grid */}
+        {/* Vision — bold prose statement with oversized opening quote */}
         <ScrollReveal>
-          <div className="mt-20 max-w-4xl">
-            <p className="text-eyebrow uppercase text-accent">{positioning.vision.title}</p>
-            <motion.p
-              initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 font-display text-[clamp(28px,4vw,56px)] font-bold leading-[1.05] tracking-tight text-ink"
-            >
-              {positioning.vision.statement}
-            </motion.p>
+          <div className="mt-24 max-w-4xl">
+            <p className="text-eyebrow uppercase text-muted">{positioning.vision.title}</p>
+            <div className="relative mt-8">
+              <span
+                aria-hidden="true"
+                className="absolute -left-2 -top-12 select-none font-display text-[clamp(120px,16vw,220px)] leading-none text-accent/15"
+              >
+                "
+              </span>
+              <motion.p
+                initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                className="relative font-display text-[clamp(28px,4vw,56px)] font-medium leading-[1.1] tracking-tight text-ink"
+              >
+                {positioning.vision.statement}
+              </motion.p>
+            </div>
           </div>
         </ScrollReveal>
 
@@ -71,7 +79,7 @@ export function Positioning() {
         {/* External emphasis — interactive image accordion-feel grid */}
         <ScrollReveal delay={0.15}>
           <div className="mt-32 flex items-end justify-between gap-6">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
               What we lead with.
             </h3>
           </div>
@@ -87,19 +95,19 @@ export function Positioning() {
 
         {/* Say / Don't Say */}
         <ScrollReveal delay={0.2}>
-          <div className="mt-32 flex items-end justify-between gap-6">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
-              Say. Don't say.
-            </h3>
-          </div>
+          <h3 className="mt-40 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            Say. Don't say.
+          </h3>
         </ScrollReveal>
 
-        <div className="mt-10 space-y-6">
+        <div className="mt-12 space-y-6">
           {positioning.sayDontSay.map((s, i) => (
             <ScrollReveal key={s.topic} delay={0.04 * i}>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-8">
-                <p className="text-eyebrow uppercase text-muted">{s.topic}</p>
-                <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7 md:p-10">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70">
+                  Topic · {s.topic}
+                </p>
+                <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div className="flex items-start gap-3 rounded-xl border border-emerald-400/25 bg-emerald-400/[0.05] p-5">
                     <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
                     <div>

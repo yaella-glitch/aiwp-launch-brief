@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, ImageIcon, Sparkles as SparkleIcon } from 'lucide-react';
+import { Play, ImageIcon } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
@@ -9,16 +9,16 @@ import { cn } from '@/lib/utils';
 
 /**
  * What we're launching:
- *  - Capabilities as Spotlight cards (4-up grid)
+ *  - Capabilities as asymmetric editorial rows (image + text, alternating)
  *  - Product demo video
- *  - 3 use cases as flip cards (front: scenario · back: outcome)
+ *  - 3 use cases as flip cards (front: scenario over image · back: outcome)
  */
 export function ProductOverview() {
   return (
     <section
       id="product-overview"
       data-section="product-overview"
-      className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40"
+      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -27,32 +27,57 @@ export function ProductOverview() {
           lede={productOverview.lede}
         />
 
-        {/* Capabilities — spotlight cards */}
-        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2">
-          {productOverview.capabilities.map((c, i) => (
-            <ScrollReveal key={c.id} delay={0.04 * i}>
-              <SpotlightCard className="h-full">
-                <div className="aspect-[16/10] w-full overflow-hidden border-b border-white/5">
-                  <MediaSlot src={c.media.src} alt={c.media.alt} />
-                </div>
-                <div className="p-7 md:p-8">
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04]">
-                    <SparkleIcon className="h-4 w-4 text-accent" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-4 font-display text-2xl text-ink md:text-3xl">{c.title}</h3>
-                  <p className="mt-3 text-base leading-relaxed text-muted">{c.description}</p>
-                </div>
-              </SpotlightCard>
-            </ScrollReveal>
-          ))}
+        {/* Capabilities — asymmetric alternating rows */}
+        <div className="mt-24 space-y-24 md:space-y-32">
+          {productOverview.capabilities.map((c, i) => {
+            const reversed = i % 2 === 1;
+            return (
+              <ScrollReveal key={c.id} delay={0.05}>
+                <article
+                  className={cn(
+                    'grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16',
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'lg:col-span-7',
+                      reversed && 'lg:order-2',
+                    )}
+                  >
+                    <SpotlightCard className="overflow-hidden">
+                      <div className="aspect-[16/10] w-full">
+                        <MediaSlot src={c.media.src} alt={c.media.alt} />
+                      </div>
+                    </SpotlightCard>
+                  </div>
+                  <div
+                    className={cn(
+                      'lg:col-span-5',
+                      reversed && 'lg:order-1',
+                    )}
+                  >
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
+                      {(i + 1).toString().padStart(2, '0')} · capability
+                    </p>
+                    <h3 className="mt-5 font-display text-[clamp(32px,4.5vw,56px)] font-semibold leading-[1.05] tracking-tight text-ink">
+                      {c.title}
+                    </h3>
+                    <p className="mt-5 text-lead leading-relaxed text-muted">
+                      {c.description}
+                    </p>
+                  </div>
+                </article>
+              </ScrollReveal>
+            );
+          })}
         </div>
 
         {/* Demo */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-32 grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
+          <div className="mt-40 grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
             <div>
-              <p className="text-eyebrow uppercase text-accent">Demo</p>
-              <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
+              <p className="text-eyebrow uppercase text-muted">Demo</p>
+              <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
                 {productOverview.demo.title}
               </h3>
               <p className="mt-4 text-base leading-relaxed text-muted">{productOverview.demo.description}</p>
@@ -67,17 +92,15 @@ export function ProductOverview() {
 
         {/* Use cases — flip cards */}
         <ScrollReveal delay={0.15}>
-          <div className="mt-32 flex items-end justify-between gap-6">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
+          <div className="mt-40">
+            <p className="text-eyebrow uppercase text-muted">Use cases</p>
+            <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
               Three scenarios we lead with.
             </h3>
-            <p className="hidden max-w-xs text-sm leading-snug text-muted md:block">
-              Hover to flip each card and see the outcome.
-            </p>
           </div>
         </ScrollReveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
           {productOverview.useCases.map((uc, i) => (
             <ScrollReveal key={uc.id} delay={0.05 + i * 0.06}>
               <div className="relative aspect-[3/4] w-full">
@@ -103,8 +126,7 @@ function UseCaseFront({ uc }: { uc: { title: string; scenario: string; image: st
       <div className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/40 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-7">
         <p className="text-eyebrow uppercase text-accent">{uc.title}</p>
-        <p className="mt-3 text-lg leading-snug text-ink md:text-xl">{uc.scenario}</p>
-        <p className="mt-4 text-xs text-muted">Hover to see the outcome →</p>
+        <p className="mt-3 font-display text-lg leading-snug text-ink md:text-xl">{uc.scenario}</p>
       </div>
     </div>
   );
@@ -113,11 +135,13 @@ function UseCaseFront({ uc }: { uc: { title: string; scenario: string; image: st
 function UseCaseBack({ uc }: { uc: { title: string; outcome: string } }) {
   return (
     <div className="relative h-full w-full overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/15 via-canvas to-canvas">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(165,138,255,0.25),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(165,138,255,0.20),transparent_60%)]" />
       <div className="relative flex h-full flex-col justify-between p-7">
         <p className="text-eyebrow uppercase text-accent">The shift</p>
-        <p className="text-2xl font-display font-medium leading-tight text-ink">{uc.outcome}</p>
-        <p className="text-xs text-muted">← {uc.title}</p>
+        <p className="font-display text-[clamp(22px,2.4vw,30px)] font-medium leading-tight text-ink">
+          {uc.outcome}
+        </p>
+        <p className="text-xs uppercase tracking-wider text-muted">{uc.title}</p>
       </div>
     </div>
   );
@@ -126,7 +150,7 @@ function UseCaseBack({ uc }: { uc: { title: string; outcome: string } }) {
 function MediaSlot({ src, alt }: { src: string; alt: string }) {
   const [ok, setOk] = useState<boolean | null>(null);
   return ok === false ? (
-    <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/15 via-indigo-500/8 to-sky-500/10">
+    <div className="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/12 via-indigo-500/6 to-sky-500/8">
       <div className="relative text-center">
         <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
           <ImageIcon className="h-5 w-5 text-white/60" aria-hidden="true" />

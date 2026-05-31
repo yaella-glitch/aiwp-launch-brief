@@ -24,7 +24,7 @@ export function Launch() {
     <section
       id="launch"
       data-section="launch"
-      className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40"
+      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -54,23 +54,28 @@ export function Launch() {
           </div>
         </ScrollReveal>
 
-        {/* Goals (2 only) */}
+        {/* Goals (2 only) — large, editorial */}
         <ScrollReveal delay={0.08}>
-          <div className="mt-24">
+          <div className="mt-32">
             <p className="text-eyebrow uppercase text-muted">Goals</p>
-            <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
+            <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
               What we're trying to achieve.
             </h3>
           </div>
         </ScrollReveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
           {launch.goals.map((g, i) => (
             <ScrollReveal key={g.title} delay={0.04 * i}>
               <SpotlightCard className="h-full">
-                <div className="p-8 md:p-10">
-                  <h4 className="font-display text-2xl text-ink md:text-3xl">{g.title}</h4>
-                  <p className="mt-3 text-base leading-relaxed text-muted">{g.description}</p>
+                <div className="flex h-full flex-col gap-5 p-10 md:p-12">
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70">
+                    Goal · 0{i + 1}
+                  </span>
+                  <h4 className="font-display text-[clamp(24px,2.6vw,36px)] font-semibold leading-[1.15] text-ink">
+                    {g.title}
+                  </h4>
+                  <p className="text-base leading-relaxed text-muted">{g.description}</p>
                 </div>
               </SpotlightCard>
             </ScrollReveal>
@@ -79,14 +84,9 @@ export function Launch() {
 
         {/* Deliverables + Owners (combined) */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-32 flex items-end justify-between gap-6">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
-              Assets &amp; owners.
-            </h3>
-            <p className="hidden max-w-xs text-sm leading-snug text-muted md:block">
-              Everything we're shipping — and who owns each.
-            </p>
-          </div>
+          <h3 className="mt-40 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            Assets &amp; owners.
+          </h3>
         </ScrollReveal>
 
         <ScrollReveal delay={0.05}>

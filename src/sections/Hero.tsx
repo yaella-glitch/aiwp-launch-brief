@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { MeshGradient } from '@/components/MeshGradient';
-import { Sparkles } from '@/components/Sparkles';
 import { KineticHeadline } from '@/components/KineticHeadline';
 import { hero } from '@/content';
 import { cn } from '@/lib/utils';
@@ -18,7 +17,6 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
       className="relative flex min-h-[100svh] w-full items-center overflow-hidden"
     >
       <MeshGradient />
-      <Sparkles count={90} minRadius={0.3} maxRadius={1.5} speed={0.7} />
 
       {/* Vignette + bottom fade */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -58,7 +56,6 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
             className={cn(
               'mt-6 font-display font-bold leading-[0.92] tracking-[-0.04em]',
               'text-[clamp(56px,12vw,160px)] text-ink',
-              'drop-shadow-[0_2px_40px_rgba(0,0,0,0.45)]',
             )}
           >
             <KineticHeadline text={hero.headline} delay={0.3} stagger={0.07} />

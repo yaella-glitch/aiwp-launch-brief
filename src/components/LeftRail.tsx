@@ -4,13 +4,15 @@ import type { SectionMeta } from '@/types';
 
 interface LeftRailProps {
   sections: SectionMeta[];
+  /** Notify parent when the active section changes. */
+  onActiveChange?: (id: string) => void;
 }
 
 /**
  * Sticky left navigation rail. Scroll-spy highlights the section currently
  * in view. Smooth-scrolls on click. Hidden in present mode.
  */
-export function LeftRail({ sections }: LeftRailProps) {
+export function LeftRail({ sections, onActiveChange }: LeftRailProps) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? '');
 
   useEffect(() => {
@@ -23,13 +25,14 @@ export function LeftRail({ sections }: LeftRailProps) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Pick the topmost intersecting section.
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         const first = visible[0];
-        if (first?.target.getAttribute('data-section')) {
-          setActiveId(first.target.getAttribute('data-section')!);
+        const id = first?.target.getAttribute('data-section');
+        if (id) {
+          setActiveId(id);
+          onActiveChange?.(id);
         }
       },
       { rootMargin: '-30% 0px -60% 0px', threshold: 0 },
@@ -37,7 +40,7 @@ export function LeftRail({ sections }: LeftRailProps) {
 
     nodes.forEach((n) => observer.observe(n));
     return () => observer.disconnect();
-  }, [sections]);
+  }, [sections, onActiveChange]);
 
   return (
     <nav

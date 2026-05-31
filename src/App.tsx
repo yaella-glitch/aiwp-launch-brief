@@ -18,6 +18,7 @@ function App() {
   const [externalPreview, setExternalPreview] = useState(
     manifest.siteMeta.defaults.externalPreview,
   );
+  const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
 
   const [audioAvailable, setAudioAvailable] = useState(false);
   useEffect(() => {
@@ -37,6 +38,10 @@ function App() {
   }, []);
 
   const railSections = getRailSections(externalPreview);
+  const activeIndex = railSections.findIndex((s) => s.id === activeSectionId);
+  // 1-based, capped at last section when activeId not yet set or unknown.
+  const currentIndex = activeIndex >= 0 ? activeIndex + 1 : 1;
+  const totalIndex = railSections.length;
 
   function playAudio() {
     const el = document.getElementById('audio-brief') as HTMLAudioElement | null;
@@ -54,12 +59,14 @@ function App() {
         presentMode={presentMode}
         externalPreview={externalPreview}
         audioAvailable={audioAvailable}
+        currentIndex={currentIndex}
+        totalIndex={totalIndex}
         onTogglePresent={() => setPresentMode((v) => !v)}
         onToggleExternal={() => setExternalPreview((v) => !v)}
         onPlayAudio={playAudio}
       />
 
-      {!presentMode && <LeftRail sections={railSections} />}
+      {!presentMode && <LeftRail sections={railSections} onActiveChange={setActiveSectionId} />}
 
       <main className={cn('pt-14', !presentMode && 'xl:pl-60')}>
         {renderedSections.map((s) => {

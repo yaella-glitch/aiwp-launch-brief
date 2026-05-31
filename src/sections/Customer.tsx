@@ -18,7 +18,7 @@ export function Customer() {
     <section
       id="customer"
       data-section="customer"
-      className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40"
+      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -27,26 +27,25 @@ export function Customer() {
           lede={customer.lede}
         />
 
-        {/* Personas — card grid with photos */}
-        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-3">
+        {/* Personas — primary spans 2 cols, secondary single */}
+        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-4">
           {customer.personas.map((p, i) => (
-            <ScrollReveal key={p.id} delay={0.04 * i}>
+            <ScrollReveal
+              key={p.id}
+              delay={0.04 * i}
+              className={cn(p.kind === 'primary' ? 'md:col-span-2' : 'md:col-span-1')}
+            >
               <PersonaCard persona={p} />
             </ScrollReveal>
           ))}
         </div>
 
         {/* Before / After */}
-        <div className="mt-32">
+        <div className="mt-40">
           <ScrollReveal>
-            <div className="mb-12 flex items-end justify-between gap-6">
-              <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
-                Before &amp; after.
-              </h3>
-              <p className="hidden max-w-xs text-sm leading-snug text-muted md:block">
-                Drag the handle on each comparison.
-              </p>
-            </div>
+            <h3 className="mb-16 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+              Before &amp; after.
+            </h3>
           </ScrollReveal>
 
           <div className="space-y-16 md:space-y-20">

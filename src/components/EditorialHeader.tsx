@@ -7,8 +7,6 @@ interface EditorialHeaderProps {
   title: ReactNode;
   lede?: ReactNode;
   className?: string;
-  /** When true, the eyebrow gets the violet thin-line accent treatment. */
-  withRule?: boolean;
 }
 
 /**
@@ -20,23 +18,19 @@ export function EditorialHeader({
   title,
   lede,
   className,
-  withRule = true,
 }: EditorialHeaderProps) {
   const reduce = useReducedMotion();
   return (
     <header className={cn('max-w-3xl', className)}>
-      <motion.div
+      <motion.p
         initial={reduce ? undefined : { opacity: 0, y: 10 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.6 }}
-        className="flex items-center gap-3"
+        className="text-eyebrow uppercase text-muted"
       >
-        {withRule && (
-          <span aria-hidden="true" className="h-px w-8 bg-accent/60" />
-        )}
-        <p className="text-eyebrow uppercase text-accent">{eyebrow}</p>
-      </motion.div>
+        {eyebrow}
+      </motion.p>
       <motion.h2
         initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}

@@ -20,8 +20,8 @@ interface SpotlightCardProps {
 export function SpotlightCard({
   children,
   className,
-  spotlightColor = 'rgba(165, 138, 255, 0.18)',
-  radius = 520,
+  spotlightColor = 'rgba(165, 138, 255, 0.10)',
+  radius = 360,
 }: SpotlightCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
