@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Calendar, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
@@ -28,7 +28,6 @@ export function Launch() {
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
-          eyebrow={launch.eyebrow}
           title={launch.title}
           lede={launch.lede}
         />
@@ -36,10 +35,9 @@ export function Launch() {
         {/* Launch date */}
         <ScrollReveal>
           <div className="mt-16 border-b border-white/10 pb-12">
-            <div className="flex items-center gap-3">
-              <Calendar className="h-4 w-4 text-accent" aria-hidden="true" />
-              <span className="text-eyebrow uppercase text-accent">Launch date</span>
-            </div>
+            <h3 className="font-display text-[clamp(24px,3vw,36px)] font-semibold tracking-tight text-ink">
+              Launch date.
+            </h3>
             <motion.p
               initial={reduce ? undefined : { opacity: 0, y: 20, filter: 'blur(10px)' }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -57,10 +55,12 @@ export function Launch() {
         {/* Goals (2 only) — large, editorial */}
         <ScrollReveal delay={0.08}>
           <div className="mt-32">
-            <p className="text-eyebrow uppercase text-muted">Goals</p>
-            <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
-              What we're trying to achieve.
+            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+              Goals.
             </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              What we're trying to achieve.
+            </p>
           </div>
         </ScrollReveal>
 
@@ -68,10 +68,7 @@ export function Launch() {
           {launch.goals.map((g, i) => (
             <ScrollReveal key={g.title} delay={0.04 * i}>
               <SpotlightCard className="h-full">
-                <div className="flex h-full flex-col gap-5 p-10 md:p-12">
-                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70">
-                    Goal · 0{i + 1}
-                  </span>
+                <div className="flex h-full flex-col gap-4 p-10 md:p-12">
                   <h4 className="font-display text-[clamp(24px,2.6vw,36px)] font-semibold leading-[1.15] text-ink">
                     {g.title}
                   </h4>

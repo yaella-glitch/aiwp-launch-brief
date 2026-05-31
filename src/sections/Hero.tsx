@@ -6,14 +6,11 @@ import { hero } from '@/content';
 import { cn } from '@/lib/utils';
 
 /**
- * Hero — Aceternity Sparkles pattern (the "Acme" variant) with a
- * Background context block under the title.
+ * Hero — Aceternity Sparkles pattern (the "Acme" variant).
  *
- *   badge
- *   eyebrow
- *   H1 + sparkle beam
- *   ── Background ─────
- *   short paragraph
+ * Centered headline above a glowing horizontal "beam" that contains
+ * twinkling sparkles drifting horizontally.
+ * Reference: https://21st.dev/community/components/aceternity/sparkles/default
  */
 export function Hero({ presentMode }: { presentMode: boolean }) {
   const reduce = useReducedMotion();
@@ -65,7 +62,7 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
         </h1>
 
         {/* Sparkle beam — light burst under the H1 */}
-        <div className="relative mx-auto mt-4 h-32 w-full max-w-2xl">
+        <div className="relative mx-auto mt-4 h-40 w-full max-w-2xl">
           <div className="absolute inset-x-16 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
           <div className="absolute inset-x-16 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-400 to-transparent" />
           <div className="absolute inset-x-48 top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-sky-400 to-transparent blur-sm" />
@@ -80,32 +77,13 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
             }}
           />
         </div>
-
-        {/* Background block — context paragraph under the title */}
-        <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 10 }}
-          animate={reduce ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
-          className="mx-auto -mt-8 max-w-2xl text-left"
-        >
-          <div className="mb-4 flex items-center justify-center gap-3">
-            <span aria-hidden="true" className="h-px w-10 bg-white/15" />
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
-              Background
-            </p>
-            <span aria-hidden="true" className="h-px w-10 bg-white/15" />
-          </div>
-          <p className="text-center text-sm leading-relaxed text-white/80 md:text-base">
-            {hero.background}
-          </p>
-        </motion.div>
       </div>
 
       {/* Scroll cue */}
       <motion.button
         type="button"
         onClick={() => {
-          document.querySelector('#product-overview')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.querySelector('#background')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }}
         initial={reduce ? undefined : { opacity: 0 }}
         animate={reduce ? undefined : { opacity: 1 }}

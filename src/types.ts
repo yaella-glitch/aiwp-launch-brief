@@ -2,6 +2,7 @@
 
 export type SectionId =
   | 'hero'
+  | 'background'
   | 'product-overview'
   | 'customer'
   | 'market'
@@ -39,9 +40,12 @@ export interface HeroContent {
   eyebrow: string;
   headline: string;
   highlight: string;
-  /** Editorial "Background" paragraph rendered under the H1. */
-  background: string;
   launchDate: string;
+}
+
+export interface BackgroundContent {
+  title: string;
+  lede: string;
 }
 
 export interface Capability {

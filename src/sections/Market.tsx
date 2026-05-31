@@ -19,7 +19,6 @@ export function Market() {
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
-          eyebrow={market.eyebrow}
           title={market.title}
           lede={market.lede}
         />
@@ -28,7 +27,9 @@ export function Market() {
         <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
             <div className="max-w-md">
-              <p className="text-eyebrow uppercase text-muted">Market context</p>
+              <h3 className="font-display text-[clamp(24px,3vw,36px)] font-semibold tracking-tight text-ink">
+                Market context.
+              </h3>
               <p className="mt-5 text-lead leading-relaxed text-ink/85">{market.marketContext}</p>
               <p className="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-muted/70">
                 {market.quadrant.xAxis.label} × {market.quadrant.yAxis.label}

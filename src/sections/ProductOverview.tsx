@@ -23,7 +23,6 @@ export function ProductOverview() {
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
-          eyebrow={productOverview.eyebrow}
           title={productOverview.title}
           lede={productOverview.lede}
         />
@@ -39,9 +38,8 @@ export function ProductOverview() {
         <ScrollReveal delay={0.1}>
           <div className="mt-40 grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
             <div>
-              <p className="text-eyebrow uppercase text-muted">Demo</p>
-              <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
-                {productOverview.demo.title}
+              <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+                Demo.
               </h3>
               <p className="mt-4 text-base leading-relaxed text-muted">{productOverview.demo.description}</p>
             </div>
@@ -56,10 +54,12 @@ export function ProductOverview() {
         {/* Use cases — flip cards */}
         <ScrollReveal delay={0.15}>
           <div className="mt-40">
-            <p className="text-eyebrow uppercase text-muted">Use cases</p>
-            <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
-              Three scenarios we lead with.
+            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+              Use cases.
             </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              Three scenarios we lead with.
+            </p>
           </div>
         </ScrollReveal>
 

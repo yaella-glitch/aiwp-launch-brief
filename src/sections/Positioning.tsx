@@ -21,7 +21,6 @@ export function Positioning() {
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
-          eyebrow={positioning.eyebrow}
           title={positioning.title}
           lede={positioning.lede}
         />
@@ -29,7 +28,9 @@ export function Positioning() {
         {/* Vision — bold prose statement with a HIGHLIGHT BAR on key phrase */}
         <ScrollReveal>
           <div className="mt-24 max-w-4xl">
-            <p className="text-eyebrow uppercase text-muted">{positioning.vision.title}</p>
+            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+              {positioning.vision.title}.
+            </h3>
             <motion.p
               initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -52,9 +53,9 @@ export function Positioning() {
         <ScrollReveal delay={0.15}>
           <div className="mt-32">
             <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
-              What we lead with.
+              What we lead with externally.
             </h3>
-            <p className="mt-3 max-w-md text-base text-muted">
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
               Hover any panel to expand. The active one tells its story.
             </p>
           </div>

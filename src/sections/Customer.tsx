@@ -23,8 +23,7 @@ export function Customer() {
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
-          eyebrow={customer.eyebrow}
-          title={customer.title}
+          title="Who it's for."
           lede={customer.lede}
         />
 
@@ -41,13 +40,18 @@ export function Customer() {
           ))}
         </div>
 
-        {/* Before / After */}
+        {/* Pains & solutions */}
         <div className="mt-40">
           <ScrollReveal>
-            <h3 className="mb-16 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
-              Before &amp; after.
+            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+              The pains &amp; solutions.
             </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              What changes for the customer, theme by theme. Drag any handle to compare.
+            </p>
           </ScrollReveal>
+
+          <div className="h-12" />
 
           <div className="space-y-16 md:space-y-20">
             {customer.beforeAfter.map((ba, i) => (
