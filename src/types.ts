@@ -42,6 +42,8 @@ export interface HeroContent {
   subhead: string;
   description: string;
   launchDate: string;
+  /** Foreground lens — image or video. Autodetects by extension. */
+  media?: string;
   /** Full-bleed background image path. */
   bgImage?: string;
 }

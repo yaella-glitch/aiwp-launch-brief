@@ -4,8 +4,12 @@ import { ImageIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ScrollExpandHeroProps {
-  /** Foreground "lens" image that starts small in the center and expands. */
+  /** Foreground "lens" media path — image (png/jpg) or video (mp4). */
   mediaSrc: string;
+  /** Override autodetect — defaults based on file extension. */
+  mediaType?: 'image' | 'video';
+  /** Optional video poster image (shows before video loads). */
+  posterSrc?: string;
   mediaAlt?: string;
   /** Full-bleed background image — fades as the foreground media expands. */
   bgImageSrc: string;
@@ -36,6 +40,8 @@ interface ScrollExpandHeroProps {
  */
 export function ScrollExpandHero({
   mediaSrc,
+  mediaType,
+  posterSrc,
   mediaAlt = 'Hero visual',
   bgImageSrc,
   titleFirstLine,
@@ -45,6 +51,8 @@ export function ScrollExpandHero({
   textBlend = true,
   className,
 }: ScrollExpandHeroProps) {
+  // Autodetect media type from extension when not explicitly set.
+  const isVideo = mediaType === 'video' || (!mediaType && /\.(mp4|webm|mov|m4v)(\?|$)/i.test(mediaSrc));
   const reduce = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const [expanded, setExpanded] = useState(false);
@@ -147,7 +155,7 @@ export function ScrollExpandHero({
         <div className="absolute inset-0 bg-canvas/40" />
       </motion.div>
 
-      {/* Foreground "lens" image card — absolute center */}
+      {/* Foreground "lens" media card — absolute center */}
       <div
         className="absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
         style={{
@@ -157,7 +165,11 @@ export function ScrollExpandHero({
           maxHeight: '85vh',
         }}
       >
-        <FullBleedImage src={mediaSrc} alt={mediaAlt} />
+        {isVideo ? (
+          <LensVideo src={mediaSrc} poster={posterSrc} />
+        ) : (
+          <FullBleedImage src={mediaSrc} alt={mediaAlt} />
+        )}
         <motion.div
           aria-hidden="true"
           className="absolute inset-0 bg-black"
@@ -206,6 +218,54 @@ export function ScrollExpandHero({
         </motion.h1>
       </div>
     </section>
+  );
+}
+
+function LensVideo({ src, poster }: { src: string; poster?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [ok, setOk] = useState<boolean | null>(null);
+
+  // Autoplay muted + loop. preventDefault on context menu / drag.
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    // Pause when tab is hidden to save battery.
+    function onVis() {
+      if (document.hidden) el.pause();
+      else void el.play().catch(() => {});
+    }
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
+
+  if (ok === false) {
+    return (
+      <div className="relative flex h-full w-full items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(165,138,255,0.2),transparent_55%),rgb(17,17,32)]">
+        <div className="text-center">
+          <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
+            <ImageIcon className="h-5 w-5 text-white/70" aria-hidden="true" />
+          </span>
+          <p className="mt-3 px-6 font-mono text-[10px] text-white/50">{src}</p>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      controls={false}
+      className={cn('h-full w-full object-cover', ok === null && 'opacity-0')}
+      onLoadedData={() => setOk(true)}
+      onError={() => setOk(false)}
+    />
   );
 }
 
