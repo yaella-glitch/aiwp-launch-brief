@@ -4,7 +4,6 @@ import { TopBar } from '@/components/TopBar';
 import { LeftRail } from '@/components/LeftRail';
 import { Footer } from '@/components/Footer';
 import { Hero } from '@/sections/Hero';
-import { HowItComesTogether } from '@/sections/HowItComesTogether';
 import { ProductOverview } from '@/sections/ProductOverview';
 import { Customer } from '@/sections/Customer';
 import { Market } from '@/sections/Market';
@@ -67,8 +66,6 @@ function App() {
           switch (s.id) {
             case 'hero':
               return <Hero key={s.id} presentMode={presentMode} />;
-            case 'how-it-comes-together':
-              return <HowItComesTogether key={s.id} />;
             case 'product-overview':
               return <ProductOverview key={s.id} />;
             case 'customer':

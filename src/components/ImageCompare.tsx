@@ -5,8 +5,9 @@ import { cn } from '@/lib/utils';
 interface ImageCompareProps {
   beforeImage: string;
   afterImage: string;
-  beforeLabel: string;
-  afterLabel: string;
+  /** Optional small label pills (shown only when provided). */
+  beforeLabel?: string;
+  afterLabel?: string;
   altBefore?: string;
   altAfter?: string;
   initialPosition?: number;
@@ -93,13 +94,17 @@ export function ImageCompare({
         <SmartImage src={beforeImage} alt={altBefore} className="h-full w-full object-cover" tint="rose" />
       </div>
 
-      {/* Labels */}
-      <span className="absolute left-5 top-5 z-10 rounded-full border border-rose-400/40 bg-rose-400/15 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-rose-100 backdrop-blur">
-        {beforeLabel}
-      </span>
-      <span className="absolute right-5 top-5 z-10 rounded-full border border-emerald-400/40 bg-emerald-400/15 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-emerald-100 backdrop-blur">
-        {afterLabel}
-      </span>
+      {/* Optional labels — only when explicitly provided */}
+      {beforeLabel && (
+        <span className="absolute left-5 top-5 z-10 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/80 backdrop-blur">
+          {beforeLabel}
+        </span>
+      )}
+      {afterLabel && (
+        <span className="absolute right-5 top-5 z-10 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/80 backdrop-blur">
+          {afterLabel}
+        </span>
+      )}
 
       {/* Divider + Handle */}
       <div

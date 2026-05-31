@@ -1,47 +1,54 @@
 {
-  "eyebrow": "Part 2",
-  "title": "The customer.",
-  "lede": "Who we're building for, and what changes for them.",
-  "audience": {
-    "primary": {
-      "title": "[Primary persona]",
-      "description": "[Placeholder] One-paragraph description of who they are, what they care about, what they're trying to get done."
+  "eyebrow": "The customer",
+  "title": "Who we're building for.",
+  "lede": "Who they are. And what changes for them.",
+  "personas": [
+    {
+      "id": "persona-1",
+      "kind": "primary",
+      "name": "Primary persona",
+      "role": "Their role",
+      "photo": "/personas/persona-1.png",
+      "description": "A short paragraph describing who they are, what they care about, and what they're trying to get done. Edit me in content/customer.json."
     },
-    "secondary": [
-      { "title": "[Secondary persona 1]", "description": "[Placeholder] One short paragraph." },
-      { "title": "[Secondary persona 2]", "description": "[Placeholder] One short paragraph." }
-    ]
-  },
+    {
+      "id": "persona-2",
+      "kind": "secondary",
+      "name": "Secondary persona",
+      "role": "Their role",
+      "photo": "/personas/persona-2.png",
+      "description": "Short paragraph. Edit me in content/customer.json."
+    },
+    {
+      "id": "persona-3",
+      "kind": "secondary",
+      "name": "Secondary persona",
+      "role": "Their role",
+      "photo": "/personas/persona-3.png",
+      "description": "Short paragraph. Edit me in content/customer.json."
+    }
+  ],
   "beforeAfter": [
     {
       "id": "ba-1",
       "theme": "Visibility",
-      "beforeLabel": "Today",
-      "afterLabel": "With Milestone 2",
       "beforeImage": "/customer/before-visibility.png",
       "afterImage": "/customer/after-visibility.png",
-      "beforeDescription": "[Placeholder] Today, work is scattered — boards, files, chat, people's heads. No one has the full picture.",
-      "afterDescription": "[Placeholder] Everything lives in one container — visible to the team, accessible by every agent."
+      "description": "What changes for the customer when visibility is built-in. Drag the handle to compare."
     },
     {
       "id": "ba-2",
       "theme": "Collaboration",
-      "beforeLabel": "Today",
-      "afterLabel": "With Milestone 2",
       "beforeImage": "/customer/before-collab.png",
       "afterImage": "/customer/after-collab.png",
-      "beforeDescription": "[Placeholder] Agents work in isolation. Outputs scatter across tools.",
-      "afterDescription": "[Placeholder] Humans + agents collaborate on the same outcome, in the same place."
+      "description": "From isolated agents to a team that ships together."
     },
     {
       "id": "ba-3",
       "theme": "Trust",
-      "beforeLabel": "Today",
-      "afterLabel": "With Milestone 2",
       "beforeImage": "/customer/before-trust.png",
       "afterImage": "/customer/after-trust.png",
-      "beforeDescription": "[Placeholder] Adopting agents feels risky — no boundaries, no visibility.",
-      "afterDescription": "[Placeholder] Permissions inherit. Visibility is built-in. Teams adopt with confidence."
+      "description": "From risky adoption to confident rollout."
     }
   ]
 }

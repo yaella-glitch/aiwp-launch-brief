@@ -1,96 +1,113 @@
-import { Check, X, Quote } from 'lucide-react';
-import { SectionMarker } from '@/components/SectionMarker';
+import { useState } from 'react';
+import { Check, X, ImageIcon } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { SpotlightCard } from '@/components/SpotlightCard';
 import { positioning } from '@/content';
+import { cn } from '@/lib/utils';
 
 /**
- * Part 4 · Positioning & messaging.
- *   - How this launch supports the vision
- *   - What we emphasize externally
- *   - Say / Don't Say
+ * Positioning & messaging — vision statement (bold prose, no parts grid),
+ * "how it all comes together" image strip, what we emphasize externally,
+ * say / don't-say guardrails.
  */
 export function Positioning() {
+  const reduce = useReducedMotion();
   return (
-    <section id="positioning" data-section="positioning" className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40">
+    <section
+      id="positioning"
+      data-section="positioning"
+      className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40"
+    >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        <SectionMarker number="04" eyebrow={positioning.eyebrow} title={positioning.title} lede={positioning.lede} />
+        <EditorialHeader
+          eyebrow={positioning.eyebrow}
+          title={positioning.title}
+          lede={positioning.lede}
+        />
 
-        {/* Vision support */}
+        {/* Vision — bold statement, no parts grid */}
         <ScrollReveal>
-          <div className="mt-20">
-            <div className="relative">
-              <Quote className="absolute -left-2 -top-4 h-12 w-12 text-accent/30" aria-hidden="true" />
-              <p className="text-eyebrow uppercase text-accent">{positioning.supportsVision.title}</p>
-              <p className="mt-6 max-w-3xl font-display text-[clamp(24px,3vw,40px)] font-medium italic leading-[1.2] text-ink">
-                "{positioning.supportsVision.lede}"
-              </p>
-            </div>
-            <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
-              {positioning.supportsVision.supportPoints.map((p, i) => (
-                <div
-                  key={p.title}
-                  className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors duration-200 hover:border-accent/30 hover:bg-white/[0.06]"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="absolute -right-3 -top-3 font-display text-6xl font-bold text-accent/10 transition-transform duration-500 group-hover:scale-110"
-                  >
-                    {(i + 1).toString().padStart(2, '0')}
-                  </span>
-                  <h4 className="relative font-display text-lg font-semibold text-ink">{p.title}</h4>
-                  <p className="relative mt-3 text-sm leading-relaxed text-muted">{p.description}</p>
-                </div>
-              ))}
-            </div>
+          <div className="mt-20 max-w-4xl">
+            <p className="text-eyebrow uppercase text-accent">{positioning.vision.title}</p>
+            <motion.p
+              initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 font-display text-[clamp(28px,4vw,56px)] font-bold leading-[1.05] tracking-tight text-ink"
+            >
+              {positioning.vision.statement}
+            </motion.p>
           </div>
         </ScrollReveal>
 
-        {/* External emphasis */}
+        {/* How it all comes together — horizontal image strip */}
         <ScrollReveal delay={0.1}>
           <div className="mt-32">
-            <p className="text-eyebrow uppercase text-muted">Externally</p>
-            <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
-              What we emphasize.
+            <p className="text-eyebrow uppercase text-muted">{positioning.comesTogether.title}</p>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
+              {positioning.comesTogether.lede}
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {positioning.comesTogether.aspects.map((a, i) => (
+            <ScrollReveal key={a.id} delay={0.04 * i}>
+              <SpotlightCard className="aspect-[3/4]">
+                <AspectImage src={a.image} alt={a.imageAlt} />
+                <div className="absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-canvas via-canvas/85 to-transparent p-5">
+                  <p className="font-display text-base font-semibold leading-tight text-ink md:text-lg">
+                    {a.title}
+                  </p>
+                </div>
+              </SpotlightCard>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {/* External emphasis — interactive image accordion-feel grid */}
+        <ScrollReveal delay={0.15}>
+          <div className="mt-32 flex items-end justify-between gap-6">
+            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
+              What we lead with.
             </h3>
           </div>
         </ScrollReveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
           {positioning.externalEmphasis.map((e, i) => (
-            <ScrollReveal key={e.title} delay={0.05 + i * 0.05}>
-              <div className="group h-full rounded-2xl border border-accent/20 bg-accent/[0.06] p-7 transition-colors duration-200 hover:border-accent/40 hover:bg-accent/[0.12]">
-                <p className="text-eyebrow uppercase text-accent">Emphasis #{i + 1}</p>
-                <h4 className="mt-3 font-display text-lg text-ink">{e.title}</h4>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{e.description}</p>
-              </div>
+            <ScrollReveal key={e.title} delay={0.05 * i}>
+              <EmphasisCard title={e.title} image={e.image} description={e.description} />
             </ScrollReveal>
           ))}
         </div>
 
         {/* Say / Don't Say */}
-        <ScrollReveal delay={0.15}>
-          <div className="mt-32">
-            <p className="text-eyebrow uppercase text-muted">Guardrails</p>
-            <h3 className="mt-3 font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
-              Say / Don't say.
+        <ScrollReveal delay={0.2}>
+          <div className="mt-32 flex items-end justify-between gap-6">
+            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-bold tracking-tight text-ink">
+              Say. Don't say.
             </h3>
           </div>
         </ScrollReveal>
 
-        <div className="mt-10 space-y-8">
+        <div className="mt-10 space-y-6">
           {positioning.sayDontSay.map((s, i) => (
-            <ScrollReveal key={s.topic} delay={0.05 + i * 0.05}>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+            <ScrollReveal key={s.topic} delay={0.04 * i}>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-8">
                 <p className="text-eyebrow uppercase text-muted">{s.topic}</p>
                 <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div className="flex items-start gap-3 rounded-xl border border-emerald-400/25 bg-emerald-400/[0.06] p-5">
+                  <div className="flex items-start gap-3 rounded-xl border border-emerald-400/25 bg-emerald-400/[0.05] p-5">
                     <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
                     <div>
                       <p className="text-eyebrow uppercase text-emerald-300">Say</p>
                       <p className="mt-2 text-base leading-relaxed text-ink">"{s.say}"</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 rounded-xl border border-rose-400/25 bg-rose-400/[0.06] p-5">
+                  <div className="flex items-start gap-3 rounded-xl border border-rose-400/25 bg-rose-400/[0.05] p-5">
                     <X className="mt-1 h-4 w-4 shrink-0 text-rose-300" aria-hidden="true" />
                     <div>
                       <p className="text-eyebrow uppercase text-rose-300">Don't say</p>
@@ -110,5 +127,42 @@ export function Positioning() {
         </div>
       </div>
     </section>
+  );
+}
+
+function EmphasisCard({ title, image, description }: { title: string; image: string; description: string }) {
+  return (
+    <SpotlightCard className="group/emphasis aspect-[4/5]">
+      <div className="absolute inset-0">
+        <AspectImage src={image} alt={title} />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/60 to-transparent transition-opacity duration-300 group-hover/emphasis:opacity-90" />
+      <div className="absolute inset-x-0 bottom-0 z-[2] p-6">
+        <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">{title}</h4>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
+      </div>
+    </SpotlightCard>
+  );
+}
+
+function AspectImage({ src, alt }: { src: string; alt: string }) {
+  const [ok, setOk] = useState<boolean | null>(null);
+  return ok === false ? (
+    <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/15 via-indigo-500/8 to-sky-500/10">
+      <div className="text-center">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
+          <ImageIcon className="h-4 w-4 text-white/60" aria-hidden="true" />
+        </span>
+        <p className="mt-2 px-2 font-mono text-[9px] text-white/40">{src}</p>
+      </div>
+    </div>
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      className={cn('absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-cinematic group-hover:scale-105', ok === null && 'opacity-0')}
+      onLoad={() => setOk(true)}
+      onError={() => setOk(false)}
+    />
   );
 }

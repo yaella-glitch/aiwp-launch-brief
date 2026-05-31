@@ -1,39 +1,62 @@
 {
-  "eyebrow": "Part 5",
-  "title": "Launch & marketing plan.",
+  "eyebrow": "Launch & marketing",
+  "title": "Ship date, scope, owners.",
   "lede": "What we're shipping. When. With whom. What's expected from you.",
   "launchDate": "July 1, 2026",
   "goals": [
     {
-      "title": "[Goal 1]",
-      "description": "[Placeholder] One sentence describing the goal."
+      "title": "Goal one",
+      "description": "A short, customer-true ambition for this launch. Edit me in content/launch.json."
     },
     {
-      "title": "[Goal 2]",
-      "description": "[Placeholder] One sentence describing the goal."
+      "title": "Goal two",
+      "description": "A short, customer-true ambition for this launch. Edit me in content/launch.json."
     }
   ],
-  "marketingScope": [
-    { "name": "[Marketing action 1]", "owner": { "name": "[Owner name]", "function": "[Role]", "photo": "/owners/owner-1.png" } },
-    { "name": "[Marketing action 2]", "owner": { "name": "[Owner name]", "function": "[Role]", "photo": "/owners/owner-2.png" } },
-    { "name": "[Marketing action 3]", "owner": { "name": "[Owner name]", "function": "[Role]", "photo": "/owners/owner-3.png" } },
-    { "name": "[Marketing action 4]", "owner": { "name": "[Owner name]", "function": "[Role]", "photo": "/owners/owner-4.png" } },
-    { "name": "[Marketing action 5]", "owner": { "name": "[Owner name]", "function": "[Role]", "photo": "/owners/owner-5.png" } }
-  ],
-  "assets": [
-    { "name": "[Asset 1 — e.g., Landing page]", "channel": "Web", "due": "[Date]", "status": "todo" },
-    { "name": "[Asset 2 — e.g., Blog post]", "channel": "Content", "due": "[Date]", "status": "todo" },
-    { "name": "[Asset 3 — e.g., Social hero]", "channel": "Social", "due": "[Date]", "status": "todo" },
-    { "name": "[Asset 4 — e.g., PR pitch]", "channel": "PR", "due": "[Date]", "status": "todo" },
-    { "name": "[Asset 5 — e.g., Sales deck]", "channel": "Enablement", "due": "[Date]", "status": "todo" }
+  "deliverables": [
+    {
+      "name": "Landing page",
+      "channel": "Web",
+      "due": "Jun 24",
+      "status": "todo",
+      "owner": { "name": "Owner name", "function": "PMM", "photo": "/owners/owner-1.png" }
+    },
+    {
+      "name": "Launch blog post",
+      "channel": "Content",
+      "due": "Jun 26",
+      "status": "todo",
+      "owner": { "name": "Owner name", "function": "Content", "photo": "/owners/owner-2.png" }
+    },
+    {
+      "name": "Social hero campaign",
+      "channel": "Social",
+      "due": "Jun 28",
+      "status": "todo",
+      "owner": { "name": "Owner name", "function": "Social", "photo": "/owners/owner-3.png" }
+    },
+    {
+      "name": "PR pitch & embargo",
+      "channel": "PR",
+      "due": "Jun 24",
+      "status": "todo",
+      "owner": { "name": "Owner name", "function": "PR", "photo": "/owners/owner-4.png" }
+    },
+    {
+      "name": "Sales enablement deck",
+      "channel": "Enablement",
+      "due": "Jun 27",
+      "status": "todo",
+      "owner": { "name": "Owner name", "function": "Enablement", "photo": "/owners/owner-5.png" }
+    }
   ],
   "expectations": [
-    "[Placeholder] What's expected from you #1",
-    "[Placeholder] What's expected from you #2"
+    "What's expected from you — line one.",
+    "What's expected from you — line two."
   ],
   "outOfScope": [
-    "[Placeholder] Not a new product launch",
-    "[Placeholder] Not a Notion-style brand reintroduction",
-    "[Placeholder] Out-of-scope item #3"
+    "Not a new product launch.",
+    "Not a Notion-style brand reintroduction.",
+    "Third out-of-scope item."
   ]
 }

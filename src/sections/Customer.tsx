@@ -1,53 +1,42 @@
-import { SectionMarker } from '@/components/SectionMarker';
+import { useState } from 'react';
+import { User } from 'lucide-react';
+import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { SpotlightCard } from '@/components/SpotlightCard';
 import { ImageCompare } from '@/components/ImageCompare';
 import { customer } from '@/content';
+import { cn } from '@/lib/utils';
+import type { Persona } from '@/types';
 
 /**
- * Part 2 · The customer.
- *  - Primary + secondary personas stacked vertically (large primary, smaller below)
- *  - Before / After image comparison sliders (drag handle)
+ * The customer:
+ *  - Persona cards (each with a photo placeholder, name, role, description)
+ *  - Before / after sliders (description only — no TODAY/WITH labels)
  */
 export function Customer() {
   return (
-    <section id="customer" data-section="customer" className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40">
+    <section
+      id="customer"
+      data-section="customer"
+      className="relative w-full overflow-hidden py-24 md:py-32 lg:py-40"
+    >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        <SectionMarker number="02" eyebrow={customer.eyebrow} title={customer.title} lede={customer.lede} />
+        <EditorialHeader
+          eyebrow={customer.eyebrow}
+          title={customer.title}
+          lede={customer.lede}
+        />
 
-        {/* Personas — vertical stack */}
-        <div className="mt-20 max-w-4xl space-y-5">
-          <ScrollReveal>
-            <article className="card-gradient">
-              <div className="card-gradient-inner p-8 md:p-10">
-                <div className="flex items-baseline gap-4">
-                  <span className="text-eyebrow uppercase text-accent">Primary</span>
-                  <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-accent/40 to-transparent" />
-                </div>
-                <h3 className="mt-5 font-display text-3xl text-ink md:text-4xl">
-                  {customer.audience.primary.title}
-                </h3>
-                <p className="mt-5 max-w-2xl text-lead leading-relaxed text-muted">
-                  {customer.audience.primary.description}
-                </p>
-              </div>
-            </article>
-          </ScrollReveal>
-
-          {customer.audience.secondary.map((s, i) => (
-            <ScrollReveal key={s.title} delay={0.05 + i * 0.05}>
-              <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors duration-200 hover:border-white/15 hover:bg-white/[0.05]">
-                <div className="flex items-baseline gap-4">
-                  <span className="text-eyebrow uppercase text-muted">Secondary</span>
-                  <span aria-hidden="true" className="h-px flex-1 bg-white/10" />
-                </div>
-                <h4 className="mt-4 font-display text-2xl text-ink">{s.title}</h4>
-                <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">{s.description}</p>
-              </article>
+        {/* Personas — card grid with photos */}
+        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-3">
+          {customer.personas.map((p, i) => (
+            <ScrollReveal key={p.id} delay={0.04 * i}>
+              <PersonaCard persona={p} />
             </ScrollReveal>
           ))}
         </div>
 
-        {/* Before / After comparison sliders */}
+        {/* Before / After */}
         <div className="mt-32">
           <ScrollReveal>
             <div className="mb-12 flex items-end justify-between gap-6">
@@ -55,39 +44,25 @@ export function Customer() {
                 Before &amp; after.
               </h3>
               <p className="hidden max-w-xs text-sm leading-snug text-muted md:block">
-                Drag the handle to reveal what changes for the customer.
+                Drag the handle on each comparison.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="space-y-20 md:space-y-28">
+          <div className="space-y-16 md:space-y-20">
             {customer.beforeAfter.map((ba, i) => (
-              <ScrollReveal key={ba.id} delay={0.05}>
+              <ScrollReveal key={ba.id} delay={0.04 * i}>
                 <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
                   <div className="lg:col-span-3">
-                    <p className="text-eyebrow uppercase text-accent">
-                      Shift #{(i + 1).toString().padStart(2, '0')}
-                    </p>
-                    <h4 className="mt-3 font-display text-3xl text-ink md:text-4xl">{ba.theme}</h4>
-                    <div className="mt-6 space-y-4 text-sm leading-relaxed">
-                      <div>
-                        <p className="text-eyebrow uppercase text-rose-300">{ba.beforeLabel}</p>
-                        <p className="mt-2 text-ink/80">{ba.beforeDescription}</p>
-                      </div>
-                      <div>
-                        <p className="text-eyebrow uppercase text-emerald-300">{ba.afterLabel}</p>
-                        <p className="mt-2 text-ink/90">{ba.afterDescription}</p>
-                      </div>
-                    </div>
+                    <p className="text-eyebrow uppercase text-accent">{ba.theme}</p>
+                    <p className="mt-4 text-base leading-relaxed text-ink/85">{ba.description}</p>
                   </div>
                   <div className="lg:col-span-9">
                     <ImageCompare
                       beforeImage={ba.beforeImage}
                       afterImage={ba.afterImage}
-                      beforeLabel={ba.beforeLabel}
-                      afterLabel={ba.afterLabel}
-                      altBefore={`${ba.theme} — ${ba.beforeLabel}`}
-                      altAfter={`${ba.theme} — ${ba.afterLabel}`}
+                      altBefore={`${ba.theme} — before`}
+                      altAfter={`${ba.theme} — after`}
                     />
                   </div>
                 </div>
@@ -97,5 +72,47 @@ export function Customer() {
         </div>
       </div>
     </section>
+  );
+}
+
+function PersonaCard({ persona }: { persona: Persona }) {
+  const [imgOk, setImgOk] = useState<boolean | null>(null);
+  const isPrimary = persona.kind === 'primary';
+
+  return (
+    <SpotlightCard className={cn('h-full', isPrimary && 'border-accent/25 bg-accent/[0.04]')}>
+      <div className="p-7 md:p-8">
+        {/* Avatar */}
+        <div
+          className={cn(
+            'relative h-20 w-20 overflow-hidden rounded-2xl ring-1',
+            isPrimary
+              ? 'ring-accent/40 shadow-[0_0_30px_rgba(165,138,255,0.25)]'
+              : 'ring-white/15',
+          )}
+        >
+          {imgOk !== false ? (
+            <img
+              src={persona.photo}
+              alt={persona.name}
+              className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
+              onLoad={() => setImgOk(true)}
+              onError={() => setImgOk(false)}
+            />
+          ) : (
+            <div className="grid h-full w-full place-items-center bg-gradient-to-br from-violet-500/30 to-indigo-500/20">
+              <User className="h-7 w-7 text-white/70" aria-hidden="true" />
+            </div>
+          )}
+        </div>
+
+        <p className={cn('mt-5 text-eyebrow uppercase', isPrimary ? 'text-accent' : 'text-muted')}>
+          {isPrimary ? 'Primary' : 'Secondary'}
+        </p>
+        <h3 className="mt-3 font-display text-2xl text-ink">{persona.name}</h3>
+        <p className="mt-1 text-sm uppercase tracking-wider text-muted">{persona.role}</p>
+        <p className="mt-5 text-base leading-relaxed text-muted">{persona.description}</p>
+      </div>
+    </SpotlightCard>
   );
 }

@@ -1,48 +1,76 @@
 {
-  "eyebrow": "Part 4",
-  "title": "Positioning & messaging.",
-  "lede": "How we frame this launch externally — and what to lead with.",
-  "supportsVision": {
+  "eyebrow": "Positioning & messaging",
+  "title": "How we frame this launch.",
+  "lede": "The story we lead with — and the guardrails to keep everyone consistent.",
+  "vision": {
     "title": "How this launch supports the vision",
-    "lede": "[Placeholder] 2-3 sentences on how milestone 2 advances the AI work platform vision.",
-    "supportPoints": [
-      { "title": "[Support point 1]", "description": "[Placeholder] One sentence on how this launch supports the broader vision." },
-      { "title": "[Support point 2]", "description": "[Placeholder] One sentence." },
-      { "title": "[Support point 3]", "description": "[Placeholder] One sentence." }
+    "statement": "It completes the picture. Each pillar plays a role — together they make humans and agents execute as one team."
+  },
+  "comesTogether": {
+    "title": "How it all comes together",
+    "lede": "Every aspect of this launch supports the same outcome.",
+    "aspects": [
+      {
+        "id": "human-agents",
+        "title": "Human & Agents collaboration",
+        "image": "/aspects/human-agents.png",
+        "imageAlt": "Drop /public/aspects/human-agents.png"
+      },
+      {
+        "id": "ecosystem",
+        "title": "Ecosystem",
+        "image": "/aspects/ecosystem.png",
+        "imageAlt": "Drop /public/aspects/ecosystem.png"
+      },
+      {
+        "id": "workflows",
+        "title": "Workflows",
+        "image": "/aspects/workflows.png",
+        "imageAlt": "Drop /public/aspects/workflows.png"
+      },
+      {
+        "id": "trust",
+        "title": "Trust & visibility",
+        "image": "/aspects/trust.png",
+        "imageAlt": "Drop /public/aspects/trust.png"
+      }
     ]
   },
   "externalEmphasis": [
     {
-      "title": "[Emphasis #1]",
-      "description": "[Placeholder] What we say loudest externally and why."
+      "title": "What we lead with",
+      "image": "/emphasis/emphasis-1.png",
+      "description": "First message — short, punchy, customer-true."
     },
     {
-      "title": "[Emphasis #2]",
-      "description": "[Placeholder] What we say loudest externally and why."
+      "title": "What we reinforce",
+      "image": "/emphasis/emphasis-2.png",
+      "description": "Second message — reinforces the lead with concrete proof."
     },
     {
-      "title": "[Emphasis #3]",
-      "description": "[Placeholder] What we say loudest externally and why."
+      "title": "What we close with",
+      "image": "/emphasis/emphasis-3.png",
+      "description": "Third message — emotional resonance, the takeaway."
     }
   ],
   "sayDontSay": [
     {
-      "topic": "[Topic 1 — e.g., what the launch is]",
-      "say": "[Placeholder] Phrase we want to use.",
-      "dontSay": "[Placeholder] Phrase to avoid.",
-      "why": "[Placeholder] Why."
+      "topic": "What the launch is",
+      "say": "An evolution of monday's AI work platform.",
+      "dontSay": "A new product / a relaunch.",
+      "why": "It's a continuation, not a reset."
     },
     {
-      "topic": "[Topic 2]",
-      "say": "[Placeholder] Phrase we want to use.",
-      "dontSay": "[Placeholder] Phrase to avoid.",
-      "why": "[Placeholder] Why."
+      "topic": "Who does the work",
+      "say": "Humans and agents working together.",
+      "dontSay": "Agents replace your team.",
+      "why": "Augmentation, not replacement."
     },
     {
-      "topic": "[Topic 3]",
-      "say": "[Placeholder] Phrase we want to use.",
-      "dontSay": "[Placeholder] Phrase to avoid.",
-      "why": "[Placeholder] Why."
+      "topic": "Where work happens",
+      "say": "In one shared container.",
+      "dontSay": "In dozens of disconnected tools.",
+      "why": "Unification is the value proposition."
     }
   ]
 }

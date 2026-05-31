@@ -1,15 +1,13 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { MeshGradient } from '@/components/MeshGradient';
+import { Sparkles } from '@/components/Sparkles';
 import { KineticHeadline } from '@/components/KineticHeadline';
 import { hero } from '@/content';
 import { cn } from '@/lib/utils';
 
 /**
- * Hero — editorial scale, kinetic word reveal, gradient highlight line.
- * Pattern inspired by Apple/Linear/Vercel: oversized headline, two-line
- * structure where the second line is the emotional accent. Word-by-word
- * blur-reveal taken from Magic MCP samples.
+ * Hero — editorial scale headline, kinetic word reveal, sparkles + mesh.
  */
 export function Hero({ presentMode }: { presentMode: boolean }) {
   const reduce = useReducedMotion();
@@ -20,6 +18,7 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
       className="relative flex min-h-[100svh] w-full items-center overflow-hidden"
     >
       <MeshGradient />
+      <Sparkles count={90} minRadius={0.3} maxRadius={1.5} speed={0.7} />
 
       {/* Vignette + bottom fade */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -34,7 +33,6 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
         )}
       >
         <div className="max-w-5xl">
-          {/* PMM brief badge */}
           <motion.div
             initial={reduce ? undefined : { opacity: 0, y: 8 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -47,7 +45,6 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
             </span>
           </motion.div>
 
-          {/* Eyebrow */}
           <motion.p
             initial={reduce ? undefined : { opacity: 0, y: 8 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -57,11 +54,9 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
             {hero.eyebrow}
           </motion.p>
 
-          {/* H1 — kinetic, two-line, gradient on second line */}
           <h1
             className={cn(
               'mt-6 font-display font-bold leading-[0.92] tracking-[-0.04em]',
-              // editorial scale — bigger than before
               'text-[clamp(56px,12vw,160px)] text-ink',
               'drop-shadow-[0_2px_40px_rgba(0,0,0,0.45)]',
             )}
@@ -71,7 +66,6 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
             <KineticHeadline text={hero.highlight} delay={0.3 + hero.headline.split(' ').length * 0.07 + 0.1} stagger={0.08} gradient />
           </h1>
 
-          {/* Subhead */}
           <motion.p
             initial={reduce ? undefined : { opacity: 0, y: 12 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -81,7 +75,6 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
             {hero.subhead}
           </motion.p>
 
-          {/* Description */}
           <motion.p
             initial={reduce ? undefined : { opacity: 0, y: 12 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -91,7 +84,6 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
             {hero.description}
           </motion.p>
 
-          {/* Launch date — animated underline accent */}
           <motion.div
             initial={reduce ? undefined : { opacity: 0, y: 12 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -109,11 +101,10 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
         </div>
       </div>
 
-      {/* Scroll cue */}
       <motion.button
         type="button"
         onClick={() => {
-          document.querySelector('#how-it-comes-together')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.querySelector('#product-overview')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }}
         initial={reduce ? undefined : { opacity: 0 }}
         animate={reduce ? undefined : { opacity: 1 }}

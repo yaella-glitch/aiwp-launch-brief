@@ -2,7 +2,6 @@
 
 export type SectionId =
   | 'hero'
-  | 'how-it-comes-together'
   | 'product-overview'
   | 'customer'
   | 'market'
@@ -15,9 +14,7 @@ export interface SectionMeta {
   icon: string;
   order: number;
   visible: boolean;
-  /** If false, the section is rendered but does not appear in the left rail. */
   showInRail?: boolean;
-  /** If false, hidden when External preview toggle is ON. */
   external?: boolean;
 }
 
@@ -29,10 +26,7 @@ export interface SiteMeta {
   audioBriefPath: string;
   heroImagePath: string;
   passwordHashHint: string;
-  defaults: {
-    externalPreview: boolean;
-    presentMode: boolean;
-  };
+  defaults: { externalPreview: boolean; presentMode: boolean };
 }
 
 export interface Manifest {
@@ -48,23 +42,6 @@ export interface HeroContent {
   subhead: string;
   description: string;
   launchDate: string;
-}
-
-export interface Aspect {
-  id: string;
-  title: string;
-  oneLiner: string;
-  image: string;
-  imageAlt: string;
-  description: string;
-  highlights: string[];
-}
-
-export interface HowItComesTogetherContent {
-  eyebrow: string;
-  title: string;
-  lede: string;
-  aspects: Aspect[];
 }
 
 export interface Capability {
@@ -88,33 +65,31 @@ export interface ProductOverviewContent {
   lede: string;
   capabilities: Capability[];
   demo: { title: string; description: string; video: string; poster: string; caption: string };
-  completesPicture: {
-    title: string;
-    lede: string;
-    parts: Array<{ name: string; description: string }>;
-  };
   useCases: UseCase[];
+}
+
+export interface Persona {
+  id: string;
+  kind: 'primary' | 'secondary';
+  name: string;
+  role: string;
+  photo: string;
+  description: string;
 }
 
 export interface BeforeAfter {
   id: string;
   theme: string;
-  beforeLabel: string;
-  afterLabel: string;
   beforeImage: string;
   afterImage: string;
-  beforeDescription: string;
-  afterDescription: string;
+  description: string;
 }
 
 export interface CustomerContent {
   eyebrow: string;
   title: string;
   lede: string;
-  audience: {
-    primary: { title: string; description: string };
-    secondary: Array<{ title: string; description: string }>;
-  };
+  personas: Persona[];
   beforeAfter: BeforeAfter[];
 }
 
@@ -137,20 +112,32 @@ export interface MarketContent {
     yAxis: { label: string; bottomLabel: string; topLabel: string };
     competitors: QuadrantCompetitor[];
   };
-  differentiators: string[];
+  differentiators: Array<{ title: string; description: string }>;
+}
+
+export interface PositioningAspect {
+  id: string;
+  title: string;
+  image: string;
+  imageAlt: string;
 }
 
 export interface PositioningContent {
   eyebrow: string;
   title: string;
   lede: string;
-  supportsVision: {
-    title: string;
-    lede: string;
-    supportPoints: Array<{ title: string; description: string }>;
-  };
-  externalEmphasis: Array<{ title: string; description: string }>;
+  vision: { title: string; statement: string };
+  comesTogether: { title: string; lede: string; aspects: PositioningAspect[] };
+  externalEmphasis: Array<{ title: string; image: string; description: string }>;
   sayDontSay: Array<{ topic: string; say: string; dontSay: string; why: string }>;
+}
+
+export interface LaunchDeliverable {
+  name: string;
+  channel: string;
+  due: string;
+  status: string;
+  owner: { name: string; function: string; photo: string };
 }
 
 export interface LaunchContent {
@@ -159,11 +146,7 @@ export interface LaunchContent {
   lede: string;
   launchDate: string;
   goals: Array<{ title: string; description: string }>;
-  marketingScope: Array<{
-    name: string;
-    owner: { name: string; function: string; photo: string };
-  }>;
-  assets: Array<{ name: string; channel: string; due: string; status: string }>;
+  deliverables: LaunchDeliverable[];
   expectations: string[];
   outOfScope: string[];
 }
