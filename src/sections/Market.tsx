@@ -27,7 +27,7 @@ export function Market() {
         <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <ScrollReveal>
             <div className="max-w-md">
-              <h3 className="font-display text-[clamp(24px,3vw,36px)] font-semibold tracking-tight text-ink">
+              <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
                 Market context.
               </h3>
               <p className="mt-5 text-lead leading-relaxed text-ink/85">{market.marketContext}</p>
@@ -82,7 +82,7 @@ export function Market() {
 
         {/* Differentiators — 4 spotlight cards with subtle numerals */}
         <ScrollReveal delay={0.15}>
-          <h3 className="mt-40 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+          <h3 className="mt-40 font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
             Why we win.
           </h3>
         </ScrollReveal>

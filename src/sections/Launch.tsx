@@ -35,7 +35,7 @@ export function Launch() {
         {/* Launch date */}
         <ScrollReveal>
           <div className="mt-16 border-b border-white/10 pb-12">
-            <h3 className="font-display text-[clamp(24px,3vw,36px)] font-semibold tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Launch date.
             </h3>
             <motion.p
@@ -55,7 +55,7 @@ export function Launch() {
         {/* Goals (2 only) — large, editorial */}
         <ScrollReveal delay={0.08}>
           <div className="mt-32">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Goals.
             </h3>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
@@ -81,7 +81,7 @@ export function Launch() {
 
         {/* Deliverables + Owners (combined) */}
         <ScrollReveal delay={0.1}>
-          <h3 className="mt-40 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+          <h3 className="mt-40 font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
             Assets &amp; owners.
           </h3>
         </ScrollReveal>

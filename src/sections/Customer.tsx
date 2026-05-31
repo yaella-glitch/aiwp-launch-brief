@@ -43,7 +43,7 @@ export function Customer() {
         {/* Pains & solutions */}
         <div className="mt-40">
           <ScrollReveal>
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               The pains &amp; solutions.
             </h3>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">

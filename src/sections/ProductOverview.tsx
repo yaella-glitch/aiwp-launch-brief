@@ -38,7 +38,7 @@ export function ProductOverview() {
         <ScrollReveal delay={0.1}>
           <div className="mt-40 grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
             <div>
-              <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+              <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
                 Demo.
               </h3>
               <p className="mt-4 text-base leading-relaxed text-muted">{productOverview.demo.description}</p>
@@ -54,7 +54,7 @@ export function ProductOverview() {
         {/* Use cases — flip cards */}
         <ScrollReveal delay={0.15}>
           <div className="mt-40">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Use cases.
             </h3>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">

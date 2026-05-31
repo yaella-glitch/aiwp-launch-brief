@@ -28,7 +28,7 @@ export function Positioning() {
         {/* Vision — bold prose statement with a HIGHLIGHT BAR on key phrase */}
         <ScrollReveal>
           <div className="mt-24 max-w-4xl">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               {positioning.vision.title}.
             </h3>
             <motion.p
@@ -52,7 +52,7 @@ export function Positioning() {
         {/* External emphasis — interactive image accordion */}
         <ScrollReveal delay={0.15}>
           <div className="mt-32">
-            <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               What we lead with externally.
             </h3>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
@@ -76,7 +76,7 @@ export function Positioning() {
 
         {/* Say / Don't Say */}
         <ScrollReveal delay={0.2}>
-          <h3 className="mt-40 font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
+          <h3 className="mt-40 font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
             Say. Don't say.
           </h3>
         </ScrollReveal>
