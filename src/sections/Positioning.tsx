@@ -4,6 +4,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
+import { HighlightText } from '@/components/HighlightText';
+import { EmphasisAccordion } from '@/components/EmphasisAccordion';
 import { positioning } from '@/content';
 import { cn } from '@/lib/utils';
 
@@ -27,27 +29,25 @@ export function Positioning() {
           lede={positioning.lede}
         />
 
-        {/* Vision — bold prose statement with oversized opening quote */}
+        {/* Vision — bold prose statement with a HIGHLIGHT BAR on key phrase */}
         <ScrollReveal>
           <div className="mt-24 max-w-4xl">
             <p className="text-eyebrow uppercase text-muted">{positioning.vision.title}</p>
-            <div className="relative mt-8">
-              <span
-                aria-hidden="true"
-                className="absolute -left-2 -top-12 select-none font-display text-[clamp(120px,16vw,220px)] leading-none text-accent/15"
-              >
-                "
-              </span>
-              <motion.p
-                initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                className="relative font-display text-[clamp(28px,4vw,56px)] font-medium leading-[1.1] tracking-tight text-ink"
-              >
-                {positioning.vision.statement}
-              </motion.p>
-            </div>
+            <motion.p
+              initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8 font-display text-[clamp(28px,4vw,56px)] font-medium leading-[1.25] tracking-tight text-ink"
+            >
+              It completes the picture.{' '}
+              <HighlightText>
+                Humans and agents execute as one team.
+              </HighlightText>
+            </motion.p>
+            <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted">
+              {positioning.vision.statement}
+            </p>
           </div>
         </ScrollReveal>
 
@@ -76,22 +76,30 @@ export function Positioning() {
           ))}
         </div>
 
-        {/* External emphasis — interactive image accordion-feel grid */}
+        {/* External emphasis — interactive image accordion */}
         <ScrollReveal delay={0.15}>
-          <div className="mt-32 flex items-end justify-between gap-6">
+          <div className="mt-32">
             <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold tracking-tight text-ink">
               What we lead with.
             </h3>
+            <p className="mt-3 max-w-md text-base text-muted">
+              Hover any panel to expand. The active one tells its story.
+            </p>
           </div>
         </ScrollReveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {positioning.externalEmphasis.map((e, i) => (
-            <ScrollReveal key={e.title} delay={0.05 * i}>
-              <EmphasisCard title={e.title} image={e.image} description={e.description} />
-            </ScrollReveal>
-          ))}
-        </div>
+        <ScrollReveal delay={0.05}>
+          <div className="mt-12">
+            <EmphasisAccordion
+              items={positioning.externalEmphasis.map((e) => ({
+                title: e.title,
+                description: e.description,
+                image: e.image,
+                imageAlt: `Emphasis: ${e.title}`,
+              }))}
+            />
+          </div>
+        </ScrollReveal>
 
         {/* Say / Don't Say */}
         <ScrollReveal delay={0.2}>
@@ -135,21 +143,6 @@ export function Positioning() {
         </div>
       </div>
     </section>
-  );
-}
-
-function EmphasisCard({ title, image, description }: { title: string; image: string; description: string }) {
-  return (
-    <SpotlightCard className="group/emphasis aspect-[4/5]">
-      <div className="absolute inset-0">
-        <AspectImage src={image} alt={title} />
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/60 to-transparent transition-opacity duration-300 group-hover/emphasis:opacity-90" />
-      <div className="absolute inset-x-0 bottom-0 z-[2] p-6">
-        <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">{title}</h4>
-        <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
-      </div>
-    </SpotlightCard>
   );
 }
 
