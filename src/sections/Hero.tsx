@@ -6,40 +6,33 @@ import { hero } from '@/content';
 import { cn } from '@/lib/utils';
 
 /**
- * Hero — dark canvas + sparkles overlay + kinetic centered title.
+ * Hero — Aceternity Sparkles pattern (the "Acme" variant).
  *
- * Pattern adapted from Aceternity's Sparkles. Simple, reliable, and
- * the title is always legible.
+ * Centered headline above a glowing horizontal "beam" that contains
+ * twinkling sparkles. The beam = two gradient lines (indigo + sky) with
+ * a sparkle band. A radial mask fades the edges so it looks like a
+ * light burst under the title.
+ *
+ * Reference:
+ * https://21st.dev/community/components/aceternity/sparkles/default
  */
 export function Hero({ presentMode }: { presentMode: boolean }) {
   const reduce = useReducedMotion();
+
   return (
     <section
       id="hero"
       data-section="hero"
-      className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-canvas"
+      className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-canvas"
     >
-      {/* Subtle ambient bloom behind the title */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-[120px]" />
-      </div>
-
-      {/* Sparkles overlay — twinkling dots */}
-      <Sparkles count={140} minRadius={0.3} maxRadius={1.6} speed={0.8} />
-
-      {/* Bottom mask fade into next section */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-40 bg-gradient-to-b from-transparent to-canvas"
-      />
-
       {/* Content */}
       <div
         className={cn(
           'relative z-[2] mx-auto w-full max-w-3xl px-6 text-center',
-          presentMode ? 'py-20' : 'py-24 md:py-28',
+          presentMode ? 'pt-12' : 'pt-24 md:pt-20',
         )}
       >
+        {/* Badge */}
         <motion.div
           initial={reduce ? undefined : { opacity: 0, y: 6 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -52,6 +45,7 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
           </span>
         </motion.div>
 
+        {/* Eyebrow */}
         <motion.p
           initial={reduce ? undefined : { opacity: 0, y: 6 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -61,7 +55,8 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
           {hero.eyebrow}
         </motion.p>
 
-        <h1 className="mt-4 font-display text-[clamp(40px,7vw,80px)] font-bold leading-[1.0] tracking-[-0.02em] text-ink">
+        {/* Headline */}
+        <h1 className="mt-4 font-display text-[clamp(40px,7vw,84px)] font-bold leading-[1.0] tracking-[-0.02em] text-ink">
           <KineticHeadline text={hero.headline} delay={0.2} stagger={0.06} />{' '}
           <KineticHeadline
             text={hero.highlight}
@@ -71,20 +66,47 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
           />
         </h1>
 
+        {/* Beam container — sparkles + gradient lines + radial mask */}
+        <div className="relative mx-auto mt-4 h-40 w-full max-w-2xl">
+          {/* Wide indigo gradient line */}
+          <div className="absolute inset-x-16 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
+          <div className="absolute inset-x-16 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-400 to-transparent" />
+          {/* Narrow sky gradient line */}
+          <div className="absolute inset-x-48 top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-sky-400 to-transparent blur-sm" />
+          <div className="absolute inset-x-48 top-0 h-px w-1/4 bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
+
+          {/* Sparkle band */}
+          <Sparkles count={160} minRadius={0.4} maxRadius={1.4} speed={0.9} />
+
+          {/* Radial mask — fades sparkles to canvas on edges */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-canvas"
+            style={{
+              maskImage:
+                'radial-gradient(420px 200px at top, transparent 20%, black 80%)',
+              WebkitMaskImage:
+                'radial-gradient(420px 200px at top, transparent 20%, black 80%)',
+            }}
+          />
+        </div>
+
+        {/* Subhead */}
         <motion.p
           initial={reduce ? undefined : { opacity: 0, y: 8 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.9 }}
-          className="mx-auto mt-6 max-w-xl text-sm font-medium leading-relaxed text-white/85 md:text-base"
+          className="mx-auto -mt-12 max-w-xl text-sm font-medium leading-relaxed text-white/85 md:text-base"
         >
           {hero.subhead}
         </motion.p>
 
+        {/* Launch date */}
         <motion.div
           initial={reduce ? undefined : { opacity: 0, y: 8 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.05 }}
-          className="mt-7 inline-flex items-center gap-2.5"
+          className="mt-6 inline-flex items-center gap-2.5"
         >
           <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-transparent via-accent to-transparent" />
           <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-muted">
