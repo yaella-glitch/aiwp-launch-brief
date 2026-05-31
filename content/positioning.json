@@ -1,0 +1,48 @@
+{
+  "eyebrow": "Part 4",
+  "title": "Positioning & messaging.",
+  "lede": "How we frame this launch externally — and what to lead with.",
+  "supportsVision": {
+    "title": "How this launch supports the vision",
+    "lede": "[Placeholder] 2-3 sentences on how milestone 2 advances the AI work platform vision.",
+    "supportPoints": [
+      { "title": "[Support point 1]", "description": "[Placeholder] One sentence on how this launch supports the broader vision." },
+      { "title": "[Support point 2]", "description": "[Placeholder] One sentence." },
+      { "title": "[Support point 3]", "description": "[Placeholder] One sentence." }
+    ]
+  },
+  "externalEmphasis": [
+    {
+      "title": "[Emphasis #1]",
+      "description": "[Placeholder] What we say loudest externally and why."
+    },
+    {
+      "title": "[Emphasis #2]",
+      "description": "[Placeholder] What we say loudest externally and why."
+    },
+    {
+      "title": "[Emphasis #3]",
+      "description": "[Placeholder] What we say loudest externally and why."
+    }
+  ],
+  "sayDontSay": [
+    {
+      "topic": "[Topic 1 — e.g., what the launch is]",
+      "say": "[Placeholder] Phrase we want to use.",
+      "dontSay": "[Placeholder] Phrase to avoid.",
+      "why": "[Placeholder] Why."
+    },
+    {
+      "topic": "[Topic 2]",
+      "say": "[Placeholder] Phrase we want to use.",
+      "dontSay": "[Placeholder] Phrase to avoid.",
+      "why": "[Placeholder] Why."
+    },
+    {
+      "topic": "[Topic 3]",
+      "say": "[Placeholder] Phrase we want to use.",
+      "dontSay": "[Placeholder] Phrase to avoid.",
+      "why": "[Placeholder] Why."
+    }
+  ]
+}

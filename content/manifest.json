@@ -1,0 +1,24 @@
+{
+  "siteMeta": {
+    "version": "0.3.0",
+    "lastUpdated": "2026-05-31",
+    "launchDate": "July 1, 2026",
+    "launchLead": "PMM brief",
+    "audioBriefPath": "/audio/brief.mp3",
+    "heroImagePath": "/hero/hero.png",
+    "passwordHashHint": "AIWPmilestone2 — hashed at runtime in PasswordGate",
+    "defaults": {
+      "externalPreview": true,
+      "presentMode": false
+    }
+  },
+  "sections": [
+    { "id": "hero", "title": "Hero", "icon": "sparkle", "order": 0, "visible": true, "showInRail": false },
+    { "id": "how-it-comes-together", "title": "How it all comes together", "icon": "layers", "order": 1, "visible": true },
+    { "id": "product-overview", "title": "Product overview", "icon": "box", "order": 2, "visible": true },
+    { "id": "customer", "title": "The customer", "icon": "users", "order": 3, "visible": true },
+    { "id": "market", "title": "Market & competitive", "icon": "swords", "order": 4, "visible": true },
+    { "id": "positioning", "title": "Positioning & messaging", "icon": "message-circle", "order": 5, "visible": true },
+    { "id": "launch", "title": "Launch & marketing plan", "icon": "rocket", "order": 6, "visible": true }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "eyebrow": "Part 3",
+  "title": "Where we play.",
+  "lede": "Market context and how we sit against the alternatives.",
+  "marketContext": "[Placeholder] 2-3 sentences on what's happening in the market — why this matters now.",
+  "quadrant": {
+    "xAxis": { "label": "Agent capability", "leftLabel": "Shallow", "rightLabel": "Deep" },
+    "yAxis": { "label": "Team execution", "bottomLabel": "Solo / chat", "topLabel": "Team / outcomes" },
+    "competitors": [
+      { "id": "us", "name": "monday", "x": 80, "y": 82, "isUs": true, "note": "[Placeholder] Why we sit here." },
+      { "id": "comp-1", "name": "[Competitor 1]", "x": 35, "y": 30, "isUs": false, "note": "[Placeholder] Their angle." },
+      { "id": "comp-2", "name": "[Competitor 2]", "x": 65, "y": 38, "isUs": false, "note": "[Placeholder] Their angle." },
+      { "id": "comp-3", "name": "[Competitor 3]", "x": 25, "y": 70, "isUs": false, "note": "[Placeholder] Their angle." },
+      { "id": "comp-4", "name": "[Competitor 4]", "x": 55, "y": 60, "isUs": false, "note": "[Placeholder] Their angle." }
+    ]
+  },
+  "differentiators": [
+    "[Placeholder] Differentiator #1 — one sentence.",
+    "[Placeholder] Differentiator #2 — one sentence.",
+    "[Placeholder] Differentiator #3 — one sentence."
+  ]
+}

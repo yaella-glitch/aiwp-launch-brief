@@ -1,0 +1,71 @@
+{
+  "eyebrow": "Part 1 · Product overview",
+  "title": "What we're launching.",
+  "lede": "[Placeholder] One-paragraph overview of what milestone 2 adds to the AI work platform.",
+  "capabilities": [
+    {
+      "id": "cap-1",
+      "title": "[Capability 1 title]",
+      "description": "[Placeholder] One-sentence description.",
+      "media": { "type": "image", "src": "/product/cap-1.png", "alt": "Drop a screenshot at /public/product/cap-1.png" }
+    },
+    {
+      "id": "cap-2",
+      "title": "[Capability 2 title]",
+      "description": "[Placeholder] One-sentence description.",
+      "media": { "type": "image", "src": "/product/cap-2.png", "alt": "Drop a screenshot at /public/product/cap-2.png" }
+    },
+    {
+      "id": "cap-3",
+      "title": "[Capability 3 title]",
+      "description": "[Placeholder] One-sentence description.",
+      "media": { "type": "image", "src": "/product/cap-3.png", "alt": "Drop a screenshot at /public/product/cap-3.png" }
+    },
+    {
+      "id": "cap-4",
+      "title": "[Capability 4 title]",
+      "description": "[Placeholder] One-sentence description.",
+      "media": { "type": "image", "src": "/product/cap-4.png", "alt": "Drop a screenshot at /public/product/cap-4.png" }
+    }
+  ],
+  "demo": {
+    "title": "Product demo",
+    "description": "[Placeholder] 60-90 second walkthrough video.",
+    "video": "/video/product-demo.mp4",
+    "poster": "/video/product-demo-poster.png",
+    "caption": "Drop a video at /public/video/product-demo.mp4 to replace this."
+  },
+  "completesPicture": {
+    "title": "How it completes the AI work platform",
+    "lede": "[Placeholder] One sentence connecting milestone 2 to the broader vision.",
+    "parts": [
+      { "name": "[Part 1]", "description": "[Placeholder] One-sentence description." },
+      { "name": "[Part 2]", "description": "[Placeholder] One-sentence description." },
+      { "name": "[Part 3]", "description": "[Placeholder] One-sentence description." },
+      { "name": "[Part 4]", "description": "[Placeholder] One-sentence description." }
+    ]
+  },
+  "useCases": [
+    {
+      "id": "uc-1",
+      "title": "[Use case #1]",
+      "scenario": "[Placeholder] One-sentence scenario.",
+      "outcome": "[Placeholder] One-sentence outcome.",
+      "image": "/usecases/uc-1.png"
+    },
+    {
+      "id": "uc-2",
+      "title": "[Use case #2]",
+      "scenario": "[Placeholder] One-sentence scenario.",
+      "outcome": "[Placeholder] One-sentence outcome.",
+      "image": "/usecases/uc-2.png"
+    },
+    {
+      "id": "uc-3",
+      "title": "[Use case #3]",
+      "scenario": "[Placeholder] One-sentence scenario.",
+      "outcome": "[Placeholder] One-sentence outcome.",
+      "image": "/usecases/uc-3.png"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "eyebrow": "How it all comes together",
+  "title": "Humans and agents — executing together.",
+  "lede": "Every aspect of milestone 2 serves the same vision: people and agents shipping outcomes side by side. Click any aspect to learn more.",
+  "aspects": [
+    {
+      "id": "human-agents",
+      "title": "Human & Agents collaboration",
+      "oneLiner": "Humans and agents share one container, one context, one goal.",
+      "image": "/aspects/human-agents.png",
+      "imageAlt": "Placeholder — drop /public/aspects/human-agents.png",
+      "description": "[Placeholder] The new shared surface where people and agents work on the same outcome. Group chat lives next to the work. Permissions inherit. Context is shared. Everyone — human or agent — can see what's happening and contribute.",
+      "highlights": [
+        "[Placeholder] Shared container + group chat",
+        "[Placeholder] One context for the whole team",
+        "[Placeholder] Visible, accountable execution"
+      ]
+    },
+    {
+      "id": "ecosystem",
+      "title": "Ecosystem",
+      "oneLiner": "Your agents, our agents, partner agents — all in one platform.",
+      "image": "/aspects/ecosystem.png",
+      "imageAlt": "Placeholder — drop /public/aspects/ecosystem.png",
+      "description": "[Placeholder] Bring your own agents (Claude, OpenAI, Gemini, MCP partners) into monday, and access monday from your AI tools. A growing library of agents that converge in one workspace.",
+      "highlights": [
+        "[Placeholder] BYO foundation models",
+        "[Placeholder] MCP & partner agents",
+        "[Placeholder] monday available from external AI tools"
+      ]
+    },
+    {
+      "id": "workflows",
+      "title": "Workflows",
+      "oneLiner": "Agents inside workflows, with control over inputs and outputs.",
+      "image": "/aspects/workflows.png",
+      "imageAlt": "Placeholder — drop /public/aspects/workflows.png",
+      "description": "[Placeholder] Agents live inside the workflows people already use. Granular control over the process, inputs, and outputs — so what gets done is exactly what should get done.",
+      "highlights": [
+        "[Placeholder] Process control",
+        "[Placeholder] Input/output transparency",
+        "[Placeholder] Production-grade reliability"
+      ]
+    },
+    {
+      "id": "trust",
+      "title": "Trust & visibility",
+      "oneLiner": "Permissions, visibility, and guardrails — so teams can adopt with confidence.",
+      "image": "/aspects/trust.png",
+      "imageAlt": "Placeholder — drop /public/aspects/trust.png",
+      "description": "[Placeholder] Agents inherit user permissions. Visibility lives at both the admin and team level. Boundaries hold. People adopt agents because they trust them.",
+      "highlights": [
+        "[Placeholder] Permissions & access",
+        "[Placeholder] Team-level visibility",
+        "[Placeholder] Guardrails for agents"
+      ]
+    },
+    {
+      "id": "context",
+      "title": "Context",
+      "oneLiner": "Agents that know you, your team, and what you're working on.",
+      "image": "/aspects/context.png",
+      "imageAlt": "Placeholder — drop /public/aspects/context.png",
+      "description": "[Placeholder] Deep understanding of who you are, your team, and your current work — fed to every agent that needs it. Brings external data in and connects agents into a team.",
+      "highlights": [
+        "[Placeholder] Personal mindset & history",
+        "[Placeholder] Team awareness",
+        "[Placeholder] External data sources"
+      ]
+    },
+    {
+      "id": "sidekick",
+      "title": "Sidekick",
+      "oneLiner": "A proactive agent that anticipates and produces real work.",
+      "image": "/aspects/sidekick.png",
+      "imageAlt": "Placeholder — drop /public/aspects/sidekick.png",
+      "description": "[Placeholder] Lives in your container, knows your context, and anticipates what's next. Produces artifacts — HTML, decks, docs — not just chat replies.",
+      "highlights": [
+        "[Placeholder] Proactive, not reactive",
+        "[Placeholder] Generates real artifacts",
+        "[Placeholder] Better integrations"
+      ]
+    }
+  ]
+}

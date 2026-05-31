@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:yaella-glitch.github.io)",
+      "Bash(curl -sL https://yaella-glitch.github.io/team_plan_view/)",
+      "Bash(curl -sL https://yaella-glitch.github.io/team_plan_view/assets/index-DXeldcSr.css)",
+      "Bash(ls \"/Users/yaella/.claude/plans/\" 2>/dev/null | head -30)",
+      "WebFetch(domain:weave.figma.com)",
+      "WebFetch(domain:www.letta.com)",
+      "WebFetch(domain:www.behaviorai.eu)",
+      "WebFetch(domain:www.khroma.co)",
+      "WebFetch(domain:www.framer.com)",
+      "WebFetch(domain:www.harvey.ai)",
+      "WebFetch(domain:runwayml.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(npx -y uipro-cli init --ai claude --global)",
+      "Bash(npx -y uipro-cli --help)",
+      "Bash(npx -y uipro-cli init --help)",
+      "Bash(npx -y uipro-cli init --ai claude)",
+      "Bash(claude mcp *)",
+      "Read(//usr/local/bin/**)",
+      "Read(//Users/yaella/.claude/local/**)",
+      "Read(//Applications/**)",
+      "Bash(npm create *)",
+      "Bash(cd \"/Users/yaella/AI work launch Jul 1/aiwp-launch-brief\" && mv ../.claude . && ls -la)"
+    ]
+  }
+}
