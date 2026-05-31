@@ -3,9 +3,6 @@
   "eyebrow": "Milestone 2 · AI Work Platform",
   "headline": "Where it all",
   "highlight": "comes together",
-  "subhead": "This brief helps you understand what we're launching, who it's for, how to talk about it, and what you'll own.",
-  "description": "Each pillar plays a role — together they complete the AI work platform vision.",
-  "launchDate": "July 1, 2026",
-  "media": "/hero/hero.mp4",
-  "bgImage": "/hero/hero-bg.png"
+  "background": "A short paragraph of context — why this brief exists, what milestone 2 means in the broader vision, and how marketing & enablement teams should use this document. Edit me in content/hero.json.",
+  "launchDate": "July 1, 2026"
 }

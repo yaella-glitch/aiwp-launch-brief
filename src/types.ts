@@ -39,13 +39,9 @@ export interface HeroContent {
   eyebrow: string;
   headline: string;
   highlight: string;
-  subhead: string;
-  description: string;
+  /** Editorial "Background" paragraph rendered under the H1. */
+  background: string;
   launchDate: string;
-  /** Foreground lens — image or video. Autodetects by extension. */
-  media?: string;
-  /** Full-bleed background image path. */
-  bgImage?: string;
 }
 
 export interface Capability {
