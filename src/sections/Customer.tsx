@@ -58,8 +58,8 @@ export function Customer() {
               <ScrollReveal key={ba.id} delay={0.04 * i}>
                 <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
                   <div className="lg:col-span-3">
-                    <p className="text-eyebrow uppercase text-accent">{ba.theme}</p>
-                    <p className="mt-4 text-base leading-relaxed text-ink/85">{ba.description}</p>
+                    <h4 className="font-display text-xl font-semibold text-ink md:text-2xl">{ba.theme}</h4>
+                    <p className="mt-3 text-base leading-relaxed text-muted">{ba.description}</p>
                   </div>
                   <div className="lg:col-span-9">
                     <ImageCompare
@@ -110,15 +110,10 @@ function PersonaCard({ persona }: { persona: Persona }) {
           )}
         </div>
 
-        {/* Label */}
-        <p className={cn('text-eyebrow uppercase', isPrimary ? 'text-accent' : 'text-muted')}>
-          {isPrimary ? 'Primary' : 'Secondary'}
-        </p>
-
         {/* Name + role */}
         <div>
           <h3 className="font-display text-2xl font-semibold text-ink">{persona.name}</h3>
-          <p className="mt-1 text-sm uppercase tracking-wider text-muted">{persona.role}</p>
+          <p className="mt-1 text-sm text-muted">{persona.role}</p>
         </div>
 
         {/* Description */}

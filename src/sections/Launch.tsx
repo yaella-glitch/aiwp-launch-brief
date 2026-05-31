@@ -81,9 +81,14 @@ export function Launch() {
 
         {/* Deliverables + Owners (combined) */}
         <ScrollReveal delay={0.1}>
-          <h3 className="mt-40 font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-            Assets &amp; owners.
-          </h3>
+          <div className="mt-40">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+              Assets &amp; owners.
+            </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              Everything we're shipping — and who owns each.
+            </p>
+          </div>
         </ScrollReveal>
 
         <ScrollReveal delay={0.05}>
@@ -129,11 +134,21 @@ export function Launch() {
 
         {/* Expectations */}
         <ScrollReveal delay={0.15}>
-          <div className="mt-24">
+          <div className="mt-40">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+              What's expected from you.
+            </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              The asks for each team contributing to the launch.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.05}>
+          <div className="mt-10">
             <SpotlightCard>
               <div className="p-8 md:p-10">
-                <p className="text-eyebrow uppercase text-accent">What's expected from you</p>
-                <ul className="mt-6 space-y-3">
+                <ul className="space-y-3">
                   {launch.expectations.map((e, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <span aria-hidden="true" className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />

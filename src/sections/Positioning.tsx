@@ -76,30 +76,33 @@ export function Positioning() {
 
         {/* Say / Don't Say */}
         <ScrollReveal delay={0.2}>
-          <h3 className="mt-40 font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-            Say. Don't say.
-          </h3>
+          <div className="mt-40">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+              Say. Don't say.
+            </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              Language guardrails for everyone telling this story.
+            </p>
+          </div>
         </ScrollReveal>
 
         <div className="mt-12 space-y-6">
           {positioning.sayDontSay.map((s, i) => (
             <ScrollReveal key={s.topic} delay={0.04 * i}>
               <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7 md:p-10">
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70">
-                  Topic · {s.topic}
-                </p>
-                <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+                <h4 className="font-display text-lg font-semibold text-ink md:text-xl">{s.topic}</h4>
+                <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div className="flex items-start gap-3 rounded-xl border border-emerald-400/25 bg-emerald-400/[0.05] p-5">
                     <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
                     <div>
-                      <p className="text-eyebrow uppercase text-emerald-300">Say</p>
+                      <h5 className="font-display text-base font-semibold text-emerald-300">Say</h5>
                       <p className="mt-2 text-base leading-relaxed text-ink">"{s.say}"</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 rounded-xl border border-rose-400/25 bg-rose-400/[0.05] p-5">
                     <X className="mt-1 h-4 w-4 shrink-0 text-rose-300" aria-hidden="true" />
                     <div>
-                      <p className="text-eyebrow uppercase text-rose-300">Don't say</p>
+                      <h5 className="font-display text-base font-semibold text-rose-300">Don't say</h5>
                       <p className="mt-2 text-base leading-relaxed text-ink/85">"{s.dontSay}"</p>
                     </div>
                   </div>

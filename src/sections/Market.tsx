@@ -82,9 +82,14 @@ export function Market() {
 
         {/* Differentiators — 4 spotlight cards with subtle numerals */}
         <ScrollReveal delay={0.15}>
-          <h3 className="mt-40 font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-            Why we win.
-          </h3>
+          <div className="mt-40">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+              Why we win.
+            </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              The differentiators we lean on across the launch.
+            </p>
+          </div>
         </ScrollReveal>
 
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">

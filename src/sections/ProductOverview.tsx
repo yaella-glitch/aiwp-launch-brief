@@ -88,8 +88,8 @@ function UseCaseFront({ uc }: { uc: { title: string; scenario: string; image: st
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/40 to-transparent" />
       <div className="relative flex h-full flex-col justify-end p-7">
-        <p className="text-eyebrow uppercase text-accent">{uc.title}</p>
-        <p className="mt-3 font-display text-lg leading-snug text-ink md:text-xl">{uc.scenario}</p>
+        <h4 className="font-display text-xl font-semibold text-ink md:text-2xl">{uc.title}</h4>
+        <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">{uc.scenario}</p>
       </div>
     </div>
   );
@@ -99,12 +99,9 @@ function UseCaseBack({ uc }: { uc: { title: string; outcome: string } }) {
   return (
     <div className="relative h-full w-full overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/15 via-canvas to-canvas">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(165,138,255,0.20),transparent_60%)]" />
-      <div className="relative flex h-full flex-col justify-between p-7">
-        <p className="text-eyebrow uppercase text-accent">The shift</p>
-        <p className="font-display text-[clamp(22px,2.4vw,30px)] font-medium leading-tight text-ink">
-          {uc.outcome}
-        </p>
-        <p className="text-xs uppercase tracking-wider text-muted">{uc.title}</p>
+      <div className="relative flex h-full flex-col justify-end p-7">
+        <h4 className="font-display text-xl font-semibold text-ink md:text-2xl">{uc.title}</h4>
+        <p className="mt-3 text-base leading-relaxed text-ink/85">{uc.outcome}</p>
       </div>
     </div>
   );

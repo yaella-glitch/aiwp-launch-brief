@@ -129,10 +129,7 @@ function AccordionPanel({ item, isActive, onActivate, index }: PanelProps) {
           isActive ? 'opacity-100' : 'opacity-0',
         )}
       >
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-          {(index + 1).toString().padStart(2, '0')}
-        </p>
-        <h4 className="mt-3 font-display text-2xl font-semibold leading-tight text-ink md:text-3xl">
+        <h4 className="font-display text-2xl font-semibold leading-tight text-ink md:text-3xl">
           {item.title}
         </h4>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-muted md:text-base">
