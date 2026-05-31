@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import { Check, X, ImageIcon } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { SpotlightCard } from '@/components/SpotlightCard';
 import { HighlightText } from '@/components/HighlightText';
 import { EmphasisAccordion } from '@/components/EmphasisAccordion';
 import { positioning } from '@/content';
-import { cn } from '@/lib/utils';
 
 /**
  * Positioning & messaging — vision statement (bold prose, no parts grid),
@@ -50,31 +47,6 @@ export function Positioning() {
             </p>
           </div>
         </ScrollReveal>
-
-        {/* How it all comes together — horizontal image strip */}
-        <ScrollReveal delay={0.1}>
-          <div className="mt-32">
-            <p className="text-eyebrow uppercase text-muted">{positioning.comesTogether.title}</p>
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-              {positioning.comesTogether.lede}
-            </p>
-          </div>
-        </ScrollReveal>
-
-        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-          {positioning.comesTogether.aspects.map((a, i) => (
-            <ScrollReveal key={a.id} delay={0.04 * i}>
-              <SpotlightCard className="aspect-[3/4]">
-                <AspectImage src={a.image} alt={a.imageAlt} />
-                <div className="absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-canvas via-canvas/85 to-transparent p-5">
-                  <p className="font-display text-base font-semibold leading-tight text-ink md:text-lg">
-                    {a.title}
-                  </p>
-                </div>
-              </SpotlightCard>
-            </ScrollReveal>
-          ))}
-        </div>
 
         {/* External emphasis — interactive image accordion */}
         <ScrollReveal delay={0.15}>
@@ -146,24 +118,3 @@ export function Positioning() {
   );
 }
 
-function AspectImage({ src, alt }: { src: string; alt: string }) {
-  const [ok, setOk] = useState<boolean | null>(null);
-  return ok === false ? (
-    <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/15 via-indigo-500/8 to-sky-500/10">
-      <div className="text-center">
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
-          <ImageIcon className="h-4 w-4 text-white/60" aria-hidden="true" />
-        </span>
-        <p className="mt-2 px-2 font-mono text-[9px] text-white/40">{src}</p>
-      </div>
-    </div>
-  ) : (
-    <img
-      src={src}
-      alt={alt}
-      className={cn('absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-cinematic group-hover:scale-105', ok === null && 'opacity-0')}
-      onLoad={() => setOk(true)}
-      onError={() => setOk(false)}
-    />
-  );
-}
