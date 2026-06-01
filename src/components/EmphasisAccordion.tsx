@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ImageIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, withBase } from '@/lib/utils';
 
 interface EmphasisAccordionItem {
   title: string;
@@ -80,7 +80,7 @@ function AccordionPanel({ item, isActive, onActivate, index }: PanelProps) {
       <div className="absolute inset-0">
         {imgOk !== false ? (
           <img
-            src={item.image}
+            src={withBase(item.image)}
             alt={item.imageAlt ?? item.title}
             className={cn(
               'h-full w-full object-cover transition-transform duration-1000 ease-cinematic',

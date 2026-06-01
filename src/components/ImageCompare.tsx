@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, withBase } from '@/lib/utils';
 
 interface ImageCompareProps {
   beforeImage: string;
@@ -177,7 +177,7 @@ function SmartImage({
 
   return (
     <img
-      src={src}
+      src={withBase(src)}
       alt={alt}
       draggable={false}
       className={cn(className, ok === null && 'opacity-0')}

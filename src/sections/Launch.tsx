@@ -5,7 +5,7 @@ import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
 import { launch } from '@/content';
-import { cn } from '@/lib/utils';
+import { cn, withBase } from '@/lib/utils';
 
 const statusColor: Record<string, string> = {
   done: 'bg-emerald-400/15 text-emerald-200 border-emerald-400/30',
@@ -177,7 +177,7 @@ function OwnerCell({ owner }: { owner: { name: string; function: string; photo: 
       <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 ring-1 ring-white/15">
         {imgOk !== false ? (
           <img
-            src={owner.photo}
+            src={withBase(owner.photo)}
             alt={owner.name}
             className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
             onLoad={() => setImgOk(true)}

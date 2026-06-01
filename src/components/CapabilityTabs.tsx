@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ImageIcon, Play, ArrowLeft, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, withBase } from '@/lib/utils';
 import type { CapabilityTab, CapabilityCard } from '@/types';
 
 interface CapabilityTabsProps {
@@ -244,7 +244,7 @@ function MediaImage({ src, alt }: { src: string; alt: string }) {
   }
   return (
     <img
-      src={src}
+      src={withBase(src)}
       alt={alt}
       className={cn(
         'h-full w-full object-cover transition-transform duration-700 ease-cinematic group-hover:scale-[1.03]',
@@ -272,7 +272,7 @@ function MediaVideo({ src, alt }: { src: string; alt: string }) {
   }
   return (
     <video
-      src={src}
+      src={withBase(src)}
       muted
       loop
       playsInline

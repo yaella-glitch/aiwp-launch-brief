@@ -5,7 +5,7 @@ import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
 import { ImageCompare } from '@/components/ImageCompare';
 import { customer } from '@/content';
-import { cn } from '@/lib/utils';
+import { cn, withBase } from '@/lib/utils';
 import type { Persona } from '@/types';
 
 /**
@@ -97,7 +97,7 @@ function PersonaCard({ persona }: { persona: Persona }) {
         >
           {imgOk !== false ? (
             <img
-              src={persona.photo}
+              src={withBase(persona.photo)}
               alt={persona.name}
               className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
               onLoad={() => setImgOk(true)}

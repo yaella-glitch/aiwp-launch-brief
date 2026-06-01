@@ -6,7 +6,7 @@ import { SpotlightCard } from '@/components/SpotlightCard';
 import { CapabilityTabs } from '@/components/CapabilityTabs';
 import { FlipCard } from '@/components/FlipCard';
 import { productOverview } from '@/content';
-import { cn } from '@/lib/utils';
+import { cn, withBase } from '@/lib/utils';
 
 /**
  * What we're launching:
@@ -120,7 +120,7 @@ function MediaSlot({ src, alt }: { src: string; alt: string }) {
     </div>
   ) : (
     <img
-      src={src}
+      src={withBase(src)}
       alt={alt}
       className={cn('h-full w-full object-cover transition-transform duration-700 ease-cinematic group-hover:scale-[1.03]', ok === null && 'opacity-0')}
       onLoad={() => setOk(true)}
@@ -142,8 +142,8 @@ function VideoSlot({ src, poster, caption }: { src: string; poster: string; capt
     </div>
   ) : (
     <video
-      src={src}
-      poster={poster}
+      src={withBase(src)}
+      poster={withBase(poster)}
       controls
       muted
       playsInline
