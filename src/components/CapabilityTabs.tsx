@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ImageIcon, Play } from 'lucide-react';
+import { ImageIcon, Play, ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CapabilityTab, CapabilityCard } from '@/types';
 
@@ -10,15 +10,19 @@ interface CapabilityTabsProps {
 }
 
 /**
- * Monday-style top tabs + horizontal card grid.
+ * Monday-style top tabs + horizontal carousel of capability cards.
  *
- * Top: pill-style tab nav (active = violet bg). Below the active tab:
- * optional tagline + grid of capability cards. Each card has a media
- * slot (image or video) plus title + description.
+ *  - Top: pill tabs (active = violet)
+ *  - Below: optional tagline
+ *  - Carousel of cards with:
+ *      - native horizontal scroll + scroll-snap (works on touch)
+ *      - left/right arrow buttons on desktop
+ *      - hidden scrollbar, fade masks on the edges
  */
 export function CapabilityTabs({ tabs, className }: CapabilityTabsProps) {
   const [activeId, setActiveId] = useState(tabs[0]?.id);
   const active = tabs.find((t) => t.id === activeId) ?? tabs[0];
+
   if (!active) return null;
 
   return (
@@ -50,7 +54,7 @@ export function CapabilityTabs({ tabs, className }: CapabilityTabsProps) {
         })}
       </nav>
 
-      {/* Tab body */}
+      {/* Tab body — tagline + carousel */}
       <AnimatePresence mode="wait">
         <motion.div
           key={active.id}
@@ -66,21 +70,141 @@ export function CapabilityTabs({ tabs, className }: CapabilityTabsProps) {
             </p>
           )}
 
-          <div
-            className={cn(
-              'mt-10 grid gap-5',
-              active.cards.length === 1 && 'grid-cols-1 max-w-2xl mx-auto',
-              active.cards.length === 2 && 'grid-cols-1 md:grid-cols-2',
-              active.cards.length >= 3 && 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-            )}
-          >
-            {active.cards.map((card) => (
-              <CardTile key={card.id} card={card} />
-            ))}
-          </div>
+          <CardCarousel cards={active.cards} />
         </motion.div>
       </AnimatePresence>
     </div>
+  );
+}
+
+function CardCarousel({ cards }: { cards: CapabilityCard[] }) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+
+  // Track scroll position to enable/disable arrow buttons.
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    function check() {
+      if (!el) return;
+      setCanPrev(el.scrollLeft > 4);
+      setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    }
+    check();
+    el.addEventListener('scroll', check, { passive: true });
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener('scroll', check);
+      ro.disconnect();
+    };
+  }, [cards]);
+
+  function scrollByCard(direction: -1 | 1) {
+    const el = scrollerRef.current;
+    if (!el) return;
+    // Scroll by one card width (~80% of viewport on mobile, single card on desktop)
+    const card = el.querySelector<HTMLElement>('[data-card]');
+    const step = card ? card.offsetWidth + 20 : el.clientWidth * 0.8;
+    el.scrollBy({ left: direction * step, behavior: 'smooth' });
+  }
+
+  return (
+    <div className="relative mt-10">
+      {/* Arrow buttons — hidden on touch / when not applicable */}
+      <div className="mb-5 hidden items-center justify-end gap-2 md:flex">
+        <CarouselArrow
+          direction="prev"
+          disabled={!canPrev}
+          onClick={() => scrollByCard(-1)}
+          label="Previous card"
+        />
+        <CarouselArrow
+          direction="next"
+          disabled={!canNext}
+          onClick={() => scrollByCard(1)}
+          label="Next card"
+        />
+      </div>
+
+      {/* Scrolling track */}
+      <div className="relative">
+        {/* Edge fades */}
+        <div
+          aria-hidden="true"
+          className={cn(
+            'pointer-events-none absolute inset-y-0 left-0 z-[2] w-16 bg-gradient-to-r from-canvas to-transparent transition-opacity duration-200',
+            canPrev ? 'opacity-100' : 'opacity-0',
+          )}
+        />
+        <div
+          aria-hidden="true"
+          className={cn(
+            'pointer-events-none absolute inset-y-0 right-0 z-[2] w-16 bg-gradient-to-l from-canvas to-transparent transition-opacity duration-200',
+            canNext ? 'opacity-100' : 'opacity-0',
+          )}
+        />
+
+        <div
+          ref={scrollerRef}
+          className={cn(
+            'flex gap-5 overflow-x-auto scroll-smooth pb-2',
+            '[scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden',
+            'snap-x snap-mandatory',
+          )}
+          role="region"
+          aria-label="Capability cards"
+          tabIndex={0}
+        >
+          {cards.map((card, i) => (
+            <div
+              key={card.id}
+              data-card
+              className={cn(
+                'shrink-0 snap-start',
+                // ~85% on mobile so the next card peeks; fixed width on desktop
+                'w-[85%] sm:w-[60%] md:w-[420px] lg:w-[460px]',
+                i === 0 && 'ml-0',
+              )}
+            >
+              <CardTile card={card} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CarouselArrow({
+  direction,
+  onClick,
+  disabled,
+  label,
+}: {
+  direction: 'prev' | 'next';
+  onClick: () => void;
+  disabled: boolean;
+  label: string;
+}) {
+  const Icon = direction === 'prev' ? ArrowLeft : ArrowRight;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      className={cn(
+        'grid h-10 w-10 cursor-pointer place-items-center rounded-full border transition-all duration-200',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
+        disabled
+          ? 'cursor-not-allowed border-white/5 bg-white/[0.02] text-muted/30'
+          : 'border-white/15 bg-white/5 text-ink hover:border-accent/40 hover:bg-white/10',
+      )}
+    >
+      <Icon className="h-4 w-4" aria-hidden="true" />
+    </button>
   );
 }
 
