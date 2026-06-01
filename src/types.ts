@@ -49,20 +49,21 @@ export interface BackgroundContent {
   marqueeText: string;
 }
 
-export interface CapabilityItem {
-  title: string;
-  description: string;
-  /** Optional small tag rendered next to the item title (e.g. "Notetaker"). */
-  tag?: string;
-}
-
-export interface Capability {
+/** A single capability card — has text + a media slot (image or video). */
+export interface CapabilityCard {
   id: string;
   title: string;
   description: string;
   media: { type: 'image' | 'video'; src: string; alt: string };
-  /** Optional sub-capabilities grouped under this domain. */
-  items?: CapabilityItem[];
+}
+
+/** A top-level tab grouping several capability cards. */
+export interface CapabilityTab {
+  id: string;
+  title: string;
+  /** Short paragraph shown under the active tab. */
+  tagline?: string;
+  cards: CapabilityCard[];
 }
 
 export interface UseCase {
@@ -74,10 +75,11 @@ export interface UseCase {
 }
 
 export interface ProductOverviewContent {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   lede: string;
-  capabilities: Capability[];
+  /** Top-level tabs of grouped capability cards. */
+  tabs: CapabilityTab[];
   demo: { title: string; description: string; video: string; poster: string; caption: string };
   useCases: UseCase[];
 }

@@ -3,7 +3,7 @@ import { Play, ImageIcon } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
-import { CapabilityShowcase } from '@/components/CapabilityShowcase';
+import { CapabilityTabs } from '@/components/CapabilityTabs';
 import { FlipCard } from '@/components/FlipCard';
 import { productOverview } from '@/content';
 import { cn } from '@/lib/utils';
@@ -27,10 +27,10 @@ export function ProductOverview() {
           lede={productOverview.lede}
         />
 
-        {/* Capabilities — Feature108-style tabs + preview */}
+        {/* Capabilities — top tabs + card grid (monday.com pattern) */}
         <ScrollReveal delay={0.05}>
-          <div className="mt-24">
-            <CapabilityShowcase capabilities={productOverview.capabilities} />
+          <div className="mt-20">
+            <CapabilityTabs tabs={productOverview.tabs} />
           </div>
         </ScrollReveal>
 

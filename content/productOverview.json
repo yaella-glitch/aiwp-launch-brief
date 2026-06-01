@@ -1,97 +1,141 @@
 {
   "title": "What we're launching?",
   "lede": "May 6th's milestone focused mostly on our agents. This milestone focuses on the way of working of agents & people — letting our customers embed agents in their day-to-day work with ease and trust.",
-  "capabilities": [
+  "tabs": [
     {
       "id": "human-agents",
       "title": "Human & Agents collaboration",
-      "description": "Where people and agents work side by side — on the same goals, in the same place, with shared context.",
-      "media": { "type": "image", "src": "/product/human-agents.png", "alt": "Human and agents collaborating" },
-      "items": [
+      "tagline": "Where people and agents work side by side — on the same goals, in the same place, with shared context.",
+      "cards": [
         {
+          "id": "container",
           "title": "Container / Initiatives",
-          "description": "A workspace dedicated to a specific shared goal. The home for agents and people working together, with shared context."
+          "description": "A workspace dedicated to a specific shared goal. The home for agents and people working together, with shared context.",
+          "media": { "type": "image", "src": "/product/human-agents/container.png", "alt": "Container — shared workspace" }
         },
         {
+          "id": "group-chat",
           "title": "Group chat",
-          "description": "Conversations where people and agents talk side by side — same place, same context."
+          "description": "Conversations where people and agents talk side by side — same place, same context.",
+          "media": { "type": "image", "src": "/product/human-agents/chat.png", "alt": "Group chat" }
         },
         {
+          "id": "notetaker",
           "title": "Notetaker",
-          "description": "Desktop app that records meetings without Zoom limitations, and brings an agent to the call with full context to take action items.",
-          "tag": "Notetaker"
+          "description": "Desktop app that records meetings without Zoom limitations. Brings an agent to the call with full context to take action items.",
+          "media": { "type": "image", "src": "/product/human-agents/notetaker.png", "alt": "Notetaker — meeting recording" }
         }
       ]
     },
     {
       "id": "ecosystem",
       "title": "Ecosystem",
-      "description": "Your agents, our agents, partner agents. Connect monday to the AI tools your teams already use.",
-      "media": { "type": "image", "src": "/product/ecosystem.png", "alt": "monday ecosystem of agents" },
-      "items": [
+      "tagline": "Your agents, our agents, partner agents. Connect monday to the AI tools your teams already use.",
+      "cards": [
         {
+          "id": "byo-agent",
           "title": "Bring your own agent",
-          "description": "Plug in 3rd-party agents (Claude, OpenAI) with full access to your monday context."
+          "description": "Plug in 3rd-party agents (Claude, OpenAI, more) with full access to your monday context.",
+          "media": { "type": "image", "src": "/product/ecosystem/byo.png", "alt": "Bring your own agent" }
         },
         {
+          "id": "access-monday",
           "title": "Access monday from your AI tools",
-          "description": "Use monday from leading AI tools like Make — the platform meets your team where they already work."
-        }
-      ]
-    },
-    {
-      "id": "workflows",
-      "title": "AI workflows",
-      "description": "Agents embedded in the workflows people already use — with full control over what they do.",
-      "media": { "type": "image", "src": "/product/workflows.png", "alt": "AI workflows" },
-      "items": [
-        {
-          "title": "Control of agents in workflows",
-          "description": "People stay in control of agents' inputs, outputs, and behavior — exactly what each agent is doing, end to end."
+          "description": "Use monday from leading AI tools like Make — the platform meets your team where they already work.",
+          "media": { "type": "image", "src": "/product/ecosystem/access.png", "alt": "Access monday from AI tools" }
         }
       ]
     },
     {
       "id": "agents",
       "title": "Agents",
-      "description": "Everything that makes our agents top-notch: collaboration, context, trust, and a proactive sidekick.",
-      "media": { "type": "image", "src": "/product/agents.png", "alt": "Agents" },
-      "items": [
+      "tagline": "Everything that makes our agents top-notch: collaboration, context, and a proactive sidekick.",
+      "cards": [
         {
-          "title": "Collaboration",
-          "description": "Tag and mention agents like teammates."
+          "id": "collab",
+          "title": "Collaboration on agents",
+          "description": "Tag and mention agents like teammates.",
+          "media": { "type": "image", "src": "/product/agents/collab.png", "alt": "Collaboration on agents" }
         },
         {
+          "id": "versioning",
           "title": "Autosave & versioning",
-          "description": "Never lose work. Roll back to previous versions."
+          "description": "Never lose work. Roll back to previous versions.",
+          "media": { "type": "image", "src": "/product/agents/versioning.png", "alt": "Autosave & versioning" }
         },
         {
+          "id": "troubleshooting",
           "title": "Troubleshooting",
-          "description": "Cut the 7% of credits lost to bad runs. Diagnose and fix in place."
+          "description": "Cut the 7% of credits lost to bad runs. Diagnose and fix in place.",
+          "media": { "type": "image", "src": "/product/agents/troubleshooting.png", "alt": "Troubleshooting" }
         },
         {
+          "id": "artifacts",
           "title": "Expanded artifacts",
-          "description": "Agents produce HTML, docs, and decks — not just chat replies."
+          "description": "Agents produce HTML, docs, and decks — not just chat replies.",
+          "media": { "type": "image", "src": "/product/agents/artifacts.png", "alt": "Expanded artifacts" }
         },
         {
+          "id": "mcp",
           "title": "One-click MCP",
-          "description": "Connect to any MCP server in a single click."
+          "description": "Connect to any MCP server in a single click.",
+          "media": { "type": "image", "src": "/product/agents/mcp.png", "alt": "One-click MCP" }
         },
         {
+          "id": "master",
           "title": "Master agents",
-          "description": "Agents that orchestrate other agents."
+          "description": "Agents that orchestrate other agents.",
+          "media": { "type": "image", "src": "/product/agents/master.png", "alt": "Master agents" }
         },
         {
+          "id": "context",
           "title": "Context",
-          "description": "Agents understand who you are, your team, and where work stands — they navigate monday with your mindset. Plus controls over what agents can access and how their knowledge scales."
+          "description": "Agents understand who you are, your team, and where work stands — they navigate monday with your mindset.",
+          "media": { "type": "image", "src": "/product/agents/context.png", "alt": "Context" }
         },
         {
-          "title": "Trust & governance",
-          "description": "Visibility to value, permissions per user and team, guardrails — so adoption is safe."
-        },
-        {
+          "id": "sidekick",
           "title": "Sidekick",
-          "description": "Proactive in the context of your task. Produces artifacts (HTML, decks). Connects through integrations."
+          "description": "Proactive in the context of your task. Produces artifacts (HTML, decks). Connects through integrations.",
+          "media": { "type": "image", "src": "/product/agents/sidekick.png", "alt": "Sidekick" }
+        }
+      ]
+    },
+    {
+      "id": "workflows",
+      "title": "AI workflows",
+      "tagline": "Agents embedded in the workflows people already use — with full control.",
+      "cards": [
+        {
+          "id": "control",
+          "title": "Control of agents in workflows",
+          "description": "People stay in control of agents' inputs, outputs, and behavior — exactly what each agent is doing, end to end.",
+          "media": { "type": "image", "src": "/product/workflows/control.png", "alt": "Control of agents in workflows" }
+        }
+      ]
+    },
+    {
+      "id": "trust",
+      "title": "AI trust & governance",
+      "tagline": "Visibility, permissions, and guardrails — so adoption is safe.",
+      "cards": [
+        {
+          "id": "permissions",
+          "title": "Permissions & access",
+          "description": "Control what agents can access — both at the user and team level.",
+          "media": { "type": "image", "src": "/product/trust/permissions.png", "alt": "Permissions & access" }
+        },
+        {
+          "id": "visibility",
+          "title": "Visibility to value",
+          "description": "Surface the value agents deliver — visible to admins and team members alike.",
+          "media": { "type": "image", "src": "/product/trust/visibility.png", "alt": "Visibility to value" }
+        },
+        {
+          "id": "guardrails",
+          "title": "Guardrails",
+          "description": "Boundaries that hold. Teams adopt agents with confidence.",
+          "media": { "type": "image", "src": "/product/trust/guardrails.png", "alt": "Guardrails" }
         }
       ]
     }
