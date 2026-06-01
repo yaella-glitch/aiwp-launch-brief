@@ -31,17 +31,17 @@
   "beforeAfter": [
     {
       "id": "ba-1",
-      "theme": "Visibility",
-      "beforeImage": "/customer/before-visibility.png",
-      "afterImage": "/customer/after-visibility.png",
-      "description": "What changes for the customer when visibility is built-in. Drag the handle to compare."
-    },
-    {
-      "id": "ba-2",
       "theme": "Collaboration",
       "beforeImage": "/customer/before-collab.png",
       "afterImage": "/customer/after-collab.png",
       "description": "From isolated agents to a team that ships together."
+    },
+    {
+      "id": "ba-2",
+      "theme": "Visibility",
+      "beforeImage": "/customer/before-visibility.png",
+      "afterImage": "/customer/after-visibility.png",
+      "description": "What changes for the customer when visibility is built-in. Drag the handle to compare."
     },
     {
       "id": "ba-3",

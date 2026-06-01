@@ -25,10 +25,10 @@ export function Positioning() {
           lede={positioning.lede}
         />
 
-        {/* Vision — bold prose statement with a HIGHLIGHT BAR on key phrase */}
+        {/* Vision — small title + highlighted line */}
         <ScrollReveal>
           <div className="mt-24 max-w-4xl">
-            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+            <h3 className="text-lg font-semibold text-ink md:text-xl">
               {positioning.vision.title}.
             </h3>
             <motion.p
@@ -36,16 +36,13 @@ export function Positioning() {
               whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 font-display text-[clamp(28px,4vw,56px)] font-medium leading-[1.25] tracking-tight text-ink"
+              className="mt-6 font-display text-[clamp(24px,3.5vw,40px)] font-medium leading-[1.25] tracking-tight text-ink"
             >
               It completes the picture.{' '}
               <HighlightText>
                 Humans and agents execute as one team.
               </HighlightText>
             </motion.p>
-            <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted">
-              {positioning.vision.statement}
-            </p>
           </div>
         </ScrollReveal>
 
@@ -56,7 +53,7 @@ export function Positioning() {
               What we lead with externally.
             </h3>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              Hover any panel to expand. The active one tells its story.
+              {positioning.emphasisLede ?? 'Hover any panel to expand. The active one tells its story.'}
             </p>
           </div>
         </ScrollReveal>

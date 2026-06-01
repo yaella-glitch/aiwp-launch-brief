@@ -52,19 +52,8 @@ export function Launch() {
           </div>
         </ScrollReveal>
 
-        {/* Goals (2 only) — large, editorial */}
-        <ScrollReveal delay={0.08}>
-          <div className="mt-32">
-            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-              Goals.
-            </h3>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              What we're trying to achieve.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+        {/* Goals (2 only) — large, editorial. No header, just the cards. */}
+        <div className="mt-24 grid grid-cols-1 gap-6 md:grid-cols-2">
           {launch.goals.map((g, i) => (
             <ScrollReveal key={g.title} delay={0.04 * i}>
               <SpotlightCard className="h-full">

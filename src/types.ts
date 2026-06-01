@@ -144,6 +144,7 @@ export interface PositioningContent {
   lede: string;
   vision: { title: string; statement: string };
   comesTogether: { title: string; lede: string; aspects: PositioningAspect[] };
+  emphasisLede?: string;
   externalEmphasis: Array<{ title: string; image: string; description: string }>;
   sayDontSay: Array<{ topic: string; say: string; dontSay: string; why: string }>;
 }

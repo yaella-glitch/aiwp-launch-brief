@@ -67,10 +67,10 @@ function AccordionPanel({ item, isActive, onActivate, index }: PanelProps) {
       aria-expanded={isActive}
       aria-label={`Emphasis ${index + 1}: ${item.title}`}
       className={cn(
-        'group relative h-[28rem] cursor-pointer overflow-hidden rounded-3xl border border-white/10',
-        'transition-[flex] duration-700 ease-cinematic',
+        'group relative h-[28rem] cursor-pointer overflow-hidden rounded-3xl border',
+        'transition-[flex,border-color] duration-700 ease-cinematic',
         // On desktop: active grows to flex-[5], inactive collapses to flex-[1]
-        isActive ? 'md:flex-[5]' : 'md:flex-[1]',
+        isActive ? 'md:flex-[5] border-accent/40' : 'md:flex-[1] border-white/20 hover:border-white/30',
         // On mobile: full width, fixed height ratios
         'w-full',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
@@ -102,24 +102,29 @@ function AccordionPanel({ item, isActive, onActivate, index }: PanelProps) {
         )}
       </div>
 
-      {/* Dim overlay (heavier on inactive) */}
+      {/* Dim overlay — lighter on inactive so the image still shows */}
       <div
         className={cn(
           'absolute inset-0 transition-opacity duration-500',
-          isActive ? 'bg-gradient-to-t from-canvas via-canvas/40 to-transparent' : 'bg-canvas/80',
+          isActive
+            ? 'bg-gradient-to-t from-canvas via-canvas/40 to-transparent'
+            : 'bg-gradient-to-t from-canvas/95 via-canvas/55 to-canvas/30',
         )}
       />
 
-      {/* Inactive label — vertical, rotated */}
+      {/* Inactive label — clean horizontal bar at the bottom */}
       <div
         className={cn(
-          'pointer-events-none absolute inset-0 flex items-end justify-center transition-opacity duration-300',
+          'pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex h-14 items-center justify-center px-3 transition-opacity duration-300',
           isActive ? 'opacity-0' : 'opacity-100',
         )}
       >
-        <div className="mb-10 origin-bottom rotate-180 [writing-mode:vertical-rl] font-display text-base font-medium uppercase tracking-[0.2em] text-white/80">
+        <p
+          className="truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-white"
+          title={item.title}
+        >
           {item.title}
-        </div>
+        </p>
       </div>
 
       {/* Active content */}
