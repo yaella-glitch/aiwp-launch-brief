@@ -1,31 +1,99 @@
 {
-  "eyebrow": "What we're launching",
-  "title": "The new additions.",
-  "lede": "Each capability is a building block — together they advance the AI work platform.",
+  "title": "What we're launching?",
+  "lede": "May 6th's milestone focused mostly on our agents. This milestone focuses on the way of working of agents & people — letting our customers embed agents in their day-to-day work with ease and trust.",
   "capabilities": [
     {
-      "id": "cap-1",
-      "title": "Capability one",
-      "description": "A short, customer-true sentence on what this capability does.",
-      "media": { "type": "image", "src": "/product/cap-1.png", "alt": "Capability one screenshot" }
+      "id": "human-agents",
+      "title": "Human & Agents collaboration",
+      "description": "Where people and agents work side by side — on the same goals, in the same place, with shared context.",
+      "media": { "type": "image", "src": "/product/human-agents.png", "alt": "Human and agents collaborating" },
+      "items": [
+        {
+          "title": "Container / Initiatives",
+          "description": "A workspace dedicated to a specific shared goal. The home for agents and people working together, with shared context."
+        },
+        {
+          "title": "Group chat",
+          "description": "Conversations where people and agents talk side by side — same place, same context."
+        },
+        {
+          "title": "Notetaker",
+          "description": "Desktop app that records meetings without Zoom limitations, and brings an agent to the call with full context to take action items.",
+          "tag": "Notetaker"
+        }
+      ]
     },
     {
-      "id": "cap-2",
-      "title": "Capability two",
-      "description": "A short, customer-true sentence on what this capability does.",
-      "media": { "type": "image", "src": "/product/cap-2.png", "alt": "Capability two screenshot" }
+      "id": "ecosystem",
+      "title": "Ecosystem",
+      "description": "Your agents, our agents, partner agents. Connect monday to the AI tools your teams already use.",
+      "media": { "type": "image", "src": "/product/ecosystem.png", "alt": "monday ecosystem of agents" },
+      "items": [
+        {
+          "title": "Bring your own agent",
+          "description": "Plug in 3rd-party agents (Claude, OpenAI) with full access to your monday context."
+        },
+        {
+          "title": "Access monday from your AI tools",
+          "description": "Use monday from leading AI tools like Make — the platform meets your team where they already work."
+        }
+      ]
     },
     {
-      "id": "cap-3",
-      "title": "Capability three",
-      "description": "A short, customer-true sentence on what this capability does.",
-      "media": { "type": "image", "src": "/product/cap-3.png", "alt": "Capability three screenshot" }
+      "id": "workflows",
+      "title": "AI workflows",
+      "description": "Agents embedded in the workflows people already use — with full control over what they do.",
+      "media": { "type": "image", "src": "/product/workflows.png", "alt": "AI workflows" },
+      "items": [
+        {
+          "title": "Control of agents in workflows",
+          "description": "People stay in control of agents' inputs, outputs, and behavior — exactly what each agent is doing, end to end."
+        }
+      ]
     },
     {
-      "id": "cap-4",
-      "title": "Capability four",
-      "description": "A short, customer-true sentence on what this capability does.",
-      "media": { "type": "image", "src": "/product/cap-4.png", "alt": "Capability four screenshot" }
+      "id": "agents",
+      "title": "Agents",
+      "description": "Everything that makes our agents top-notch: collaboration, context, trust, and a proactive sidekick.",
+      "media": { "type": "image", "src": "/product/agents.png", "alt": "Agents" },
+      "items": [
+        {
+          "title": "Collaboration",
+          "description": "Tag and mention agents like teammates."
+        },
+        {
+          "title": "Autosave & versioning",
+          "description": "Never lose work. Roll back to previous versions."
+        },
+        {
+          "title": "Troubleshooting",
+          "description": "Cut the 7% of credits lost to bad runs. Diagnose and fix in place."
+        },
+        {
+          "title": "Expanded artifacts",
+          "description": "Agents produce HTML, docs, and decks — not just chat replies."
+        },
+        {
+          "title": "One-click MCP",
+          "description": "Connect to any MCP server in a single click."
+        },
+        {
+          "title": "Master agents",
+          "description": "Agents that orchestrate other agents."
+        },
+        {
+          "title": "Context",
+          "description": "Agents understand who you are, your team, and where work stands — they navigate monday with your mindset. Plus controls over what agents can access and how their knowledge scales."
+        },
+        {
+          "title": "Trust & governance",
+          "description": "Visibility to value, permissions per user and team, guardrails — so adoption is safe."
+        },
+        {
+          "title": "Sidekick",
+          "description": "Proactive in the context of your task. Produces artifacts (HTML, decks). Connects through integrations."
+        }
+      ]
     }
   ],
   "demo": {

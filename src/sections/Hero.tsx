@@ -3,7 +3,6 @@ import { ArrowDown } from 'lucide-react';
 import { Sparkles } from '@/components/Sparkles';
 import { KineticHeadline } from '@/components/KineticHeadline';
 import { hero } from '@/content';
-import { cn } from '@/lib/utils';
 
 /**
  * Hero — Aceternity Sparkles pattern (the "Acme" variant).
@@ -12,7 +11,7 @@ import { cn } from '@/lib/utils';
  * twinkling sparkles drifting horizontally.
  * Reference: https://21st.dev/community/components/aceternity/sparkles/default
  */
-export function Hero({ presentMode }: { presentMode: boolean }) {
+export function Hero(_: { presentMode?: boolean } = {}) {
   const reduce = useReducedMotion();
 
   return (
@@ -22,23 +21,17 @@ export function Hero({ presentMode }: { presentMode: boolean }) {
       className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-canvas"
     >
       <div
-        className={cn(
-          'relative z-[2] mx-auto w-full max-w-3xl px-6 text-center',
-          presentMode ? 'pt-12' : 'pt-24 md:pt-20',
-        )}
+        className="relative z-[2] mx-auto w-full max-w-3xl px-6 pt-24 text-center md:pt-20"
       >
-        {/* Badge */}
-        <motion.div
+        {/* Badge — subtle text-only treatment */}
+        <motion.p
           initial={reduce ? undefined : { opacity: 0, y: 6 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 backdrop-blur"
+          className="text-[10px] font-medium uppercase tracking-[0.22em] text-muted"
         >
-          <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(165,138,255,0.8)]" />
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/90">
-            {hero.badge}
-          </span>
-        </motion.div>
+          {hero.badge}
+        </motion.p>
 
         {/* Eyebrow */}
         <motion.p

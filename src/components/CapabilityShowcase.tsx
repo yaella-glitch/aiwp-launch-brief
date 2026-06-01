@@ -66,15 +66,38 @@ export function CapabilityShowcase({
                       {c.title}
                     </h4>
                     {isActive && (
-                      <motion.p
+                      <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-3 overflow-hidden text-sm leading-relaxed text-muted"
+                        className="overflow-hidden"
                       >
-                        {c.description}
-                      </motion.p>
+                        <p className="mt-3 text-sm leading-relaxed text-muted">
+                          {c.description}
+                        </p>
+                        {c.items && c.items.length > 0 && (
+                          <ul className="mt-5 space-y-3">
+                            {c.items.map((it) => (
+                              <li key={it.title} className="border-l border-accent/30 pl-3.5">
+                                <div className="flex items-center gap-2">
+                                  <p className="font-display text-sm font-semibold text-ink">
+                                    {it.title}
+                                  </p>
+                                  {it.tag && (
+                                    <span className="rounded-full border border-white/15 bg-white/5 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted">
+                                      {it.tag}
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-muted">
+                                  {it.description}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </motion.div>
                     )}
                   </div>
                   {/* Active indicator bar */}

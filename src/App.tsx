@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PasswordGate } from '@/components/PasswordGate';
 import { TopBar } from '@/components/TopBar';
-import { LeftRail } from '@/components/LeftRail';
 import { Footer } from '@/components/Footer';
 import { Hero } from '@/sections/Hero';
 import { Background } from '@/sections/Background';
@@ -11,16 +10,9 @@ import { Market } from '@/sections/Market';
 import { Positioning } from '@/sections/Positioning';
 import { Launch } from '@/sections/Launch';
 import { Placeholder } from '@/sections/Placeholder';
-import { manifest, getRailSections } from '@/content';
-import { cn } from '@/lib/utils';
+import { manifest } from '@/content';
 
 function App() {
-  const [presentMode, setPresentMode] = useState(manifest.siteMeta.defaults.presentMode);
-  const [externalPreview, setExternalPreview] = useState(
-    manifest.siteMeta.defaults.externalPreview,
-  );
-  const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
-
   const [audioAvailable, setAudioAvailable] = useState(false);
   useEffect(() => {
     let cancelled = false;
@@ -38,12 +30,6 @@ function App() {
     };
   }, []);
 
-  const railSections = getRailSections(externalPreview);
-  const activeIndex = railSections.findIndex((s) => s.id === activeSectionId);
-  // 1-based, capped at last section when activeId not yet set or unknown.
-  const currentIndex = activeIndex >= 0 ? activeIndex + 1 : 1;
-  const totalIndex = railSections.length;
-
   function playAudio() {
     const el = document.getElementById('audio-brief') as HTMLAudioElement | null;
     if (el) void el.play();
@@ -51,29 +37,20 @@ function App() {
 
   const renderedSections = manifest.sections
     .filter((s) => s.visible)
-    .filter((s) => (externalPreview ? s.external !== false : true))
     .sort((a, b) => a.order - b.order);
 
   return (
     <PasswordGate>
       <TopBar
-        presentMode={presentMode}
-        externalPreview={externalPreview}
         audioAvailable={audioAvailable}
-        currentIndex={currentIndex}
-        totalIndex={totalIndex}
-        onTogglePresent={() => setPresentMode((v) => !v)}
-        onToggleExternal={() => setExternalPreview((v) => !v)}
         onPlayAudio={playAudio}
       />
 
-      {!presentMode && <LeftRail sections={railSections} onActiveChange={setActiveSectionId} />}
-
-      <main className={cn('pt-14', !presentMode && 'xl:pl-60')}>
+      <main className="pt-14">
         {renderedSections.map((s) => {
           switch (s.id) {
             case 'hero':
-              return <Hero key={s.id} presentMode={presentMode} />;
+              return <Hero key={s.id} />;
             case 'background':
               return <Background key={s.id} />;
             case 'product-overview':

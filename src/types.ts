@@ -45,7 +45,15 @@ export interface HeroContent {
 
 export interface BackgroundContent {
   title: string;
-  lede: string;
+  paragraphs: string[];
+  marqueeText: string;
+}
+
+export interface CapabilityItem {
+  title: string;
+  description: string;
+  /** Optional small tag rendered next to the item title (e.g. "Notetaker"). */
+  tag?: string;
 }
 
 export interface Capability {
@@ -53,6 +61,8 @@ export interface Capability {
   title: string;
   description: string;
   media: { type: 'image' | 'video'; src: string; alt: string };
+  /** Optional sub-capabilities grouped under this domain. */
+  items?: CapabilityItem[];
 }
 
 export interface UseCase {

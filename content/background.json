@@ -1,4 +1,8 @@
 {
   "title": "Background.",
-  "lede": "Why this brief exists. What milestone 2 means in the broader vision. How marketing & enablement teams should use this document. Edit me in content/background.json."
+  "paragraphs": [
+    "May 6 marked the first milestone of our AI Work Platform, where people and AI agents work together as one team. The launch focused on agents, their execution capabilities, and the new experience in monday.",
+    "This milestone delivers on what monday does best: helping teams work more efficiently through the collaboration, visibility, and control of people and agents. As work becomes more fragmented and overwhelming, monday brings people, agents, and work together in one place."
+  ],
+  "marqueeText": "This product milestone completes the vision of the AI Work Platform."
 }
