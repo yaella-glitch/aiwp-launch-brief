@@ -19,7 +19,7 @@ export function Customer() {
     <section
       id="customer"
       data-section="customer"
-      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
+      className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -41,7 +41,7 @@ export function Customer() {
         </div>
 
         {/* Pains & solutions */}
-        <div className="mt-40">
+        <div className="mt-24">
           <ScrollReveal>
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               The pains &amp; solutions.

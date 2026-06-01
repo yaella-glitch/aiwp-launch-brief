@@ -19,7 +19,7 @@ export function ProductOverview() {
     <section
       id="product-overview"
       data-section="product-overview"
-      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
+      className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -36,7 +36,7 @@ export function ProductOverview() {
 
         {/* Demo */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-40 grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
+          <div className="mt-24 grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
             <div>
               <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
                 Demo.
@@ -53,7 +53,7 @@ export function ProductOverview() {
 
         {/* Use cases — flip cards */}
         <ScrollReveal delay={0.15}>
-          <div className="mt-40">
+          <div className="mt-24">
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Use cases.
             </h3>

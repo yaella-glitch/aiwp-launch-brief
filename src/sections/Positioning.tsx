@@ -17,7 +17,7 @@ export function Positioning() {
     <section
       id="positioning"
       data-section="positioning"
-      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
+      className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -48,7 +48,7 @@ export function Positioning() {
 
         {/* External emphasis — interactive image accordion */}
         <ScrollReveal delay={0.15}>
-          <div className="mt-32">
+          <div className="mt-24">
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               What we lead with externally.
             </h3>
@@ -73,7 +73,7 @@ export function Positioning() {
 
         {/* Say / Don't Say */}
         <ScrollReveal delay={0.2}>
-          <div className="mt-40">
+          <div className="mt-24">
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Say. Don't say.
             </h3>

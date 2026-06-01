@@ -24,7 +24,7 @@ export function Launch() {
     <section
       id="launch"
       data-section="launch"
-      className="relative w-full overflow-hidden py-32 md:py-40 lg:py-48"
+      className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader
@@ -70,7 +70,7 @@ export function Launch() {
 
         {/* Deliverables + Owners (combined) */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-40">
+          <div className="mt-24">
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Assets &amp; owners.
             </h3>
@@ -123,7 +123,7 @@ export function Launch() {
 
         {/* Expectations */}
         <ScrollReveal delay={0.15}>
-          <div className="mt-40">
+          <div className="mt-24">
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               What's expected from you.
             </h3>
