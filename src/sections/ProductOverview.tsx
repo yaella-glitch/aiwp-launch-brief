@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ImageIcon } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { CapabilityTabs } from '@/components/CapabilityTabs';
+import { ProductAccordion } from '@/components/ProductAccordion';
 import { FlipCard } from '@/components/FlipCard';
 import { productOverview } from '@/content';
 import { cn, withBase } from '@/lib/utils';
@@ -25,10 +25,10 @@ export function ProductOverview() {
           lede={productOverview.lede}
         />
 
-        {/* Capabilities — top tabs + card grid (monday.com pattern) */}
+        {/* Capabilities — vertical accordion + sticky feature preview */}
         <ScrollReveal delay={0.05}>
           <div className="mt-20">
-            <CapabilityTabs tabs={productOverview.tabs} />
+            <ProductAccordion tabs={productOverview.tabs} />
           </div>
         </ScrollReveal>
 
