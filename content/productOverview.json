@@ -3,6 +3,50 @@
   "lede": "May 6th's milestone focused mostly on our agents. This milestone focuses on the way of working of agents & people — letting our customers embed agents in their day-to-day work with ease and trust.",
   "tabs": [
     {
+      "id": "human-agents",
+      "title": "Human & Agents collaboration",
+      "tagline": "Where people and agents work side by side — on the same goals, in the same place, with shared context.",
+      "cards": [
+        {
+          "id": "container",
+          "title": "Container / Initiatives",
+          "description": "A workspace dedicated to a specific shared goal. The home for agents and people working together, with shared context.",
+          "media": { "type": "image", "src": "/product/human-agents/container.png", "alt": "Container — shared workspace" }
+        },
+        {
+          "id": "group-chat",
+          "title": "Group chat",
+          "description": "Conversations where people and agents talk side by side — same place, same context.",
+          "media": { "type": "image", "src": "/product/human-agents/chat.png", "alt": "Group chat" }
+        },
+        {
+          "id": "notetaker",
+          "title": "Notetaker",
+          "description": "Desktop app that records meetings without Zoom limitations. Brings an agent to the call with full context to take action items.",
+          "media": { "type": "image", "src": "/product/human-agents/notetaker.png", "alt": "Notetaker — meeting recording" }
+        }
+      ]
+    },
+    {
+      "id": "ecosystem",
+      "title": "Ecosystem",
+      "tagline": "Your agents, our agents, partner agents. Connect monday to the AI tools your teams already use.",
+      "cards": [
+        {
+          "id": "byo-agent",
+          "title": "Bring your own agent",
+          "description": "Plug in 3rd-party agents (Claude, OpenAI, more) with full access to your monday context.",
+          "media": { "type": "image", "src": "/product/ecosystem/byo.png", "alt": "Bring your own agent" }
+        },
+        {
+          "id": "access-monday",
+          "title": "Access monday from your AI tools",
+          "description": "Use monday from leading AI tools like Make — the platform meets your team where they already work.",
+          "media": { "type": "image", "src": "/product/ecosystem/access.png", "alt": "Access monday from AI tools" }
+        }
+      ]
+    },
+    {
       "id": "agents",
       "title": "Agents",
       "tagline": "Everything that makes our agents top-notch: collaboration, context, and a proactive sidekick.",
@@ -54,50 +98,6 @@
           "title": "Sidekick",
           "description": "Proactive in the context of your task. Produces artifacts (HTML, decks). Connects through integrations.",
           "media": { "type": "image", "src": "/product/agents/sidekick.png", "alt": "Sidekick" }
-        }
-      ]
-    },
-    {
-      "id": "human-agents",
-      "title": "Human & Agents collaboration",
-      "tagline": "Where people and agents work side by side — on the same goals, in the same place, with shared context.",
-      "cards": [
-        {
-          "id": "container",
-          "title": "Container / Initiatives",
-          "description": "A workspace dedicated to a specific shared goal. The home for agents and people working together, with shared context.",
-          "media": { "type": "image", "src": "/product/human-agents/container.png", "alt": "Container — shared workspace" }
-        },
-        {
-          "id": "group-chat",
-          "title": "Group chat",
-          "description": "Conversations where people and agents talk side by side — same place, same context.",
-          "media": { "type": "image", "src": "/product/human-agents/chat.png", "alt": "Group chat" }
-        },
-        {
-          "id": "notetaker",
-          "title": "Notetaker",
-          "description": "Desktop app that records meetings without Zoom limitations. Brings an agent to the call with full context to take action items.",
-          "media": { "type": "image", "src": "/product/human-agents/notetaker.png", "alt": "Notetaker — meeting recording" }
-        }
-      ]
-    },
-    {
-      "id": "ecosystem",
-      "title": "Ecosystem",
-      "tagline": "Your agents, our agents, partner agents. Connect monday to the AI tools your teams already use.",
-      "cards": [
-        {
-          "id": "byo-agent",
-          "title": "Bring your own agent",
-          "description": "Plug in 3rd-party agents (Claude, OpenAI, more) with full access to your monday context.",
-          "media": { "type": "image", "src": "/product/ecosystem/byo.png", "alt": "Bring your own agent" }
-        },
-        {
-          "id": "access-monday",
-          "title": "Access monday from your AI tools",
-          "description": "Use monday from leading AI tools like Make — the platform meets your team where they already work.",
-          "media": { "type": "image", "src": "/product/ecosystem/access.png", "alt": "Access monday from AI tools" }
         }
       ]
     },

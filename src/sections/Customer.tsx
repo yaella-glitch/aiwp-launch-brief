@@ -28,8 +28,8 @@ export function Customer() {
           lede={customer.lede}
         />
 
-        {/* Personas — static grid (no auto-rotation). Primary spans 2/4. */}
-        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-4">
+        {/* Personas — static grid. Primary spans 2/4 (wider + roomier). */}
+        <div className="mt-20 grid grid-cols-1 gap-6 md:grid-cols-4 md:gap-7">
           {customer.personas.map((p, i) => (
             <ScrollReveal
               key={p.id}
@@ -165,14 +165,20 @@ function PersonaCard({ persona }: { persona: Persona }) {
 
   return (
     <SpotlightCard className={cn('h-full', isPrimary && 'border-accent/25 bg-accent/[0.04]')}>
-      <div className="flex h-full flex-col gap-5 p-7 md:p-8">
-        {/* Photo */}
+      <div
+        className={cn(
+          'flex h-full flex-col gap-6',
+          // Primary card: roomier padding for breathing room
+          isPrimary ? 'p-9 md:p-11' : 'p-7 md:p-8',
+        )}
+      >
+        {/* Photo — bumped from 80px → 112px (primary 128px) */}
         <div
           className={cn(
-            'relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl ring-1',
+            'relative shrink-0 overflow-hidden rounded-2xl ring-1',
             isPrimary
-              ? 'ring-accent/40 shadow-[0_0_30px_-10px_rgba(165,138,255,0.45)]'
-              : 'ring-white/15',
+              ? 'h-32 w-32 ring-accent/40 shadow-[0_0_40px_-12px_rgba(165,138,255,0.55)]'
+              : 'h-28 w-28 ring-white/15',
           )}
         >
           {imgOk !== false ? (
@@ -185,19 +191,28 @@ function PersonaCard({ persona }: { persona: Persona }) {
             />
           ) : (
             <div className="grid h-full w-full place-items-center bg-gradient-to-br from-violet-500/30 to-indigo-500/20">
-              <User className="h-7 w-7 text-white/70" aria-hidden="true" />
+              <User className={cn(isPrimary ? 'h-10 w-10' : 'h-9 w-9', 'text-white/70')} aria-hidden="true" />
             </div>
           )}
         </div>
 
         {/* Name + role */}
         <div>
-          <h3 className="font-display text-2xl font-semibold text-ink">{persona.name}</h3>
+          <h3
+            className={cn(
+              'font-display font-semibold text-ink',
+              isPrimary ? 'text-3xl md:text-[32px]' : 'text-2xl',
+            )}
+          >
+            {persona.name}
+          </h3>
           <p className="mt-1 text-sm text-muted">{persona.role}</p>
         </div>
 
         {/* Description */}
-        <p className="text-base leading-relaxed text-muted">{persona.description}</p>
+        <p className={cn('leading-relaxed text-muted', isPrimary ? 'text-lg' : 'text-base')}>
+          {persona.description}
+        </p>
       </div>
     </SpotlightCard>
   );

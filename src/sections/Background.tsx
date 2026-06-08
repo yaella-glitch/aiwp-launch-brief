@@ -51,7 +51,7 @@ export function Background() {
         </div>
 
         {/* Gist visual */}
-        <div className="mt-20 md:mt-24">
+        <div className="mt-24">
           <GistOrbit center={background.gist.center} nodes={background.gist.nodes} />
         </div>
       </div>

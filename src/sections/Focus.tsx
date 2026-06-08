@@ -21,7 +21,7 @@ export function Focus() {
         <EditorialHeader title={focus.title} lede={focus.lede} />
 
         <ScrollReveal delay={0.05}>
-          <div className="mt-16">
+          <div className="mt-20">
             <EmphasisAccordion
               items={focus.items.map((e) => ({
                 title: e.title,

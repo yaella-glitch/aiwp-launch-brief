@@ -15,15 +15,15 @@ import type { GistOrbitNode } from '@/types';
 /**
  * GistOrbit — visual centerpiece of the Background section.
  *
- * Behavior (per reference: 21st.dev radial-orbital-timeline):
- *  - The orbit AUTO-ROTATES continuously when no node is selected.
- *  - Click a node → rotation pauses, the orbit snaps that node to the top
- *    of the ring, and a compact detail card appears directly below it.
- *  - Click again, click the X, or click outside → reset (rotation resumes).
+ * Behavior (matches 21st.dev radial-orbital-timeline):
+ *  - Orbit AUTO-ROTATES (via requestAnimationFrame, so motion is smooth at
+ *    60fps without CSS transitions fighting each new tick).
+ *  - Click a node → rotation pauses, the orbit snaps that node to the top,
+ *    and a compact card appears directly below it (with a connector tick).
+ *  - Click the X, the same node again, or the empty stage → reset.
  *
- * Center: a bold rounded-rect anchor for "Humans + Agents" (with a
- * cluster of overlapping avatars). Fades to ~30% while a node is open so
- * the card has clear space.
+ * Center: bold rounded-rect anchor for "Humans + Agents" with an
+ * overlapping avatar cluster. Fades while a card is open.
  */
 
 interface GistOrbitProps {
@@ -39,7 +39,7 @@ const iconByNodeId: Record<string, LucideIcon> = {
   governance: ShieldCheck,
 };
 
-/** 6 mixed avatars (humans + stylized agents) shown inside the center plate. */
+/** 6 mixed avatars (humans + stylized agents). */
 const CENTER_AVATARS = [
   '/center/avatar-1.avif',
   '/center/avatar-2.avif',
@@ -49,24 +49,35 @@ const CENTER_AVATARS = [
   '/center/avatar-10.avif',
 ];
 
-const RADIUS = 220; // px — orbit radius for the nodes
-const STAGE = 640;  // px — square stage height
+const RADIUS = 250; // px — orbit radius (more breathing room around the plate)
+const STAGE = 700;  // px — square stage height
 
 export function GistOrbit({ center, nodes }: GistOrbitProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [rotation, setRotation] = useState(0);
+  const [isSnapping, setIsSnapping] = useState(false);
   const reduce = useReducedMotion();
 
   const autoRotate = activeId === null;
 
-  // Auto-rotate continuously while nothing is selected.
+  // Smooth 60fps auto-rotation via requestAnimationFrame.
   useEffect(() => {
     if (!autoRotate || reduce) return;
-    const id = setInterval(() => {
-      setRotation((r) => (r + 0.25) % 360);
-    }, 50);
-    return () => clearInterval(id);
+    let frame = 0;
+    const tick = () => {
+      setRotation((r) => (r + 0.08) % 360); // ~5°/sec → 1 rev / 72 sec
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, [autoRotate, reduce]);
+
+  // Clean up the snap-transition flag after the animation finishes.
+  useEffect(() => {
+    if (!isSnapping) return;
+    const id = window.setTimeout(() => setIsSnapping(false), 750);
+    return () => window.clearTimeout(id);
+  }, [isSnapping]);
 
   function selectNode(id: string) {
     if (activeId === id) {
@@ -75,7 +86,7 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
     }
     const idx = nodes.findIndex((n) => n.id === id);
     if (idx < 0) return;
-    // Snap so this node moves to the top (-90°).
+    setIsSnapping(true);
     const targetRotation = -(idx / nodes.length) * 360;
     setRotation(targetRotation);
     setActiveId(id);
@@ -89,10 +100,9 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
     <div className="relative w-full">
       {/* --- Desktop: orbit --- */}
       <div
-        className="relative mx-auto hidden w-full max-w-[760px] md:block"
+        className="relative mx-auto hidden w-full max-w-[820px] md:block"
         style={{ height: STAGE }}
         onClick={(e) => {
-          // Click on the empty stage closes the active card.
           if (e.target === e.currentTarget) closeActive();
         }}
       >
@@ -116,11 +126,11 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
             marginTop: -RADIUS,
           }}
         >
-          <div className="h-full w-full rounded-full border border-white/12" />
+          <div className="h-full w-full rounded-full border border-white/15" />
           <div className="absolute inset-2 rounded-full border border-white/[0.05]" />
         </motion.div>
 
-        {/* Connector lines from center to each node (live with rotation) */}
+        {/* Connector lines from center to each node */}
         <svg
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full"
@@ -162,8 +172,8 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
             <div
               key={node.id}
               className={cn(
-                'absolute left-1/2 top-1/2 ease-out',
-                !reduce && 'transition-transform duration-700',
+                'absolute left-1/2 top-1/2',
+                isSnapping && !reduce && 'transition-transform duration-700 ease-out',
                 isActive ? 'z-40' : 'z-10',
               )}
               style={{
@@ -172,7 +182,10 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
             >
               <button
                 type="button"
-                onClick={() => selectNode(node.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  selectNode(node.id);
+                }}
                 aria-pressed={isActive}
                 aria-label={`${node.title} — click to read more`}
                 className={cn(
@@ -215,16 +228,16 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
                 </span>
               </button>
 
-              {/* Compact detail card — appears below the node (which is now at top) */}
+              {/* Compact detail card — appears below the active (top) node */}
               {isActive && (
                 <motion.div
-                  initial={reduce ? undefined : { opacity: 0, y: -8, scale: 0.96 }}
+                  initial={reduce ? undefined : { opacity: 0, y: -6, scale: 0.96 }}
                   animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute left-1/2 top-full mt-4 w-72 -translate-x-1/2"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <CompactCard node={node} onClose={closeActive} />
-                  {/* Connector tick from node to card */}
                   <span
                     aria-hidden="true"
                     className="absolute -top-3 left-1/2 h-3 w-px -translate-x-1/2 bg-accent/50"
@@ -236,7 +249,7 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
         })}
       </div>
 
-      {/* --- Mobile: stacked card grid (orbit isn't useful at small width) --- */}
+      {/* --- Mobile: stacked card grid --- */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:hidden">
         <div className="relative col-span-full overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/15 via-canvas to-canvas p-7">
           <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_20%,rgba(165,138,255,0.18),transparent_60%)]" />
@@ -276,7 +289,6 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
 /* ---------- helpers ---------- */
 
 function nodePosition(index: number, total: number, rotationDeg: number) {
-  // Start at top (-90°), distribute evenly clockwise, add live rotation.
   const angleDeg = -90 + (index / total) * 360 + rotationDeg;
   const angleRad = (angleDeg * Math.PI) / 180;
   return {
@@ -309,33 +321,27 @@ function CenterPlate({
           initial={{ opacity: 0.4, scale: 1 }}
           animate={{ opacity: 0, scale: 1.35 }}
           transition={{ duration: 2.6, repeat: Infinity, ease: 'easeOut' }}
-          className="absolute inset-0 -m-2 rounded-[28px] border border-accent/40"
+          className="absolute inset-0 -m-2 rounded-[22px] border border-accent/40"
         />
 
-        <div className="relative grid place-items-center rounded-[28px] border border-accent/40 bg-gradient-to-br from-accent/25 via-accent/15 to-transparent px-10 py-7 backdrop-blur shadow-[0_0_60px_-12px_rgba(165,138,255,0.55)]">
+        {/* Tighter plate — narrower padding, smaller title, smaller avatars */}
+        <div className="relative grid place-items-center rounded-[22px] border border-accent/40 bg-gradient-to-br from-accent/25 via-accent/15 to-transparent px-7 py-5 backdrop-blur shadow-[0_0_60px_-12px_rgba(165,138,255,0.55)]">
           <div className="text-center">
-            {/* Overlapping avatar cluster — center 2 are larger for hierarchy */}
-            <div className="mb-4 flex items-center justify-center -space-x-2">
-              {CENTER_AVATARS.map((src, i) => {
-                const isCenter = i === 2 || i === 3;
-                const isFlank = i === 1 || i === 4;
-                return (
-                  <span
-                    key={src}
-                    className={cn(
-                      'relative inline-block overflow-hidden rounded-full border-2 border-canvas/95 bg-canvas shadow-lg ring-1 ring-white/10',
-                      isCenter ? 'h-14 w-14 z-10' : isFlank ? 'h-11 w-11' : 'h-9 w-9 opacity-90',
-                    )}
-                  >
-                    <img src={withBase(src)} alt="" className="h-full w-full object-cover" draggable={false} />
-                  </span>
-                );
-              })}
+            {/* Uniform avatar cluster — all same size for compact width */}
+            <div className="mb-3 flex items-center justify-center -space-x-2">
+              {CENTER_AVATARS.map((src) => (
+                <span
+                  key={src}
+                  className="relative inline-block h-9 w-9 overflow-hidden rounded-full border-2 border-canvas/95 bg-canvas shadow-md ring-1 ring-white/10"
+                >
+                  <img src={withBase(src)} alt="" className="h-full w-full object-cover" draggable={false} />
+                </span>
+              ))}
             </div>
-            <h3 className="font-display text-[clamp(26px,2.8vw,36px)] font-bold leading-[1.05] tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(20px,2.2vw,28px)] font-bold leading-[1.05] tracking-tight text-ink">
               {title}
             </h3>
-            <p className="mt-2 max-w-[16rem] text-xs leading-snug text-muted/90">{tagline}</p>
+            <p className="mx-auto mt-1.5 max-w-[14rem] text-[11px] leading-snug text-muted/85">{tagline}</p>
           </div>
         </div>
       </div>

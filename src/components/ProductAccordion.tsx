@@ -24,15 +24,15 @@ interface ProductAccordionProps {
 
 export function ProductAccordion({ tabs }: ProductAccordionProps) {
   const reduce = useReducedMotion();
-  const [openId, setOpenId] = useState<string>(tabs[0]?.id ?? '');
-  const [activeFeatureId, setActiveFeatureId] = useState<string>(
-    tabs[0]?.cards[0]?.id ?? '',
-  );
+  // Start with all rows closed — user opens what they want.
+  const [openId, setOpenId] = useState<string>('');
+  const [activeFeatureId, setActiveFeatureId] = useState<string>('');
 
-  // Resolve the currently active feature (for the right preview).
-  const activeTab = tabs.find((t) => t.id === openId) ?? tabs[0];
+  // Resolve the currently active feature (for the right preview). Null when
+  // nothing is open.
+  const activeTab = openId ? tabs.find((t) => t.id === openId) ?? null : null;
   const activeFeature =
-    activeTab?.cards.find((c) => c.id === activeFeatureId) ?? activeTab?.cards[0];
+    activeTab?.cards.find((c) => c.id === activeFeatureId) ?? activeTab?.cards[0] ?? null;
 
   function selectTab(id: string) {
     const next = id === openId ? '' : id;
@@ -166,7 +166,7 @@ export function ProductAccordion({ tabs }: ProductAccordionProps) {
       <div className="hidden lg:col-span-7 lg:block">
         <div className="sticky top-24">
           <AnimatePresence mode="wait">
-            {activeFeature && (
+            {activeFeature ? (
               <motion.div
                 key={`${activeTab?.id}-${activeFeature.id}`}
                 initial={reduce ? undefined : { opacity: 0, y: 16 }}
@@ -175,6 +175,19 @@ export function ProductAccordion({ tabs }: ProductAccordionProps) {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
                 <FeaturePreview card={activeFeature} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="empty"
+                initial={reduce ? undefined : { opacity: 0 }}
+                animate={reduce ? undefined : { opacity: 1 }}
+                exit={reduce ? undefined : { opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="flex aspect-[16/10] w-full items-center justify-center rounded-3xl border border-dashed border-white/10 bg-white/[0.015] p-10 text-center"
+              >
+                <p className="max-w-xs text-sm leading-relaxed text-muted/70">
+                  Open a domain on the left to preview the features inside.
+                </p>
               </motion.div>
             )}
           </AnimatePresence>

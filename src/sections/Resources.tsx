@@ -17,7 +17,7 @@ export function Resources() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader title={resources.title} lede={resources.lede ?? ''} />
 
-        <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+        <div className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {resources.groups.map((group, i) => (
             <ScrollReveal key={group.id} delay={0.05 * i}>
               <h3 className="font-display text-xl font-semibold text-ink md:text-2xl">

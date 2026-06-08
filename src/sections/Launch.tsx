@@ -32,7 +32,7 @@ export function Launch() {
         />
 
         {/* Goals (2 only) — large, editorial. No header, just the cards. */}
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mt-20 grid grid-cols-1 gap-6 md:grid-cols-2">
           {launch.goals.map((g, i) => (
             <ScrollReveal key={g.title} delay={0.04 * i}>
               <SpotlightCard className="h-full">
