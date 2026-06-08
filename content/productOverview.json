@@ -140,13 +140,6 @@
       ]
     }
   ],
-  "demo": {
-    "title": "See it in motion.",
-    "description": "A 60–90 second walkthrough video.",
-    "video": "/video/product-demo.mp4",
-    "poster": "/video/product-demo-poster.png",
-    "caption": "Drop a video at /public/video/product-demo.mp4 to replace this."
-  },
   "useCases": [
     {
       "id": "uc-1",

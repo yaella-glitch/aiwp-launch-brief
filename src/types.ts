@@ -80,7 +80,6 @@ export interface ProductOverviewContent {
   lede: string;
   /** Top-level tabs of grouped capability cards. */
   tabs: CapabilityTab[];
-  demo: { title: string; description: string; video: string; poster: string; caption: string };
   useCases: UseCase[];
 }
 

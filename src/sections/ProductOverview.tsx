@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Play, ImageIcon } from 'lucide-react';
+import { ImageIcon } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { SpotlightCard } from '@/components/SpotlightCard';
 import { CapabilityTabs } from '@/components/CapabilityTabs';
 import { FlipCard } from '@/components/FlipCard';
 import { productOverview } from '@/content';
@@ -10,8 +9,7 @@ import { cn, withBase } from '@/lib/utils';
 
 /**
  * What we're launching:
- *  - Capabilities as asymmetric editorial rows (image + text, alternating)
- *  - Product demo video
+ *  - Capabilities as monday-style top tabs + horizontal carousel
  *  - 3 use cases as flip cards (front: scenario over image · back: outcome)
  */
 export function ProductOverview() {
@@ -31,23 +29,6 @@ export function ProductOverview() {
         <ScrollReveal delay={0.05}>
           <div className="mt-20">
             <CapabilityTabs tabs={productOverview.tabs} />
-          </div>
-        </ScrollReveal>
-
-        {/* Demo */}
-        <ScrollReveal delay={0.1}>
-          <div className="mt-24 grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-12">
-            <div>
-              <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-                Demo.
-              </h3>
-              <p className="mt-4 text-base leading-relaxed text-muted">{productOverview.demo.description}</p>
-            </div>
-            <SpotlightCard className="overflow-hidden">
-              <div className="aspect-video w-full">
-                <VideoSlot src={productOverview.demo.video} poster={productOverview.demo.poster} caption={productOverview.demo.caption} />
-              </div>
-            </SpotlightCard>
           </div>
         </ScrollReveal>
 
@@ -129,27 +110,3 @@ function MediaSlot({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-function VideoSlot({ src, poster, caption }: { src: string; poster: string; caption: string }) {
-  const [ok, setOk] = useState<boolean | null>(null);
-  return ok === false ? (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="text-center">
-        <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
-          <Play className="h-6 w-6 text-white" aria-hidden="true" />
-        </span>
-        <p className="mt-4 max-w-md px-4 text-sm text-muted">{caption}</p>
-      </div>
-    </div>
-  ) : (
-    <video
-      src={withBase(src)}
-      poster={withBase(poster)}
-      controls
-      muted
-      playsInline
-      className="h-full w-full object-cover"
-      onError={() => setOk(false)}
-      onLoadedMetadata={() => setOk(true)}
-    />
-  );
-}
