@@ -9,8 +9,18 @@ import {
   X,
   type LucideIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, withBase } from '@/lib/utils';
 import type { GistOrbitNode } from '@/types';
+
+/** 6 mixed avatars (humans + stylized agents) shown inside the center plate. */
+const CENTER_AVATARS = [
+  '/center/avatar-1.avif',
+  '/center/avatar-2.avif',
+  '/center/avatar-3.avif',
+  '/center/avatar-4.avif',
+  '/center/avatar-9.avif',
+  '/center/avatar-10.avif',
+];
 
 /**
  * GistOrbit — the visual centerpiece of the Background section.
@@ -199,6 +209,16 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
         <div className="relative col-span-full overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/15 via-canvas to-canvas p-7">
           <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_20%,rgba(165,138,255,0.18),transparent_60%)]" />
           <div className="relative">
+            <div className="mb-5 flex -space-x-2">
+              {CENTER_AVATARS.map((src) => (
+                <span
+                  key={src}
+                  className="relative inline-block h-10 w-10 overflow-hidden rounded-full border-2 border-canvas/95 bg-canvas shadow-md ring-1 ring-white/10"
+                >
+                  <img src={withBase(src)} alt="" className="h-full w-full object-cover" draggable={false} />
+                </span>
+              ))}
+            </div>
             <h3 className="font-display text-2xl font-bold text-ink">{center.title}</h3>
             <p className="mt-3 text-sm text-muted">{center.tagline}</p>
           </div>
@@ -265,7 +285,31 @@ function CenterPlate({
 
         <div className="relative grid place-items-center rounded-[28px] border border-accent/40 bg-gradient-to-br from-accent/25 via-accent/15 to-transparent px-10 py-7 backdrop-blur shadow-[0_0_60px_-12px_rgba(165,138,255,0.55)]">
           <div className="text-center">
-            <h3 className="font-display text-[clamp(28px,3vw,40px)] font-bold leading-[1.05] tracking-tight text-ink">
+            {/* Overlapping avatar cluster — center 2 are larger for hierarchy */}
+            <div className="mb-4 flex items-center justify-center -space-x-2">
+              {CENTER_AVATARS.map((src, i) => {
+                // Center 2 nudge larger; outer ones smaller.
+                const isCenter = i === 2 || i === 3;
+                const isFlank = i === 1 || i === 4;
+                return (
+                  <span
+                    key={src}
+                    className={cn(
+                      'relative inline-block overflow-hidden rounded-full border-2 border-canvas/95 bg-canvas shadow-lg ring-1 ring-white/10',
+                      isCenter ? 'h-14 w-14 z-10' : isFlank ? 'h-11 w-11' : 'h-9 w-9 opacity-90',
+                    )}
+                  >
+                    <img
+                      src={withBase(src)}
+                      alt=""
+                      className="h-full w-full object-cover"
+                      draggable={false}
+                    />
+                  </span>
+                );
+              })}
+            </div>
+            <h3 className="font-display text-[clamp(26px,2.8vw,36px)] font-bold leading-[1.05] tracking-tight text-ink">
               {title}
             </h3>
             <p className="mt-2 max-w-[16rem] text-xs leading-snug text-muted/90">{tagline}</p>
