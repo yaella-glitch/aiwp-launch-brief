@@ -144,9 +144,9 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
                 y1="50%"
                 x2={`calc(50% + ${x}px)`}
                 y2={`calc(50% + ${y}px)`}
-                stroke="rgba(165,138,255,0.18)"
-                strokeWidth={1}
-                strokeDasharray="3 5"
+                stroke="rgba(165,138,255,0.3)"
+                strokeWidth={1.25}
+                strokeDasharray="4 6"
               />
             );
           })}
@@ -228,21 +228,26 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
                 </span>
               </button>
 
-              {/* Compact detail card — appears below the active (top) node */}
+              {/* Compact detail card — appears below the active (top) node.
+                  Positioning lives on the outer div; the inner motion.div only
+                  handles opacity/y so it doesn't stomp on the centering
+                  translate. */}
               {isActive && (
-                <motion.div
-                  initial={reduce ? undefined : { opacity: 0, y: -6, scale: 0.96 }}
-                  animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute left-1/2 top-full mt-4 w-72 -translate-x-1/2"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <CompactCard node={node} onClose={closeActive} />
+                <div className="absolute left-1/2 top-full mt-5 w-80 -translate-x-1/2">
+                  {/* Connector line from node down to the card */}
                   <span
                     aria-hidden="true"
-                    className="absolute -top-3 left-1/2 h-3 w-px -translate-x-1/2 bg-accent/50"
+                    className="absolute -top-5 left-1/2 h-5 w-[2px] -translate-x-1/2 bg-gradient-to-b from-accent to-accent/40"
                   />
-                </motion.div>
+                  <motion.div
+                    initial={reduce ? undefined : { opacity: 0, y: -8 }}
+                    animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <CompactCard node={node} onClose={closeActive} />
+                  </motion.div>
+                </div>
               )}
             </div>
           );
@@ -360,9 +365,9 @@ function CompactCard({ node, onClose }: { node: GistOrbitNode; onClose: () => vo
           onClose();
         }}
         aria-label="Close"
-        className="absolute right-3 top-3 grid h-6 w-6 place-items-center rounded-full border border-white/15 bg-canvas/60 text-muted transition-colors hover:bg-canvas hover:text-ink"
+        className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full border border-white/20 bg-canvas/80 text-ink/80 transition-colors hover:border-accent/60 hover:bg-accent/15 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       >
-        <X className="h-3 w-3" aria-hidden="true" />
+        <X className="h-4 w-4" aria-hidden="true" />
       </button>
       <div className="relative">
         <h4 className="font-display text-base font-semibold leading-tight text-ink">
