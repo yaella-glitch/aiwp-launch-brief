@@ -1,23 +1,82 @@
 {
-  "eyebrow": "Market & competitive",
-  "title": "Where we play. Why we win.",
-  "lede": "How we sit against the alternatives — and what makes us distinct.",
-  "marketContext": "A short paragraph on what's happening in the market — why this matters now. Edit me in content/market.json.",
-  "quadrant": {
-    "xAxis": { "label": "Agent capability", "leftLabel": "Shallow", "rightLabel": "Deep" },
-    "yAxis": { "label": "Team execution", "bottomLabel": "Solo / chat", "topLabel": "Team / outcomes" },
-    "competitors": [
-      { "id": "us", "name": "monday", "x": 80, "y": 82, "isUs": true, "note": "Why we sit here." },
-      { "id": "comp-1", "name": "Competitor 1", "x": 35, "y": 30, "isUs": false, "note": "Their angle." },
-      { "id": "comp-2", "name": "Competitor 2", "x": 65, "y": 38, "isUs": false, "note": "Their angle." },
-      { "id": "comp-3", "name": "Competitor 3", "x": 25, "y": 70, "isUs": false, "note": "Their angle." },
-      { "id": "comp-4", "name": "Competitor 4", "x": 55, "y": 60, "isUs": false, "note": "Their angle." }
-    ]
-  },
-  "differentiators": [
-    { "title": "Differentiator one", "description": "One sentence that captures why this matters to the customer." },
-    { "title": "Differentiator two", "description": "One sentence that captures why this matters to the customer." },
-    { "title": "Differentiator three", "description": "One sentence that captures why this matters to the customer." },
-    { "title": "Differentiator four", "description": "One sentence that captures why this matters to the customer." }
+  "title": "Competitive overview",
+  "lede": "Where we sit against the alternatives — by category. Each bucket lives in its own world; we're the one that ties them together.",
+  "tabs": [
+    {
+      "id": "classic",
+      "title": "Classic",
+      "tagline": "The work platforms our customers already know — adding AI on top of an existing surface.",
+      "cards": [
+        {
+          "id": "classic-1",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp. Why they're known, and where they fall short.",
+          "media": { "type": "image", "src": "/market/classic/1.png", "alt": "Competitor screenshot" }
+        },
+        {
+          "id": "classic-2",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp.",
+          "media": { "type": "image", "src": "/market/classic/2.png", "alt": "Competitor screenshot" }
+        }
+      ]
+    },
+    {
+      "id": "agent-builders",
+      "title": "Agent builders",
+      "tagline": "Tools built for one job: standing up agents. Powerful — but they live outside the work.",
+      "cards": [
+        {
+          "id": "builders-1",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp.",
+          "media": { "type": "image", "src": "/market/agent-builders/1.png", "alt": "Competitor screenshot" }
+        },
+        {
+          "id": "builders-2",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp.",
+          "media": { "type": "image", "src": "/market/agent-builders/2.png", "alt": "Competitor screenshot" }
+        }
+      ]
+    },
+    {
+      "id": "vertical-ai",
+      "title": "Vertical AI",
+      "tagline": "AI that goes deep on one function. Great for that team — but not the company.",
+      "cards": [
+        {
+          "id": "vertical-1",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp.",
+          "media": { "type": "image", "src": "/market/vertical-ai/1.png", "alt": "Competitor screenshot" }
+        },
+        {
+          "id": "vertical-2",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp.",
+          "media": { "type": "image", "src": "/market/vertical-ai/2.png", "alt": "Competitor screenshot" }
+        }
+      ]
+    },
+    {
+      "id": "ai-leaders",
+      "title": "AI leaders",
+      "tagline": "Frontier model makers and assistants — the agents themselves, without the workplace around them.",
+      "cards": [
+        {
+          "id": "leaders-1",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp.",
+          "media": { "type": "image", "src": "/market/ai-leaders/1.png", "alt": "Competitor screenshot" }
+        },
+        {
+          "id": "leaders-2",
+          "title": "Competitor name",
+          "description": "Their angle — short, sharp.",
+          "media": { "type": "image", "src": "/market/ai-leaders/2.png", "alt": "Competitor screenshot" }
+        }
+      ]
+    }
   ]
 }

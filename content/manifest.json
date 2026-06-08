@@ -14,11 +14,12 @@
   },
   "sections": [
     { "id": "hero", "title": "Hero", "icon": "sparkle", "order": 0, "visible": true, "showInRail": false },
-    { "id": "background", "title": "Background", "icon": "book", "order": 1, "visible": true },
-    { "id": "product-overview", "title": "What we're launching", "icon": "box", "order": 2, "visible": true },
-    { "id": "customer", "title": "Who it's for", "icon": "users", "order": 3, "visible": true },
-    { "id": "market", "title": "Market & competitive", "icon": "swords", "order": 4, "visible": true },
+    { "id": "launch-date", "title": "Launch date", "icon": "calendar", "order": 1, "visible": true, "showInRail": false },
+    { "id": "background", "title": "Background", "icon": "book", "order": 2, "visible": true },
+    { "id": "product-overview", "title": "What we're launching", "icon": "box", "order": 3, "visible": true },
+    { "id": "customer", "title": "Who it's for", "icon": "users", "order": 4, "visible": true },
     { "id": "positioning", "title": "Positioning & messaging", "icon": "message-circle", "order": 5, "visible": true },
-    { "id": "launch", "title": "Launch & marketing", "icon": "rocket", "order": 6, "visible": true }
+    { "id": "market", "title": "Competitive overview", "icon": "swords", "order": 6, "visible": true },
+    { "id": "launch", "title": "Launch & marketing", "icon": "rocket", "order": 7, "visible": true }
   ]
 }

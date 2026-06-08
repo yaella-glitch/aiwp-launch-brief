@@ -2,6 +2,7 @@
 
 export type SectionId =
   | 'hero'
+  | 'launch-date'
   | 'background'
   | 'product-overview'
   | 'customer'
@@ -108,26 +109,11 @@ export interface CustomerContent {
   beforeAfter: BeforeAfter[];
 }
 
-export interface QuadrantCompetitor {
-  id: string;
-  name: string;
-  x: number;
-  y: number;
-  isUs: boolean;
-  note: string;
-}
-
 export interface MarketContent {
-  eyebrow: string;
   title: string;
   lede: string;
-  marketContext: string;
-  quadrant: {
-    xAxis: { label: string; leftLabel: string; rightLabel: string };
-    yAxis: { label: string; bottomLabel: string; topLabel: string };
-    competitors: QuadrantCompetitor[];
-  };
-  differentiators: Array<{ title: string; description: string }>;
+  /** Competitor categories — same shape as ProductOverview tabs. */
+  tabs: CapabilityTab[];
 }
 
 export interface PositioningAspect {

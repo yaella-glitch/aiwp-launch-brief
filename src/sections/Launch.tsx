@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
 import { User } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
@@ -15,11 +14,11 @@ const statusColor: Record<string, string> = {
 };
 
 /**
- * Launch & marketing — date statement, 2 goals, single combined assets+owners
- * table, expectations card, out-of-scope (small, below).
+ * Launch & marketing — 2 goals, single combined assets+owners table,
+ * expectations card, out-of-scope (small, below). Launch date now lives in
+ * its own section directly under the hero.
  */
 export function Launch() {
-  const reduce = useReducedMotion();
   return (
     <section
       id="launch"
@@ -32,28 +31,8 @@ export function Launch() {
           lede={launch.lede}
         />
 
-        {/* Launch date */}
-        <ScrollReveal>
-          <div className="mt-16 border-b border-white/10 pb-12">
-            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-              Launch date.
-            </h3>
-            <motion.p
-              initial={reduce ? undefined : { opacity: 0, y: 20, filter: 'blur(10px)' }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-4 font-display text-[clamp(48px,9vw,128px)] font-bold leading-none tracking-[-0.02em] text-ink"
-            >
-              <span className="bg-gradient-to-br from-violet-200 via-indigo-200 to-sky-300 bg-clip-text text-transparent">
-                {launch.launchDate}
-              </span>
-            </motion.p>
-          </div>
-        </ScrollReveal>
-
         {/* Goals (2 only) — large, editorial. No header, just the cards. */}
-        <div className="mt-24 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
           {launch.goals.map((g, i) => (
             <ScrollReveal key={g.title} delay={0.04 * i}>
               <SpotlightCard className="h-full">

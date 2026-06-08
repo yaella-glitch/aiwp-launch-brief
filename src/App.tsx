@@ -3,6 +3,7 @@ import { PasswordGate } from '@/components/PasswordGate';
 import { TopBar } from '@/components/TopBar';
 import { Footer } from '@/components/Footer';
 import { Hero } from '@/sections/Hero';
+import { LaunchDate } from '@/sections/LaunchDate';
 import { Background } from '@/sections/Background';
 import { ProductOverview } from '@/sections/ProductOverview';
 import { Customer } from '@/sections/Customer';
@@ -51,6 +52,8 @@ function App() {
           switch (s.id) {
             case 'hero':
               return <Hero key={s.id} />;
+            case 'launch-date':
+              return <LaunchDate key={s.id} />;
             case 'background':
               return <Background key={s.id} />;
             case 'product-overview':
