@@ -1,58 +1,12 @@
 {
-  "eyebrow": "Positioning & messaging",
-  "title": "Launch positioning & messaging.",
-  "lede": "The story we lead with — and the guardrails to keep everyone consistent.",
-  "vision": {
-    "title": "How this launch supports the vision",
-    "statement": ""
-  },
-  "emphasisLede": "What we want to put focus on in our marketing assets, and how we want to talk about it.",
-  "comesTogether": {
-    "title": "How it all comes together",
-    "lede": "Every aspect of this launch supports the same outcome.",
-    "aspects": [
-      {
-        "id": "human-agents",
-        "title": "Human & Agents collaboration",
-        "image": "/aspects/human-agents.png",
-        "imageAlt": "Drop /public/aspects/human-agents.png"
-      },
-      {
-        "id": "ecosystem",
-        "title": "Ecosystem",
-        "image": "/aspects/ecosystem.png",
-        "imageAlt": "Drop /public/aspects/ecosystem.png"
-      },
-      {
-        "id": "workflows",
-        "title": "Workflows",
-        "image": "/aspects/workflows.png",
-        "imageAlt": "Drop /public/aspects/workflows.png"
-      },
-      {
-        "id": "trust",
-        "title": "Trust & visibility",
-        "image": "/aspects/trust.png",
-        "imageAlt": "Drop /public/aspects/trust.png"
-      }
-    ]
-  },
-  "externalEmphasis": [
-    {
-      "title": "What we lead with",
-      "image": "/emphasis/emphasis-1.png",
-      "description": "First message — short, punchy, customer-true."
-    },
-    {
-      "title": "What we reinforce",
-      "image": "/emphasis/emphasis-2.png",
-      "description": "Second message — reinforces the lead with concrete proof."
-    },
-    {
-      "title": "What we close with",
-      "image": "/emphasis/emphasis-3.png",
-      "description": "Third message — emotional resonance, the takeaway."
-    }
+  "title": "Messaging hierarchy.",
+  "lede": "The story we lead with — top of the hierarchy down to the supporting messages.",
+  "tagline": "The official launch tagline.",
+  "keyMessage": "The single key message — the one thing they should walk away with.",
+  "secondaryMessages": [
+    "Secondary message #1 — supporting proof point one.",
+    "Secondary message #2 — supporting proof point two.",
+    "Secondary message #3 — supporting proof point three."
   ],
   "sayDontSay": [
     {

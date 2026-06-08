@@ -1,0 +1,32 @@
+{
+  "title": "Resources.",
+  "lede": "Everything else — decks, dashboards, dependencies. Click through for the source.",
+  "groups": [
+    {
+      "id": "decks",
+      "title": "Decks & docs",
+      "links": [
+        { "label": "Launch deck (master)", "href": "#", "note": "PMM-owned" },
+        { "label": "Product spec — milestone 2", "href": "#" },
+        { "label": "Internal FAQ", "href": "#" }
+      ]
+    },
+    {
+      "id": "dashboards",
+      "title": "Dashboards",
+      "links": [
+        { "label": "Adoption tracker", "href": "#" },
+        { "label": "Credit usage dashboard", "href": "#" }
+      ]
+    },
+    {
+      "id": "dependencies",
+      "title": "Dependencies & sources",
+      "links": [
+        { "label": "Brand assets (Figma)", "href": "#" },
+        { "label": "Customer research repo", "href": "#" },
+        { "label": "Competitor scan", "href": "#" }
+      ]
+    }
+  ]
+}

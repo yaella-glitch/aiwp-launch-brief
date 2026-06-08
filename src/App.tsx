@@ -11,6 +11,7 @@ import { Customer } from '@/sections/Customer';
 import { Market } from '@/sections/Market';
 import { Positioning } from '@/sections/Positioning';
 import { Launch } from '@/sections/Launch';
+import { Resources } from '@/sections/Resources';
 import { Placeholder } from '@/sections/Placeholder';
 import { manifest } from '@/content';
 
@@ -69,6 +70,8 @@ function App() {
               return <Positioning key={s.id} />;
             case 'launch':
               return <Launch key={s.id} />;
+            case 'resources':
+              return <Resources key={s.id} />;
             default:
               return (
                 <Placeholder

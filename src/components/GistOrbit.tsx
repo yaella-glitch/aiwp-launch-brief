@@ -19,8 +19,10 @@ import type { GistOrbitNode } from '@/types';
  * Orbit: 5 nodes evenly spaced around a violet ring. Each clickable, opening
  * a detail card below the visual.
  *
- * Static positions (no auto-rotation) — this is a brief, not a product UI.
- * Mobile fallback: simple stacked grid of cards (orbit doesn't work small).
+ * Implementation note: layout (positioning) is done with a static wrapper div
+ * so framer-motion's transform-based animations (scale/x/y) don't stomp on
+ * placement. Each orbit node is `position: absolute` with left/top set by
+ * trigonometry, and the inner motion.button only animates opacity + scale.
  */
 
 interface GistOrbitProps {
@@ -37,6 +39,7 @@ const iconByNodeId: Record<string, LucideIcon> = {
 };
 
 const RADIUS = 220; // px — orbit radius for the 5 nodes
+const STAGE = 640; // px — square stage height; width scales to container
 
 export function GistOrbit({ center, nodes }: GistOrbitProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -47,49 +50,48 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
   return (
     <div className="relative w-full">
       {/* --- Desktop: orbit --- */}
-      <div className="relative mx-auto hidden h-[640px] w-full max-w-[760px] md:block">
+      <div
+        className="relative mx-auto hidden w-full max-w-[760px] md:block"
+        style={{ height: STAGE }}
+      >
         {/* Soft radial glow behind the system */}
         <div
           aria-hidden="true"
           className="absolute inset-0 [background:radial-gradient(circle_at_center,rgba(165,138,255,0.14),transparent_60%)]"
         />
 
-        {/* Center: Humans + Agents (rounded-rect, not a circle) */}
-        <CenterPlate title={center.title} tagline={center.tagline} reduce={!!reduce} />
-
-        {/* Orbit ring */}
+        {/* Orbit ring (static positioning, opacity-only animation) */}
         <motion.div
-          initial={reduce ? undefined : { opacity: 0, scale: 0.94 }}
-          whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+          initial={reduce ? undefined : { opacity: 0 }}
+          whileInView={reduce ? undefined : { opacity: 1 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
           className="pointer-events-none absolute left-1/2 top-1/2"
           style={{
             width: RADIUS * 2,
             height: RADIUS * 2,
-            transform: 'translate(-50%, -50%)',
+            marginLeft: -RADIUS,
+            marginTop: -RADIUS,
           }}
         >
           <div className="h-full w-full rounded-full border border-white/12" />
           <div className="absolute inset-2 rounded-full border border-white/[0.05]" />
         </motion.div>
 
-        {/* Orbiting connector lines from center to each node */}
+        {/* Connector lines from center to each node */}
         <svg
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full"
-          viewBox="0 0 760 640"
-          preserveAspectRatio="xMidYMid meet"
         >
           {nodes.map((_, i) => {
             const { x, y } = nodePosition(i, nodes.length);
             return (
               <line
                 key={i}
-                x1={380}
-                y1={320}
-                x2={380 + x}
-                y2={320 + y}
+                x1="50%"
+                y1="50%"
+                x2={`calc(50% + ${x}px)`}
+                y2={`calc(50% + ${y}px)`}
                 stroke="rgba(165,138,255,0.18)"
                 strokeWidth={1}
                 strokeDasharray="3 5"
@@ -98,6 +100,11 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
           })}
         </svg>
 
+        {/* Center plate — positioned by wrapper, animated inside */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+          <CenterPlate title={center.title} tagline={center.tagline} reduce={!!reduce} />
+        </div>
+
         {/* Nodes */}
         {nodes.map((node, i) => {
           const { x, y } = nodePosition(i, nodes.length);
@@ -105,34 +112,38 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
           const isActive = activeId === node.id;
 
           return (
-            <motion.button
+            <div
               key={node.id}
-              type="button"
-              onClick={() => setActiveId(isActive ? null : node.id)}
-              initial={reduce ? undefined : { opacity: 0, scale: 0.6 }}
-              whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{
-                duration: 0.7,
-                delay: 0.35 + i * 0.08,
-                ease: [0.16, 1, 0.3, 1],
+              className="absolute z-10"
+              style={{
+                left: `calc(50% + ${x}px)`,
+                top: `calc(50% + ${y}px)`,
+                transform: 'translate(-50%, -50%)',
               }}
-              className="group absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 outline-none"
-              style={{ transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))` }}
-              aria-pressed={isActive}
-              aria-label={`${node.title} — click to read more`}
             >
-              <div
+              <motion.button
+                type="button"
+                onClick={() => setActiveId(isActive ? null : node.id)}
+                initial={reduce ? undefined : { opacity: 0, scale: 0.6 }}
+                whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{
+                  duration: 0.55,
+                  delay: 0.3 + i * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                aria-pressed={isActive}
+                aria-label={`${node.title} — click to read more`}
                 className={cn(
-                  'relative flex flex-col items-center gap-2 transition-all duration-300',
-                  'focus-visible:ring-2 focus-visible:ring-accent/60 rounded-2xl',
+                  'group relative flex flex-col items-center gap-2 outline-none',
+                  'rounded-2xl focus-visible:ring-2 focus-visible:ring-accent/60',
                 )}
               >
                 <span
                   className={cn(
                     'relative grid h-14 w-14 place-items-center rounded-2xl border transition-all duration-300',
                     isActive
-                      ? 'border-accent/70 bg-accent/20 shadow-[0_0_40px_-8px_rgba(165,138,255,0.7)] scale-110'
+                      ? 'scale-110 border-accent/70 bg-accent/20 shadow-[0_0_40px_-8px_rgba(165,138,255,0.7)]'
                       : 'border-white/15 bg-canvas/80 backdrop-blur group-hover:border-accent/40 group-hover:bg-accent/10',
                   )}
                 >
@@ -161,13 +172,13 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
                 >
                   {node.title}
                 </span>
-              </div>
-            </motion.button>
+              </motion.button>
+            </div>
           );
         })}
       </div>
 
-      {/* Active node card — desktop only, sits below the orbit */}
+      {/* Active node card — desktop only, below the orbit */}
       <AnimatePresence mode="wait">
         {activeNode && (
           <motion.div
@@ -188,8 +199,7 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
         <div className="relative col-span-full overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/15 via-canvas to-canvas p-7">
           <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_20%,rgba(165,138,255,0.18),transparent_60%)]" />
           <div className="relative">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted/70">At the core</p>
-            <h3 className="mt-2 font-display text-2xl font-bold text-ink">{center.title}</h3>
+            <h3 className="font-display text-2xl font-bold text-ink">{center.title}</h3>
             <p className="mt-3 text-sm text-muted">{center.tagline}</p>
           </div>
         </div>
@@ -237,14 +247,14 @@ function CenterPlate({
 }) {
   return (
     <motion.div
-      initial={reduce ? undefined : { opacity: 0, scale: 0.92, filter: 'blur(6px)' }}
-      whileInView={reduce ? undefined : { opacity: 1, scale: 1, filter: 'blur(0px)' }}
+      initial={reduce ? undefined : { opacity: 0 }}
+      whileInView={reduce ? undefined : { opacity: 1 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
+      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+      className="pointer-events-auto relative"
     >
       <div className="relative">
-        {/* Pulse halo */}
+        {/* Pulse halo — uses scale + opacity but on a self-contained absolute child */}
         <motion.span
           aria-hidden="true"
           initial={{ opacity: 0.4, scale: 1 }}
@@ -255,11 +265,10 @@ function CenterPlate({
 
         <div className="relative grid place-items-center rounded-[28px] border border-accent/40 bg-gradient-to-br from-accent/25 via-accent/15 to-transparent px-10 py-7 backdrop-blur shadow-[0_0_60px_-12px_rgba(165,138,255,0.55)]">
           <div className="text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-accent/90">At the core</p>
-            <h3 className="mt-2 font-display text-[clamp(28px,3vw,40px)] font-bold leading-[1.05] tracking-tight text-ink">
+            <h3 className="font-display text-[clamp(28px,3vw,40px)] font-bold leading-[1.05] tracking-tight text-ink">
               {title}
             </h3>
-            <p className="mt-2 max-w-[14rem] text-xs leading-snug text-muted/90">{tagline}</p>
+            <p className="mt-2 max-w-[16rem] text-xs leading-snug text-muted/90">{tagline}</p>
           </div>
         </div>
       </div>

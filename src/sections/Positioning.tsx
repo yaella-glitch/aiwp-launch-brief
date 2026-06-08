@@ -1,18 +1,15 @@
 import { Check, X } from 'lucide-react';
-import { motion, useReducedMotion } from 'framer-motion';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { HighlightText } from '@/components/HighlightText';
-import { EmphasisAccordion } from '@/components/EmphasisAccordion';
+import { MessagingHierarchy } from '@/components/MessagingHierarchy';
 import { positioning } from '@/content';
 
 /**
- * Positioning & messaging — vision statement (bold prose, no parts grid),
- * "how it all comes together" image strip, what we emphasize externally,
- * say / don't-say guardrails.
+ * Positioning & messaging — visual hierarchy of:
+ *   tagline → key message → secondary messages (up to 3)
+ * with say/don't-say language guardrails underneath.
  */
 export function Positioning() {
-  const reduce = useReducedMotion();
   return (
     <section
       id="positioning"
@@ -20,59 +17,20 @@ export function Positioning() {
       className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        <EditorialHeader
-          title={positioning.title}
-          lede={positioning.lede}
-        />
-
-        {/* Vision — small title + highlighted line */}
-        <ScrollReveal>
-          <div className="mt-24 max-w-4xl">
-            <h3 className="text-lg font-semibold text-ink md:text-xl">
-              {positioning.vision.title}.
-            </h3>
-            <motion.p
-              initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 font-display text-[clamp(24px,3.5vw,40px)] font-medium leading-[1.25] tracking-tight text-ink"
-            >
-              It completes the picture.{' '}
-              <HighlightText>
-                Humans and agents execute as one team.
-              </HighlightText>
-            </motion.p>
-          </div>
-        </ScrollReveal>
-
-        {/* External emphasis — interactive image accordion */}
-        <ScrollReveal delay={0.15}>
-          <div className="mt-24">
-            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-              What we lead with externally.
-            </h3>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              {positioning.emphasisLede ?? 'Hover any panel to expand. The active one tells its story.'}
-            </p>
-          </div>
-        </ScrollReveal>
+        <EditorialHeader title={positioning.title} lede={positioning.lede} />
 
         <ScrollReveal delay={0.05}>
-          <div className="mt-12">
-            <EmphasisAccordion
-              items={positioning.externalEmphasis.map((e) => ({
-                title: e.title,
-                description: e.description,
-                image: e.image,
-                imageAlt: `Emphasis: ${e.title}`,
-              }))}
+          <div className="mt-20">
+            <MessagingHierarchy
+              tagline={positioning.tagline}
+              keyMessage={positioning.keyMessage}
+              secondaryMessages={positioning.secondaryMessages}
             />
           </div>
         </ScrollReveal>
 
-        {/* Say / Don't Say */}
-        <ScrollReveal delay={0.2}>
+        {/* Say / Don't Say — language guardrails */}
+        <ScrollReveal delay={0.15}>
           <div className="mt-24">
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Say. Don't say.
@@ -118,4 +76,3 @@ export function Positioning() {
     </section>
   );
 }
-

@@ -1,24 +1,24 @@
 {
   "title": "What we lead with externally.",
-  "lede": "Of everything we're shipping, these are the moments we lead with — the headlines for go-to-market.",
+  "lede": "What we want to put focus on in our marketing assets, and how we want to talk about it.",
   "items": [
     {
-      "id": "lead-1",
-      "title": "Lead headline #1",
-      "description": "Short, sharp framing — what this means to the customer and why it matters now.",
-      "image": "/focus/lead-1.png"
+      "id": "lead",
+      "title": "What we lead with",
+      "image": "/emphasis/emphasis-1.png",
+      "description": "First message — short, punchy, customer-true."
     },
     {
-      "id": "lead-2",
-      "title": "Lead headline #2",
-      "description": "Short, sharp framing — what this means to the customer and why it matters now.",
-      "image": "/focus/lead-2.png"
+      "id": "reinforce",
+      "title": "What we reinforce",
+      "image": "/emphasis/emphasis-2.png",
+      "description": "Second message — reinforces the lead with concrete proof."
     },
     {
-      "id": "lead-3",
-      "title": "Lead headline #3",
-      "description": "Short, sharp framing — what this means to the customer and why it matters now.",
-      "image": "/focus/lead-3.png"
+      "id": "close",
+      "title": "What we close with",
+      "image": "/emphasis/emphasis-3.png",
+      "description": "Third message — emotional resonance, the takeaway."
     }
   ]
 }

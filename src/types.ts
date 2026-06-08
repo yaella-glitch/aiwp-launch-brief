@@ -9,7 +9,8 @@ export type SectionId =
   | 'customer'
   | 'market'
   | 'positioning'
-  | 'launch';
+  | 'launch'
+  | 'resources';
 
 export interface SectionMeta {
   id: SectionId;
@@ -107,7 +108,20 @@ export interface FocusItem {
 export interface FocusContent {
   title: string;
   lede: string;
+  /** 3-panel emphasis: lead / reinforce / close. */
   items: FocusItem[];
+}
+
+export interface MessagingHierarchyContent {
+  title: string;
+  lede: string;
+  /** The official launch tagline — top of the hierarchy. */
+  tagline: string;
+  /** The single key message — second level. */
+  keyMessage: string;
+  /** Up to 3 supporting / secondary messages. */
+  secondaryMessages: string[];
+  sayDontSay: Array<{ topic: string; say: string; dontSay: string; why: string }>;
 }
 
 export interface Persona {
@@ -143,22 +157,23 @@ export interface MarketContent {
   tabs: CapabilityTab[];
 }
 
-export interface PositioningAspect {
-  id: string;
-  title: string;
-  image: string;
-  imageAlt: string;
+/** Positioning section is now a Messaging Hierarchy. */
+export type PositioningContent = MessagingHierarchyContent;
+
+export interface ResourceLink {
+  label: string;
+  href: string;
+  note?: string;
 }
 
-export interface PositioningContent {
-  eyebrow: string;
+export interface ResourcesContent {
   title: string;
-  lede: string;
-  vision: { title: string; statement: string };
-  comesTogether: { title: string; lede: string; aspects: PositioningAspect[] };
-  emphasisLede?: string;
-  externalEmphasis: Array<{ title: string; image: string; description: string }>;
-  sayDontSay: Array<{ topic: string; say: string; dontSay: string; why: string }>;
+  lede?: string;
+  groups: Array<{
+    id: string;
+    title: string;
+    links: ResourceLink[];
+  }>;
 }
 
 export interface LaunchDeliverable {

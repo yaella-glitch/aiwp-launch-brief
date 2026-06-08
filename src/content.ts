@@ -8,6 +8,7 @@ import customerJson from '../content/customer.json';
 import marketJson from '../content/market.json';
 import positioningJson from '../content/positioning.json';
 import launchJson from '../content/launch.json';
+import resourcesJson from '../content/resources.json';
 
 import type {
   Manifest,
@@ -19,6 +20,7 @@ import type {
   MarketContent,
   PositioningContent,
   LaunchContent,
+  ResourcesContent,
 } from './types';
 
 export const manifest = manifestJson as Manifest;
@@ -30,6 +32,7 @@ export const customer = customerJson as CustomerContent;
 export const market = marketJson as MarketContent;
 export const positioning = positioningJson as PositioningContent;
 export const launch = launchJson as LaunchContent;
+export const resources = resourcesJson as ResourcesContent;
 
 export function getRailSections(externalPreview: boolean) {
   return manifest.sections
