@@ -1,13 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { HighlightText } from '@/components/HighlightText';
+import { GistOrbit } from '@/components/GistOrbit';
 import { background } from '@/content';
 
 /**
- * Background section — title + paragraphs + a smaller HighlightText
- * accent on the closing line that connects back to the vision.
- *
- * Uses the same outer container width (1400px) as every other section;
- * the reading column is constrained to max-w-3xl inside.
+ * Background section — title + 2-3 sentence gist story + the gist visual
+ * (radial orbital: Humans+Agents at center, 5 wrapper concepts orbiting).
  */
 export function Background() {
   const reduce = useReducedMotion();
@@ -19,6 +17,7 @@ export function Background() {
       className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
+        {/* Header column — narrower for readability */}
         <div className="max-w-3xl">
           <motion.h2
             initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
@@ -30,30 +29,30 @@ export function Background() {
             {background.title}
           </motion.h2>
 
-          <div className="mt-8 space-y-5">
-            {background.paragraphs.map((p, i) => (
-              <motion.p
-                key={i}
-                initial={reduce ? undefined : { opacity: 0, y: 8 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.7, delay: 0.1 + i * 0.08 }}
-                className="text-base leading-relaxed text-muted md:text-lg"
-              >
-                {p}
-              </motion.p>
-            ))}
-          </div>
+          <motion.p
+            initial={reduce ? undefined : { opacity: 0, y: 8 }}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="mt-8 text-base leading-relaxed text-muted md:text-lg"
+          >
+            {background.story}
+          </motion.p>
 
           <motion.p
             initial={reduce ? undefined : { opacity: 0, y: 8 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-10 font-display text-lg font-semibold leading-snug text-ink md:text-xl"
+            transition={{ duration: 0.7, delay: 0.25 }}
+            className="mt-8 font-display text-lg font-semibold leading-snug text-ink md:text-xl"
           >
-            <HighlightText duration={1.4} delay={0.4}>{background.marqueeText}</HighlightText>
+            <HighlightText duration={1.4} delay={0.4}>{background.highlight}</HighlightText>
           </motion.p>
+        </div>
+
+        {/* Gist visual */}
+        <div className="mt-20 md:mt-24">
+          <GistOrbit center={background.gist.center} nodes={background.gist.nodes} />
         </div>
       </div>
     </section>

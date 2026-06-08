@@ -44,10 +44,23 @@ export interface HeroContent {
   launchDate: string;
 }
 
+export interface GistOrbitNode {
+  id: string;
+  title: string;
+  summary: string;
+  detail: string;
+}
+
 export interface BackgroundContent {
   title: string;
-  paragraphs: string[];
-  marqueeText: string;
+  /** Short 2-3 sentence gist of the launch. */
+  story: string;
+  /** Highlighted closing line (painted-marker accent). */
+  highlight: string;
+  gist: {
+    center: { title: string; tagline: string };
+    nodes: GistOrbitNode[];
+  };
 }
 
 /** A single capability card — has text + a media slot (image or video). */
