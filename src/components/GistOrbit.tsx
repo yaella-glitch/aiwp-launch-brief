@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Bot,
   MessageSquare,
@@ -12,27 +12,18 @@ import {
 import { cn, withBase } from '@/lib/utils';
 import type { GistOrbitNode } from '@/types';
 
-/** 6 mixed avatars (humans + stylized agents) shown inside the center plate. */
-const CENTER_AVATARS = [
-  '/center/avatar-1.avif',
-  '/center/avatar-2.avif',
-  '/center/avatar-3.avif',
-  '/center/avatar-4.avif',
-  '/center/avatar-9.avif',
-  '/center/avatar-10.avif',
-];
-
 /**
- * GistOrbit — the visual centerpiece of the Background section.
+ * GistOrbit — visual centerpiece of the Background section.
  *
- * Center: a bold rounded-rect (NOT a circle) anchoring "Humans + Agents".
- * Orbit: 5 nodes evenly spaced around a violet ring. Each clickable, opening
- * a detail card below the visual.
+ * Behavior (per reference: 21st.dev radial-orbital-timeline):
+ *  - The orbit AUTO-ROTATES continuously when no node is selected.
+ *  - Click a node → rotation pauses, the orbit snaps that node to the top
+ *    of the ring, and a compact detail card appears directly below it.
+ *  - Click again, click the X, or click outside → reset (rotation resumes).
  *
- * Implementation note: layout (positioning) is done with a static wrapper div
- * so framer-motion's transform-based animations (scale/x/y) don't stomp on
- * placement. Each orbit node is `position: absolute` with left/top set by
- * trigonometry, and the inner motion.button only animates opacity + scale.
+ * Center: a bold rounded-rect anchor for "Humans + Agents" (with a
+ * cluster of overlapping avatars). Fades to ~30% while a node is open so
+ * the card has clear space.
  */
 
 interface GistOrbitProps {
@@ -48,14 +39,51 @@ const iconByNodeId: Record<string, LucideIcon> = {
   governance: ShieldCheck,
 };
 
-const RADIUS = 220; // px — orbit radius for the 5 nodes
-const STAGE = 640; // px — square stage height; width scales to container
+/** 6 mixed avatars (humans + stylized agents) shown inside the center plate. */
+const CENTER_AVATARS = [
+  '/center/avatar-1.avif',
+  '/center/avatar-2.avif',
+  '/center/avatar-3.avif',
+  '/center/avatar-4.avif',
+  '/center/avatar-9.avif',
+  '/center/avatar-10.avif',
+];
+
+const RADIUS = 220; // px — orbit radius for the nodes
+const STAGE = 640;  // px — square stage height
 
 export function GistOrbit({ center, nodes }: GistOrbitProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [rotation, setRotation] = useState(0);
   const reduce = useReducedMotion();
 
-  const activeNode = nodes.find((n) => n.id === activeId);
+  const autoRotate = activeId === null;
+
+  // Auto-rotate continuously while nothing is selected.
+  useEffect(() => {
+    if (!autoRotate || reduce) return;
+    const id = setInterval(() => {
+      setRotation((r) => (r + 0.25) % 360);
+    }, 50);
+    return () => clearInterval(id);
+  }, [autoRotate, reduce]);
+
+  function selectNode(id: string) {
+    if (activeId === id) {
+      setActiveId(null);
+      return;
+    }
+    const idx = nodes.findIndex((n) => n.id === id);
+    if (idx < 0) return;
+    // Snap so this node moves to the top (-90°).
+    const targetRotation = -(idx / nodes.length) * 360;
+    setRotation(targetRotation);
+    setActiveId(id);
+  }
+
+  function closeActive() {
+    setActiveId(null);
+  }
 
   return (
     <div className="relative w-full">
@@ -63,14 +91,18 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
       <div
         className="relative mx-auto hidden w-full max-w-[760px] md:block"
         style={{ height: STAGE }}
+        onClick={(e) => {
+          // Click on the empty stage closes the active card.
+          if (e.target === e.currentTarget) closeActive();
+        }}
       >
-        {/* Soft radial glow behind the system */}
+        {/* Soft radial glow */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 [background:radial-gradient(circle_at_center,rgba(165,138,255,0.14),transparent_60%)]"
+          className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_center,rgba(165,138,255,0.14),transparent_60%)]"
         />
 
-        {/* Orbit ring (static positioning, opacity-only animation) */}
+        {/* Orbit ring */}
         <motion.div
           initial={reduce ? undefined : { opacity: 0 }}
           whileInView={reduce ? undefined : { opacity: 1 }}
@@ -88,13 +120,13 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
           <div className="absolute inset-2 rounded-full border border-white/[0.05]" />
         </motion.div>
 
-        {/* Connector lines from center to each node */}
+        {/* Connector lines from center to each node (live with rotation) */}
         <svg
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full"
         >
           {nodes.map((_, i) => {
-            const { x, y } = nodePosition(i, nodes.length);
+            const { x, y } = nodePosition(i, nodes.length, rotation);
             return (
               <line
                 key={i}
@@ -110,38 +142,37 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
           })}
         </svg>
 
-        {/* Center plate — positioned by wrapper, animated inside */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+        {/* Center plate — fades when a node is active */}
+        <div
+          className={cn(
+            'pointer-events-none absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500',
+            activeId ? 'opacity-25' : 'opacity-100',
+          )}
+        >
           <CenterPlate title={center.title} tagline={center.tagline} reduce={!!reduce} />
         </div>
 
         {/* Nodes */}
         {nodes.map((node, i) => {
-          const { x, y } = nodePosition(i, nodes.length);
+          const { x, y } = nodePosition(i, nodes.length, rotation);
           const Icon = iconByNodeId[node.id] ?? Bot;
           const isActive = activeId === node.id;
 
           return (
             <div
               key={node.id}
-              className="absolute z-10"
+              className={cn(
+                'absolute left-1/2 top-1/2 ease-out',
+                !reduce && 'transition-transform duration-700',
+                isActive ? 'z-40' : 'z-10',
+              )}
               style={{
-                left: `calc(50% + ${x}px)`,
-                top: `calc(50% + ${y}px)`,
-                transform: 'translate(-50%, -50%)',
+                transform: `translate(calc(${x}px - 50%), calc(${y}px - 50%))`,
               }}
             >
-              <motion.button
+              <button
                 type="button"
-                onClick={() => setActiveId(isActive ? null : node.id)}
-                initial={reduce ? undefined : { opacity: 0, scale: 0.6 }}
-                whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{
-                  duration: 0.55,
-                  delay: 0.3 + i * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                onClick={() => selectNode(node.id)}
                 aria-pressed={isActive}
                 aria-label={`${node.title} — click to read more`}
                 className={cn(
@@ -182,29 +213,30 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
                 >
                   {node.title}
                 </span>
-              </motion.button>
+              </button>
+
+              {/* Compact detail card — appears below the node (which is now at top) */}
+              {isActive && (
+                <motion.div
+                  initial={reduce ? undefined : { opacity: 0, y: -8, scale: 0.96 }}
+                  animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute left-1/2 top-full mt-4 w-72 -translate-x-1/2"
+                >
+                  <CompactCard node={node} onClose={closeActive} />
+                  {/* Connector tick from node to card */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -top-3 left-1/2 h-3 w-px -translate-x-1/2 bg-accent/50"
+                  />
+                </motion.div>
+              )}
             </div>
           );
         })}
       </div>
 
-      {/* Active node card — desktop only, below the orbit */}
-      <AnimatePresence mode="wait">
-        {activeNode && (
-          <motion.div
-            key={activeNode.id}
-            initial={reduce ? undefined : { opacity: 0, y: 14 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0, y: 14 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto -mt-4 hidden max-w-2xl md:block"
-          >
-            <NodeCard node={activeNode} onClose={() => setActiveId(null)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* --- Mobile: stacked card grid --- */}
+      {/* --- Mobile: stacked card grid (orbit isn't useful at small width) --- */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:hidden">
         <div className="relative col-span-full overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/15 via-canvas to-canvas p-7">
           <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_20%,rgba(165,138,255,0.18),transparent_60%)]" />
@@ -226,10 +258,7 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
         {nodes.map((node) => {
           const Icon = iconByNodeId[node.id] ?? Bot;
           return (
-            <div
-              key={node.id}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
-            >
+            <div key={node.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-canvas/80">
                 <Icon className="h-5 w-5 text-accent" aria-hidden="true" />
               </span>
@@ -246,9 +275,9 @@ export function GistOrbit({ center, nodes }: GistOrbitProps) {
 
 /* ---------- helpers ---------- */
 
-function nodePosition(index: number, total: number) {
-  // Start at top (-90deg), distribute evenly clockwise.
-  const angleDeg = -90 + (index / total) * 360;
+function nodePosition(index: number, total: number, rotationDeg: number) {
+  // Start at top (-90°), distribute evenly clockwise, add live rotation.
+  const angleDeg = -90 + (index / total) * 360 + rotationDeg;
   const angleRad = (angleDeg * Math.PI) / 180;
   return {
     x: RADIUS * Math.cos(angleRad),
@@ -271,10 +300,10 @@ function CenterPlate({
       whileInView={reduce ? undefined : { opacity: 1 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      className="pointer-events-auto relative"
+      className="relative"
     >
       <div className="relative">
-        {/* Pulse halo — uses scale + opacity but on a self-contained absolute child */}
+        {/* Pulse halo */}
         <motion.span
           aria-hidden="true"
           initial={{ opacity: 0.4, scale: 1 }}
@@ -288,7 +317,6 @@ function CenterPlate({
             {/* Overlapping avatar cluster — center 2 are larger for hierarchy */}
             <div className="mb-4 flex items-center justify-center -space-x-2">
               {CENTER_AVATARS.map((src, i) => {
-                // Center 2 nudge larger; outer ones smaller.
                 const isCenter = i === 2 || i === 3;
                 const isFlank = i === 1 || i === 4;
                 return (
@@ -299,12 +327,7 @@ function CenterPlate({
                       isCenter ? 'h-14 w-14 z-10' : isFlank ? 'h-11 w-11' : 'h-9 w-9 opacity-90',
                     )}
                   >
-                    <img
-                      src={withBase(src)}
-                      alt=""
-                      className="h-full w-full object-cover"
-                      draggable={false}
-                    />
+                    <img src={withBase(src)} alt="" className="h-full w-full object-cover" draggable={false} />
                   </span>
                 );
               })}
@@ -320,22 +343,27 @@ function CenterPlate({
   );
 }
 
-function NodeCard({ node, onClose }: { node: GistOrbitNode; onClose: () => void }) {
+function CompactCard({ node, onClose }: { node: GistOrbitNode; onClose: () => void }) {
   return (
-    <div className="relative rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/12 via-canvas to-canvas p-7 shadow-card-lg">
-      <div className="absolute inset-0 rounded-3xl [background:radial-gradient(circle_at_30%_0%,rgba(165,138,255,0.18),transparent_55%)]" />
+    <div className="relative rounded-2xl border border-accent/40 bg-canvas/95 p-5 shadow-card-lg backdrop-blur">
+      <div className="absolute inset-0 rounded-2xl [background:radial-gradient(circle_at_30%_0%,rgba(165,138,255,0.16),transparent_55%)]" />
       <button
         type="button"
-        onClick={onClose}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
         aria-label="Close"
-        className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full border border-white/15 bg-canvas/60 text-muted transition-colors hover:bg-canvas/90 hover:text-ink"
+        className="absolute right-3 top-3 grid h-6 w-6 place-items-center rounded-full border border-white/15 bg-canvas/60 text-muted transition-colors hover:bg-canvas hover:text-ink"
       >
-        <X className="h-4 w-4" aria-hidden="true" />
+        <X className="h-3 w-3" aria-hidden="true" />
       </button>
       <div className="relative">
-        <h4 className="font-display text-2xl font-semibold text-ink">{node.title}</h4>
-        <p className="mt-2 text-sm font-medium text-accent/90">{node.summary}</p>
-        <p className="mt-4 text-base leading-relaxed text-ink/85">{node.detail}</p>
+        <h4 className="font-display text-base font-semibold leading-tight text-ink">
+          {node.title}
+        </h4>
+        <p className="mt-1.5 text-xs font-medium text-accent/90">{node.summary}</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink/85">{node.detail}</p>
       </div>
     </div>
   );
