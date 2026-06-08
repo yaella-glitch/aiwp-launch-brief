@@ -39,14 +39,19 @@ const iconByNodeId: Record<string, LucideIcon> = {
   governance: ShieldCheck,
 };
 
-/** 6 mixed avatars (humans + stylized agents). */
+/**
+ * Avatars in the center plate. Ordered intentionally:
+ *   - Outer (positions 0, 1, 4, 5): agents (stylized characters)
+ *   - Inner (positions 2, 3): humans (real photos)
+ * If a particular file lands on the wrong side, swap entries here.
+ */
 const CENTER_AVATARS = [
-  '/center/avatar-1.avif',
-  '/center/avatar-2.avif',
-  '/center/avatar-3.avif',
-  '/center/avatar-4.avif',
-  '/center/avatar-9.avif',
-  '/center/avatar-10.avif',
+  '/center/avatar-4.avif',   // agent — left edge
+  '/center/avatar-9.avif',   // agent — left flank
+  '/center/avatar-1.avif',   // human — center
+  '/center/avatar-2.avif',   // human — center
+  '/center/avatar-3.avif',   // human — center
+  '/center/avatar-10.avif',  // agent — right edge
 ];
 
 const RADIUS = 250; // px — orbit radius (more breathing room around the plate)
