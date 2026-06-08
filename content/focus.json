@@ -1,0 +1,24 @@
+{
+  "title": "What we lead with externally.",
+  "lede": "Of everything we're shipping, these are the moments we lead with — the headlines for go-to-market.",
+  "items": [
+    {
+      "id": "lead-1",
+      "title": "Lead headline #1",
+      "description": "Short, sharp framing — what this means to the customer and why it matters now.",
+      "image": "/focus/lead-1.png"
+    },
+    {
+      "id": "lead-2",
+      "title": "Lead headline #2",
+      "description": "Short, sharp framing — what this means to the customer and why it matters now.",
+      "image": "/focus/lead-2.png"
+    },
+    {
+      "id": "lead-3",
+      "title": "Lead headline #3",
+      "description": "Short, sharp framing — what this means to the customer and why it matters now.",
+      "image": "/focus/lead-3.png"
+    }
+  ]
+}

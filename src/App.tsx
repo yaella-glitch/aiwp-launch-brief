@@ -6,6 +6,7 @@ import { Hero } from '@/sections/Hero';
 import { LaunchDate } from '@/sections/LaunchDate';
 import { Background } from '@/sections/Background';
 import { ProductOverview } from '@/sections/ProductOverview';
+import { Focus } from '@/sections/Focus';
 import { Customer } from '@/sections/Customer';
 import { Market } from '@/sections/Market';
 import { Positioning } from '@/sections/Positioning';
@@ -58,6 +59,8 @@ function App() {
               return <Background key={s.id} />;
             case 'product-overview':
               return <ProductOverview key={s.id} />;
+            case 'focus':
+              return <Focus key={s.id} />;
             case 'customer':
               return <Customer key={s.id} />;
             case 'market':

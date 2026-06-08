@@ -28,6 +28,29 @@
       "description": "Short paragraph. Edit me in content/customer.json."
     }
   ],
+  "useCases": [
+    {
+      "id": "uc-1",
+      "title": "Use case #1",
+      "scenario": "The customer scenario — short and concrete.",
+      "outcome": "The shift it creates.",
+      "image": "/usecases/uc-1.png"
+    },
+    {
+      "id": "uc-2",
+      "title": "Use case #2",
+      "scenario": "The customer scenario — short and concrete.",
+      "outcome": "The shift it creates.",
+      "image": "/usecases/uc-2.png"
+    },
+    {
+      "id": "uc-3",
+      "title": "Use case #3",
+      "scenario": "The customer scenario — short and concrete.",
+      "outcome": "The shift it creates.",
+      "image": "/usecases/uc-3.png"
+    }
+  ],
   "beforeAfter": [
     {
       "id": "ba-1",

@@ -5,6 +5,7 @@ export type SectionId =
   | 'launch-date'
   | 'background'
   | 'product-overview'
+  | 'focus'
   | 'customer'
   | 'market'
   | 'positioning'
@@ -94,7 +95,19 @@ export interface ProductOverviewContent {
   lede: string;
   /** Top-level tabs of grouped capability cards. */
   tabs: CapabilityTab[];
-  useCases: UseCase[];
+}
+
+export interface FocusItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface FocusContent {
+  title: string;
+  lede: string;
+  items: FocusItem[];
 }
 
 export interface Persona {
@@ -119,6 +132,7 @@ export interface CustomerContent {
   title: string;
   lede: string;
   personas: Persona[];
+  useCases: UseCase[];
   beforeAfter: BeforeAfter[];
 }
 
