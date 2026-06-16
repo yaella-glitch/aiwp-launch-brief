@@ -27,7 +27,7 @@ export function Background() {
           {background.title}
         </motion.h2>
 
-        <div className="mt-12 grid grid-cols-1 items-start gap-10 md:mt-16 md:grid-cols-[1.4fr_1fr] md:gap-14 lg:gap-20">
+        <div className="mt-12 grid grid-cols-1 items-center gap-10 md:mt-16 md:grid-cols-[1fr_1.05fr] md:gap-12 lg:gap-16">
           {/* Left: story + highlight */}
           <div>
             <motion.p
@@ -51,11 +51,9 @@ export function Background() {
             </motion.p>
           </div>
 
-          {/* Right: stat carousel */}
+          {/* Right: slide carousel */}
           {background.carousel && background.carousel.length > 0 && (
-            <div className="md:pl-2">
-              <BackgroundCarousel slides={background.carousel} />
-            </div>
+            <BackgroundCarousel slides={background.carousel} />
           )}
         </div>
       </div>

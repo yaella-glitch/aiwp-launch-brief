@@ -57,12 +57,16 @@ export interface GistOrbitNode {
 
 export interface BackgroundCarouselSlide {
   id: string;
-  /** Layout kind — 'stat' for big number, 'visual' for icon arrangement. */
-  kind: 'stat' | 'visual';
-  /** Headline number / phrase, only when kind === 'stat'. */
+  /** Drop an image at /public/<image> to use a real slide. When set, the
+   *  fallback below is ignored. */
+  image?: string;
+  /** Caption shown beneath the slide. */
+  caption?: string;
+  /** Fallback layout when no image is provided. */
+  kind?: 'stat' | 'visual';
+  /** Big number / phrase used when kind === 'stat'. */
   stat?: string;
-  caption: string;
-  /** Visual tone — 'warning' (amber/rose) or 'accent' (violet). */
+  /** Visual tone for the fallback — 'warning' (amber) or 'accent' (violet). */
   tone?: 'warning' | 'accent';
 }
 
