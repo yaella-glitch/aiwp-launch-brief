@@ -1,6 +1,7 @@
 /** Content loader. JSON imported at build time — fully static. */
 import manifestJson from '../content/manifest.json';
 import heroJson from '../content/hero.json';
+import bottomLineJson from '../content/bottomLine.json';
 import backgroundJson from '../content/background.json';
 import productJson from '../content/productOverview.json';
 import focusJson from '../content/focus.json';
@@ -13,6 +14,7 @@ import resourcesJson from '../content/resources.json';
 import type {
   Manifest,
   HeroContent,
+  BottomLineContent,
   BackgroundContent,
   ProductOverviewContent,
   FocusContent,
@@ -25,6 +27,7 @@ import type {
 
 export const manifest = manifestJson as Manifest;
 export const hero = heroJson as HeroContent;
+export const bottomLine = bottomLineJson as BottomLineContent;
 export const background = backgroundJson as BackgroundContent;
 export const productOverview = productJson as ProductOverviewContent;
 export const focus = focusJson as FocusContent;

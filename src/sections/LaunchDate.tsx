@@ -15,14 +15,15 @@ export function LaunchDate() {
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <motion.p
-          initial={reduce ? undefined : { opacity: 0, y: 24, filter: 'blur(12px)' }}
+          initial={reduce ? undefined : { opacity: 0, y: 18, filter: 'blur(10px)' }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-[clamp(56px,11vw,160px)] font-bold leading-[0.95] tracking-[-0.03em] text-ink"
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display text-[clamp(28px,4vw,52px)] font-semibold leading-[1.1] tracking-tight text-ink"
         >
+          Product milestone is planned for{' '}
           <span className="bg-gradient-to-br from-violet-200 via-indigo-200 to-sky-300 bg-clip-text text-transparent">
-            Launching {launch.launchDate}.
+            {launch.launchDate}.
           </span>
         </motion.p>
       </div>

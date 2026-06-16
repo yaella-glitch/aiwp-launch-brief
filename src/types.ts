@@ -3,6 +3,7 @@
 export type SectionId =
   | 'hero'
   | 'launch-date'
+  | 'bottom-line'
   | 'background'
   | 'product-overview'
   | 'focus'
@@ -159,6 +160,13 @@ export interface MarketContent {
 
 /** Positioning section is now a Messaging Hierarchy. */
 export type PositioningContent = MessagingHierarchyContent;
+
+export interface BottomLineContent {
+  title: string;
+  lede?: string;
+  /** 3–5 short statements. Rendered as a numbered editorial list. */
+  points: string[];
+}
 
 export interface ResourceLink {
   label: string;

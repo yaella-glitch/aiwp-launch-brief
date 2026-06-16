@@ -4,6 +4,7 @@ import { TopBar } from '@/components/TopBar';
 import { Footer } from '@/components/Footer';
 import { Hero } from '@/sections/Hero';
 import { LaunchDate } from '@/sections/LaunchDate';
+import { BottomLine } from '@/sections/BottomLine';
 import { Background } from '@/sections/Background';
 import { ProductOverview } from '@/sections/ProductOverview';
 import { Focus } from '@/sections/Focus';
@@ -56,6 +57,8 @@ function App() {
               return <Hero key={s.id} />;
             case 'launch-date':
               return <LaunchDate key={s.id} />;
+            case 'bottom-line':
+              return <BottomLine key={s.id} />;
             case 'background':
               return <Background key={s.id} />;
             case 'product-overview':
