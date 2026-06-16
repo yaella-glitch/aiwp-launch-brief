@@ -162,7 +162,9 @@ function CarouselArrow({
 function CompetitorTile({ competitor }: { competitor: CompetitorCard }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors duration-300 hover:border-white/20 hover:bg-white/[0.05]">
-      <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/5">
+      {/* Image container — uses object-contain so portrait/landscape/square
+          competitor screenshots all show fully without cropping. */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-white/5 bg-gradient-to-br from-canvas to-white/[0.02] p-3">
         <CompetitorImage src={competitor.image} alt={competitor.title} />
       </div>
       <div className="flex flex-1 flex-col p-6">
@@ -179,7 +181,7 @@ function CompetitorImage({ src, alt }: { src: string; alt: string }) {
   const [ok, setOk] = useState<boolean | null>(null);
   if (ok === false || !src) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/12 via-indigo-500/6 to-sky-500/8">
+      <div className="flex h-full w-full items-center justify-center">
         <div className="text-center">
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
             <ImageIcon className="h-4 w-4 text-white/60" aria-hidden="true" />
@@ -196,7 +198,7 @@ function CompetitorImage({ src, alt }: { src: string; alt: string }) {
       onLoad={() => setOk(true)}
       onError={() => setOk(false)}
       className={cn(
-        'h-full w-full object-cover transition-transform duration-700 ease-cinematic group-hover:scale-[1.03]',
+        'h-full w-full object-contain transition-opacity duration-500',
         ok === null && 'opacity-0',
       )}
     />

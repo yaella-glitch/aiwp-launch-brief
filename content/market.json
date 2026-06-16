@@ -3,40 +3,46 @@
   "lede": "Where we sit against the alternatives — the players we measure ourselves against and what makes us distinct.",
   "competitors": [
     {
-      "id": "comp-1",
-      "title": "Competitor name",
-      "description": "Their angle — short, sharp. Why they're known, and where they fall short.",
-      "image": "/market/comp-1.png"
+      "id": "asana-gpt",
+      "title": "Asana x OpenAI",
+      "description": "Access Asana directly from ChatGPT.",
+      "image": "/market/Asana-GPT.png"
     },
     {
-      "id": "comp-2",
-      "title": "Competitor name",
-      "description": "Their angle — short, sharp.",
-      "image": "/market/comp-2.png"
+      "id": "asana-hp",
+      "title": "Asana new HP",
+      "description": "Promise to be the backbone for people & agent collab.",
+      "image": "/market/Asana-HP.png"
     },
     {
-      "id": "comp-3",
-      "title": "Competitor name",
-      "description": "Their angle — short, sharp.",
-      "image": "/market/comp-3.png"
+      "id": "notion-context",
+      "title": "Notion CEO's on context",
+      "description": "Position themselves as the database for agents.",
+      "image": "/market/Notion-context.png"
     },
     {
-      "id": "comp-4",
-      "title": "Competitor name",
-      "description": "Their angle — short, sharp.",
-      "image": "/market/comp-4.png"
+      "id": "notion-dev",
+      "title": "Notion's dev platform",
+      "description": "Talking directly to technical AI people.",
+      "image": "/market/Notion-dev.png"
     },
     {
-      "id": "comp-5",
-      "title": "Competitor name",
-      "description": "Their angle — short, sharp.",
-      "image": "/market/comp-5.png"
+      "id": "notion-fable",
+      "title": "Notion x Fable",
+      "description": "Launched it less than 24 hours from model launch.",
+      "image": "/market/notion-fable.png"
     },
     {
-      "id": "comp-6",
-      "title": "Competitor name",
-      "description": "Their angle — short, sharp.",
-      "image": "/market/comp-6.png"
+      "id": "notion-byoa",
+      "title": "Claude x Notion",
+      "description": "Bring Claude agents to Notion.",
+      "image": "/market/Notion-BYOA.png"
+    },
+    {
+      "id": "notion-managed",
+      "title": "Notion x managed agents",
+      "description": "Delegate work to Claude from Notion, using Claude's managed agents.",
+      "image": "/market/Notion-managed.png"
     }
   ]
 }
