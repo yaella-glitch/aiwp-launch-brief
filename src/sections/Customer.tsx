@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { User } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { ArrowRight } from 'lucide-react';
+import { ImageCompare } from '@/components/ImageCompare';
 import { ActionLink } from '@/components/ActionLink';
 import { FlipCard } from '@/components/FlipCard';
 import { customer } from '@/content';
@@ -32,41 +32,34 @@ export function Customer() {
         <PersonasGrid />
 
 
-        {/* Pains & solutions — before / after as TWO side-by-side cards. */}
+        {/* Pains & solutions */}
         <div className="mt-24">
           <ScrollReveal>
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               The pains &amp; solutions.
             </h3>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              What changes for the customer, theme by theme.
+              What changes for the customer, theme by theme. Drag any handle to compare.
             </p>
           </ScrollReveal>
 
-          <div className="mt-12 space-y-16 md:space-y-20">
+          <div className="h-12" />
+
+          <div className="space-y-16 md:space-y-20">
             {customer.beforeAfter.map((ba, i) => (
               <ScrollReveal key={ba.id} delay={0.04 * i}>
-                <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10">
-                  {/* Theme description */}
+                <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
                   <div className="lg:col-span-3">
                     <h4 className="font-display text-xl font-semibold text-ink md:text-2xl">{ba.theme}</h4>
                     <p className="mt-3 text-base leading-relaxed text-muted">{ba.description}</p>
                   </div>
-
-                  {/* Side-by-side: Before → After */}
                   <div className="lg:col-span-9">
-                    <div className="relative grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 md:gap-6">
-                      <BeforeCard image={ba.beforeImage} theme={ba.theme} />
-                      <AfterCard image={ba.afterImage} theme={ba.theme} />
-
-                      {/* Arrow badge sitting between the two cards on desktop */}
-                      <span
-                        aria-hidden="true"
-                        className="absolute left-1/2 top-1/2 z-10 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-accent/40 bg-canvas shadow-[0_0_24px_-8px_rgba(165,138,255,0.6)] md:grid"
-                      >
-                        <ArrowRight className="h-4 w-4 text-accent" aria-hidden="true" />
-                      </span>
-                    </div>
+                    <ImageCompare
+                      beforeImage={ba.beforeImage}
+                      afterImage={ba.afterImage}
+                      altBefore={`${ba.theme} — before`}
+                      altAfter={`${ba.theme} — after`}
+                    />
                   </div>
                 </div>
               </ScrollReveal>
@@ -100,87 +93,6 @@ export function Customer() {
         )}
       </div>
     </section>
-  );
-}
-
-/* ---------- before / after side-by-side cards ---------- */
-
-function BeforeCard({ image, theme }: { image: string; theme: string }) {
-  return (
-    <PainCard
-      tone="rose"
-      label="Before"
-      image={image}
-      alt={`${theme} — before`}
-    />
-  );
-}
-
-function AfterCard({ image, theme }: { image: string; theme: string }) {
-  return (
-    <PainCard
-      tone="emerald"
-      label="After"
-      image={image}
-      alt={`${theme} — after`}
-    />
-  );
-}
-
-function PainCard({
-  tone,
-  label,
-  image,
-  alt,
-}: {
-  tone: 'rose' | 'emerald';
-  label: string;
-  image: string;
-  alt: string;
-}) {
-  const [ok, setOk] = useState<boolean | null>(null);
-  const borderTone =
-    tone === 'rose' ? 'border-rose-300/25' : 'border-emerald-300/25';
-  const labelTone =
-    tone === 'rose'
-      ? 'border-rose-300/35 bg-rose-500/[0.12] text-rose-200'
-      : 'border-emerald-300/35 bg-emerald-500/[0.12] text-emerald-200';
-
-  return (
-    <div
-      className={cn(
-        'relative overflow-hidden rounded-3xl border bg-white/[0.02]',
-        borderTone,
-      )}
-    >
-      {/* Label pill — top-left */}
-      <span
-        className={cn(
-          'absolute left-4 top-4 z-10 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em]',
-          labelTone,
-        )}
-      >
-        {label}
-      </span>
-
-      <div className="aspect-[16/10] w-full">
-        {ok === false || !image ? (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/8 via-canvas to-canvas">
-            <p className="px-4 text-center font-mono text-[10px] text-white/40">
-              {image}
-            </p>
-          </div>
-        ) : (
-          <img
-            src={withBase(image)}
-            alt={alt}
-            className={cn('h-full w-full object-cover', ok === null && 'opacity-0')}
-            onLoad={() => setOk(true)}
-            onError={() => setOk(false)}
-          />
-        )}
-      </div>
-    </div>
   );
 }
 

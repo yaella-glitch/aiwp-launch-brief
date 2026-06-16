@@ -1,82 +1,42 @@
 {
   "title": "Competitive overview",
-  "lede": "Where we sit against the alternatives — by category. Each bucket lives in its own world; we're the one that ties them together.",
-  "tabs": [
+  "lede": "Where we sit against the alternatives — the players we measure ourselves against and what makes us distinct.",
+  "competitors": [
     {
-      "id": "classic",
-      "title": "Classic",
-      "tagline": "The work platforms our customers already know — adding AI on top of an existing surface.",
-      "cards": [
-        {
-          "id": "classic-1",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp. Why they're known, and where they fall short.",
-          "media": { "type": "image", "src": "/market/classic/1.png", "alt": "Competitor screenshot" }
-        },
-        {
-          "id": "classic-2",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp.",
-          "media": { "type": "image", "src": "/market/classic/2.png", "alt": "Competitor screenshot" }
-        }
-      ]
+      "id": "comp-1",
+      "title": "Competitor name",
+      "description": "Their angle — short, sharp. Why they're known, and where they fall short.",
+      "image": "/market/comp-1.png"
     },
     {
-      "id": "agent-builders",
-      "title": "Agent builders",
-      "tagline": "Tools built for one job: standing up agents. Powerful — but they live outside the work.",
-      "cards": [
-        {
-          "id": "builders-1",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp.",
-          "media": { "type": "image", "src": "/market/agent-builders/1.png", "alt": "Competitor screenshot" }
-        },
-        {
-          "id": "builders-2",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp.",
-          "media": { "type": "image", "src": "/market/agent-builders/2.png", "alt": "Competitor screenshot" }
-        }
-      ]
+      "id": "comp-2",
+      "title": "Competitor name",
+      "description": "Their angle — short, sharp.",
+      "image": "/market/comp-2.png"
     },
     {
-      "id": "vertical-ai",
-      "title": "Vertical AI",
-      "tagline": "AI that goes deep on one function. Great for that team — but not the company.",
-      "cards": [
-        {
-          "id": "vertical-1",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp.",
-          "media": { "type": "image", "src": "/market/vertical-ai/1.png", "alt": "Competitor screenshot" }
-        },
-        {
-          "id": "vertical-2",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp.",
-          "media": { "type": "image", "src": "/market/vertical-ai/2.png", "alt": "Competitor screenshot" }
-        }
-      ]
+      "id": "comp-3",
+      "title": "Competitor name",
+      "description": "Their angle — short, sharp.",
+      "image": "/market/comp-3.png"
     },
     {
-      "id": "ai-leaders",
-      "title": "AI leaders",
-      "tagline": "Frontier model makers and assistants — the agents themselves, without the workplace around them.",
-      "cards": [
-        {
-          "id": "leaders-1",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp.",
-          "media": { "type": "image", "src": "/market/ai-leaders/1.png", "alt": "Competitor screenshot" }
-        },
-        {
-          "id": "leaders-2",
-          "title": "Competitor name",
-          "description": "Their angle — short, sharp.",
-          "media": { "type": "image", "src": "/market/ai-leaders/2.png", "alt": "Competitor screenshot" }
-        }
-      ]
+      "id": "comp-4",
+      "title": "Competitor name",
+      "description": "Their angle — short, sharp.",
+      "image": "/market/comp-4.png"
+    },
+    {
+      "id": "comp-5",
+      "title": "Competitor name",
+      "description": "Their angle — short, sharp.",
+      "image": "/market/comp-5.png"
+    },
+    {
+      "id": "comp-6",
+      "title": "Competitor name",
+      "description": "Their angle — short, sharp.",
+      "image": "/market/comp-6.png"
     }
   ]
 }

@@ -201,11 +201,18 @@ export interface CustomerContent {
   beforeAfter: BeforeAfter[];
 }
 
+export interface CompetitorCard {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
 export interface MarketContent {
   title: string;
   lede: string;
-  /** Competitor categories — same shape as ProductOverview tabs. */
-  tabs: CapabilityTab[];
+  /** Flat gallery of competitor cards — no category tabs. */
+  competitors: CompetitorCard[];
 }
 
 /** Positioning section is now a Messaging Hierarchy. */
