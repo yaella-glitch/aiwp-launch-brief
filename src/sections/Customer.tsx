@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { User } from 'lucide-react';
+import { ArrowUpRight, User } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { SpotlightCard } from '@/components/SpotlightCard';
 import { ImageCompare } from '@/components/ImageCompare';
 import { ActionLink } from '@/components/ActionLink';
 import { FlipCard } from '@/components/FlipCard';
@@ -29,15 +28,9 @@ export function Customer() {
           lede={customer.lede}
         />
 
-        {/* Personas — weighted grid: decision maker 40% · end-user technical 25%
-            · end-user business 25% · investor 10% (sums to 20fr). */}
-        <div className="mt-20 grid grid-cols-1 gap-6 md:grid-cols-[8fr_5fr_5fr_2fr] md:gap-6">
-          {customer.personas.map((p, i) => (
-            <ScrollReveal key={p.id} delay={0.04 * i}>
-              <PersonaCard persona={p} />
-            </ScrollReveal>
-          ))}
-        </div>
+        {/* Personas — 3 slots: Decision maker | End user (frame w/ 2 inside) | Investor */}
+        <PersonasGrid />
+
 
         {/* Pains & solutions */}
         <div className="mt-24">
@@ -166,80 +159,182 @@ function UseCaseSolution({ solution, features }: { solution: string; features: s
   );
 }
 
-function PersonaCard({ persona }: { persona: Persona }) {
-  const [imgOk, setImgOk] = useState<boolean | null>(null);
-  const isPrimary = persona.kind === 'primary';
-  const isSupporting = persona.kind === 'supporting';
+/* ---------- personas ---------- */
+
+function PersonasGrid() {
+  const decisionMaker = customer.personas.find((p) => p.kind === 'primary');
+  const endUserTech = customer.personas.find((p) => p.kind === 'end-user-technical');
+  const endUserBiz = customer.personas.find((p) => p.kind === 'end-user-business');
+  const investor = customer.personas.find((p) => p.kind === 'investor');
 
   return (
-    <SpotlightCard
+    <div className="mt-20 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[1fr_2fr_1fr]">
+      {decisionMaker && (
+        <ScrollReveal>
+          <PersonaCard persona={decisionMaker} />
+        </ScrollReveal>
+      )}
+
+      {(endUserTech || endUserBiz) && (
+        <ScrollReveal delay={0.06}>
+          <EndUserFrame technical={endUserTech} business={endUserBiz} />
+        </ScrollReveal>
+      )}
+
+      {investor && (
+        <ScrollReveal delay={0.12}>
+          <PersonaCard persona={investor} />
+        </ScrollReveal>
+      )}
+    </div>
+  );
+}
+
+function EndUserFrame({
+  technical,
+  business,
+}: {
+  technical?: Persona;
+  business?: Persona;
+}) {
+  return (
+    <div className="flex h-full flex-col rounded-3xl border border-white/15 bg-white/[0.015] p-5 md:p-6">
+      <div className="mb-5">
+        <h3 className="font-display text-lg font-semibold text-ink">End user</h3>
+        <p className="mt-1 text-xs text-muted">The people who live in monday day to day.</p>
+      </div>
+      <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2">
+        {technical && <PersonaCard persona={technical} variant="nested" />}
+        {business && <PersonaCard persona={business} variant="nested" />}
+      </div>
+    </div>
+  );
+}
+
+function PersonaCard({
+  persona,
+  variant = 'full',
+}: {
+  persona: Persona;
+  variant?: 'full' | 'nested';
+}) {
+  const isNested = variant === 'nested';
+  return (
+    <article
       className={cn(
-        'h-full',
-        isPrimary && 'border-accent/25 bg-accent/[0.04]',
-        isSupporting && 'border-white/8 bg-white/[0.015]',
+        'group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025]',
+        'transition-colors duration-300 hover:border-accent/30 hover:bg-white/[0.04]',
+        isNested ? 'p-5' : 'p-6 md:p-7',
       )}
     >
-      <div
+      {/* Read-more arrow — top-right, icon only */}
+      <button
+        type="button"
+        aria-label={`Read more about ${persona.name}`}
         className={cn(
-          'flex h-full flex-col',
-          isPrimary ? 'gap-6 p-9 md:p-11' : isSupporting ? 'gap-3 p-5 md:p-6' : 'gap-5 p-7 md:p-8',
+          'absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full',
+          'border border-white/15 bg-canvas/60 text-muted',
+          'transition-all duration-200 hover:border-accent/50 hover:bg-accent/[0.12] hover:text-accent',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
         )}
       >
-        {/* Photo */}
-        <div
-          className={cn(
-            'relative shrink-0 overflow-hidden rounded-2xl ring-1',
-            isPrimary
-              ? 'h-32 w-32 ring-accent/40 shadow-[0_0_40px_-12px_rgba(165,138,255,0.55)]'
-              : isSupporting
-                ? 'h-14 w-14 ring-white/12'
-                : 'h-24 w-24 ring-white/15',
-          )}
-        >
-          {imgOk !== false ? (
-            <img
-              src={withBase(persona.photo)}
-              alt={persona.name}
-              className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
-              onLoad={() => setImgOk(true)}
-              onError={() => setImgOk(false)}
-            />
-          ) : (
-            <div className="grid h-full w-full place-items-center bg-gradient-to-br from-violet-500/30 to-indigo-500/20">
-              <User
-                className={cn(
-                  isPrimary ? 'h-10 w-10' : isSupporting ? 'h-5 w-5' : 'h-8 w-8',
-                  'text-white/70',
-                )}
-                aria-hidden="true"
-              />
-            </div>
-          )}
-        </div>
+        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+      </button>
 
-        {/* Name + role */}
-        <div>
-          <h3
-            className={cn(
-              'font-display font-semibold text-ink',
-              isPrimary ? 'text-3xl md:text-[32px]' : isSupporting ? 'text-base' : 'text-xl md:text-2xl',
-            )}
-          >
-            {persona.name}
-          </h3>
-          <p className={cn('mt-1 text-muted', isSupporting ? 'text-xs' : 'text-sm')}>{persona.role}</p>
-        </div>
+      {/* Photo — uniform size across all cards */}
+      <PersonaPhoto persona={persona} />
 
-        {/* Description */}
-        <p
-          className={cn(
-            'leading-relaxed text-muted',
-            isPrimary ? 'text-lg' : isSupporting ? 'text-xs' : 'text-base',
-          )}
-        >
-          {persona.description}
-        </p>
+      {/* Name + role */}
+      <div className="mt-5">
+        <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">
+          {persona.name}
+        </h4>
+        <p className="mt-1 text-sm text-muted">{persona.role}</p>
       </div>
-    </SpotlightCard>
+
+      {/* Who are they */}
+      {persona.whoAreThey.length > 0 && (
+        <div className="mt-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+            Who are they
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {persona.whoAreThey.map((line, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm leading-relaxed text-ink/85">
+                <span
+                  aria-hidden="true"
+                  className="mt-[8px] inline-block h-1 w-1 shrink-0 rounded-full bg-accent/70"
+                />
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* What they care about */}
+      {persona.whatTheyCareAbout && (
+        <div className="mt-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+            What they care about
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-ink/85">
+            {persona.whatTheyCareAbout}
+          </p>
+        </div>
+      )}
+
+      {/* Messaging goal */}
+      {persona.messagingGoal && (
+        <div className="mt-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent/80">
+            Our messaging goal
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-ink/90">
+            {persona.messagingGoal}
+          </p>
+        </div>
+      )}
+
+      {/* Features tags */}
+      {persona.features.length > 0 && (
+        <div className="mt-auto pt-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+            Features
+          </p>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {persona.features.map((f) => (
+              <span
+                key={f}
+                className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-2.5 py-1 text-[11px] font-medium text-ink/85"
+              >
+                {f}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </article>
+  );
+}
+
+function PersonaPhoto({ persona }: { persona: Persona }) {
+  const [imgOk, setImgOk] = useState<boolean | null>(null);
+  return (
+    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl ring-1 ring-white/15">
+      {imgOk !== false ? (
+        <img
+          src={withBase(persona.photo)}
+          alt={persona.name}
+          className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
+          onLoad={() => setImgOk(true)}
+          onError={() => setImgOk(false)}
+        />
+      ) : (
+        <div className="grid h-full w-full place-items-center bg-gradient-to-br from-violet-500/30 to-indigo-500/20">
+          <User className="h-8 w-8 text-white/70" aria-hidden="true" />
+        </div>
+      )}
+    </div>
   );
 }

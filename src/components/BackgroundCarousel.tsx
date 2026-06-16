@@ -56,8 +56,8 @@ export function BackgroundCarousel({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Slide */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl border border-white/10 bg-canvas shadow-card-lg">
+      {/* Slide — 16:9 to match standard presentation slide ratio */}
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-white/10 bg-canvas shadow-card-lg">
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
@@ -144,7 +144,7 @@ function SlideImage({
     <img
       src={withBase(src)}
       alt={alt}
-      className={cn('h-full w-full object-cover', ok === null && 'opacity-0')}
+      className={cn('h-full w-full object-contain', ok === null && 'opacity-0')}
       onLoad={() => setOk(true)}
       onError={() => setOk(false)}
     />

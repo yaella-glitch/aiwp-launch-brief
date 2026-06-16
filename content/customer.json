@@ -9,31 +9,59 @@
       "name": "Decision maker",
       "role": "Buyer / champion inside the org",
       "photo": "/personas/decision-maker.png",
-      "description": "The person who signs off on adopting monday's AI Work Platform — cares about org-wide ROI, risk, and team adoption."
+      "whoAreThey": [
+        "Holds the budget — the bottleneck or the enabler for org-wide AI adoption.",
+        "Could be from any department: Marketing, IT, Sales, Projects…",
+        "IT persona leading the tech stack in the organization.",
+        "Executives such as CIO, COO, CMO, VP of Operations or HR."
+      ],
+      "whatTheyCareAbout": "Leverage AI to increase organizational efficiency and business outcomes — without runaway spend or risk.",
+      "messagingGoal": "Push for top-down buy-in.",
+      "features": ["Trust", "monday DB", "Human-agent collaboration", "MCP & API", "Ecosystem"]
     },
     {
       "id": "end-user-technical",
-      "kind": "secondary",
+      "kind": "end-user-technical",
       "name": "End user — technical",
       "role": "Engineer, RevOps, automations owner",
       "photo": "/personas/end-user-technical.png",
-      "description": "Hands-on with agents and integrations. Speaks MCP, APIs, workflows. Wants depth and control."
+      "whoAreThey": [
+        "Hands-on builder, lives in agents and integrations.",
+        "Speaks the technical language: MCP, APIs, webhooks.",
+        "Wants depth and control over what agents can do."
+      ],
+      "whatTheyCareAbout": "Agents that scale with their org's stack — no black boxes.",
+      "messagingGoal": "Prove technical depth — show MCP, APIs, and BYOA in action.",
+      "features": ["MCP", "APIs", "Workflows", "BYOA"]
     },
     {
       "id": "end-user-business",
-      "kind": "secondary",
+      "kind": "end-user-business",
       "name": "End user — business",
       "role": "PM, marketer, ops, sales",
       "photo": "/personas/end-user-business.png",
-      "description": "Lives in monday day-to-day. Wants agents that just work and make their week lighter."
+      "whoAreThey": [
+        "Lives in monday every day.",
+        "Wants agents that just work.",
+        "Cares about outcomes, not infrastructure."
+      ],
+      "whatTheyCareAbout": "Agents that make their week lighter — without setup or technical lift.",
+      "messagingGoal": "Show real outcomes and concrete day-to-day examples.",
+      "features": ["Workspace 2.0", "Agents in meetings", "Collaborative agents"]
     },
     {
       "id": "investor",
-      "kind": "supporting",
+      "kind": "investor",
       "name": "Investor",
       "role": "Analyst / shareholder",
       "photo": "/personas/investor.png",
-      "description": "Tracking the AI narrative."
+      "whoAreThey": [
+        "Tracking the AI narrative.",
+        "Watches for market signal and execution proof."
+      ],
+      "whatTheyCareAbout": "Vision-to-execution: monday delivering on the AI Work Platform promise.",
+      "messagingGoal": "Signal momentum, scale, and a defensible market position.",
+      "features": ["monday DB", "Ecosystem", "MCP"]
     }
   ],
   "useCases": [

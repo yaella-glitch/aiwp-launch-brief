@@ -168,12 +168,19 @@ export interface MessagingHierarchyContent {
 
 export interface Persona {
   id: string;
-  /** primary = decision maker, secondary = end user, supporting = investor */
-  kind: 'primary' | 'secondary' | 'supporting';
+  kind: 'primary' | 'end-user-technical' | 'end-user-business' | 'investor';
   name: string;
+  /** Short role label (e.g. "Buyer / champion inside the org"). */
   role: string;
   photo: string;
-  description: string;
+  /** Bullet list — who they are. */
+  whoAreThey: string[];
+  /** What they care about — one sentence. */
+  whatTheyCareAbout: string;
+  /** Our messaging goal — one sentence. */
+  messagingGoal: string;
+  /** Features they care about — rendered as tag pills. */
+  features: string[];
 }
 
 export interface BeforeAfter {
