@@ -103,43 +103,6 @@ function FocusCarousel({ items }: { items: FocusItem[] }) {
         </div>
       )}
 
-      {/* Dedicated text area — under the dots */}
-      <div className="mx-auto mt-8 max-w-3xl text-center md:mt-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`text-${item.id}`}
-            initial={reduce ? undefined : { opacity: 0, y: 8 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0, y: -4 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="font-mono text-xs uppercase tracking-[0.22em] text-muted/70">
-              {(index + 1).toString().padStart(2, '0')} / {items.length} · {item.title}
-            </span>
-            <p className="mt-4 text-base leading-relaxed text-ink/85 md:text-lg">
-              {item.description}
-            </p>
-
-            {item.talkingPoints && item.talkingPoints.length > 0 && (
-              <ul className="mx-auto mt-5 max-w-xl space-y-2 text-left">
-                {item.talkingPoints.map((p, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3 text-sm leading-relaxed text-muted md:text-base"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-[10px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                    />
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
       {/* Arrow buttons — outside the device, vertically centered against the screen */}
       {items.length > 1 && (
         <>
