@@ -1,11 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { HighlightText } from '@/components/HighlightText';
-import { GistOrbit } from '@/components/GistOrbit';
 import { background } from '@/content';
 
 /**
- * Background section — title + 2-3 sentence gist story + the gist visual
- * (radial orbital: Humans+Agents at center, 5 wrapper concepts orbiting).
+ * Background — title + 2-3 sentence story + highlighted closing line.
+ * The gist orbit visual moved to its own section ("The gist of the story")
+ * that sits after the product overview.
  */
 export function Background() {
   const reduce = useReducedMotion();
@@ -17,7 +17,6 @@ export function Background() {
       className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        {/* Header column — narrower for readability */}
         <div className="max-w-3xl">
           <motion.h2
             initial={reduce ? undefined : { opacity: 0, y: 14, filter: 'blur(8px)' }}
@@ -48,11 +47,6 @@ export function Background() {
           >
             <HighlightText duration={1.4} delay={0.4}>{background.highlight}</HighlightText>
           </motion.p>
-        </div>
-
-        {/* Gist visual */}
-        <div className="mt-24">
-          <GistOrbit center={background.gist.center} nodes={background.gist.nodes} />
         </div>
       </div>
     </section>

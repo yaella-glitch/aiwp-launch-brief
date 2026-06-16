@@ -5,8 +5,9 @@ export type SectionId =
   | 'launch-date'
   | 'bottom-line'
   | 'background'
-  | 'product-overview'
   | 'focus'
+  | 'product-overview'
+  | 'gist-story'
   | 'customer'
   | 'market'
   | 'positioning'
@@ -60,6 +61,21 @@ export interface BackgroundContent {
   story: string;
   /** Highlighted closing line (painted-marker accent). */
   highlight: string;
+}
+
+export interface GistStoryBox {
+  id: string;
+  title: string;
+  body: string;
+  tags: string[];
+}
+
+export interface GistStoryContent {
+  title: string;
+  lede?: string;
+  /** Two side-by-side boxes that frame the launch narrative. */
+  boxes: GistStoryBox[];
+  /** Orbit visual that sits below the boxes. */
   gist: {
     center: { title: string; tagline: string };
     nodes: GistOrbitNode[];

@@ -7,6 +7,7 @@ import { LaunchDate } from '@/sections/LaunchDate';
 import { BottomLine } from '@/sections/BottomLine';
 import { Background } from '@/sections/Background';
 import { ProductOverview } from '@/sections/ProductOverview';
+import { GistStory } from '@/sections/GistStory';
 import { Focus } from '@/sections/Focus';
 import { Customer } from '@/sections/Customer';
 import { Market } from '@/sections/Market';
@@ -63,6 +64,8 @@ function App() {
               return <Background key={s.id} />;
             case 'product-overview':
               return <ProductOverview key={s.id} />;
+            case 'gist-story':
+              return <GistStory key={s.id} />;
             case 'focus':
               return <Focus key={s.id} />;
             case 'customer':

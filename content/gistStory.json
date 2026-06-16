@@ -1,0 +1,56 @@
+{
+  "title": "The gist of the story.",
+  "lede": "Two shifts at the heart of this launch.",
+  "boxes": [
+    {
+      "id": "collaboration",
+      "title": "True collaboration between people & agents",
+      "body": "We now enable true collaboration between people and agents — a mutual workspace, group chat where people and agents talk side by side, and agents that join your meetings.",
+      "tags": ["Mutual workspace", "Chat", "Agents in meetings"]
+    },
+    {
+      "id": "connectivity",
+      "title": "Connected to your AI ecosystem",
+      "body": "We connect to the AI ecosystem you already use — bring your own agents to monday, or use monday from any AI tool via MCP and open APIs.",
+      "tags": ["Bring your own agents", "Access monday anywhere", "MCP"]
+    }
+  ],
+  "gist": {
+    "center": {
+      "title": "Humans + Agents",
+      "tagline": "The team at the heart of the work."
+    },
+    "nodes": [
+      {
+        "id": "agents",
+        "title": "Agents",
+        "summary": "Smarter, more capable agents at the core.",
+        "detail": "Agents understand who you are, your team, and where work stands. They produce real artifacts — not just chat replies — and orchestrate other agents when needed."
+      },
+      {
+        "id": "communication",
+        "title": "Communication",
+        "summary": "Conversations where people and agents talk side by side.",
+        "detail": "Group chat brings humans and agents into the same thread, with full shared context. Tag and mention agents like teammates."
+      },
+      {
+        "id": "workspace",
+        "title": "Mutual workspace",
+        "summary": "Shared spaces dedicated to a goal.",
+        "detail": "Containers and initiatives — a single home for everyone working on the same outcome, with the context, history, and artifacts all in one place."
+      },
+      {
+        "id": "workflows",
+        "title": "Workflows",
+        "summary": "Agents embedded in the workflows you already run.",
+        "detail": "Inputs, outputs, and behavior — end to end. People stay in control of exactly what each agent is doing inside the workflows your teams already trust."
+      },
+      {
+        "id": "governance",
+        "title": "Governance",
+        "summary": "Visibility, permissions, and guardrails so adoption is safe.",
+        "detail": "Control what agents can access at the user and team level. Surface the value they deliver. Boundaries that hold — so teams adopt with confidence."
+      }
+    ]
+  }
+}

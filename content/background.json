@@ -1,43 +1,5 @@
 {
   "title": "Background.",
   "story": "Every AI tool today makes one individual a bit more productive. monday's AI Work Platform makes the whole team reach their goal — humans and agents working together, in the same place, on the same goal.",
-  "highlight": "This milestone completes the vision of the AI Work Platform.",
-  "gist": {
-    "center": {
-      "title": "Humans + Agents",
-      "tagline": "The team at the heart of the work."
-    },
-    "nodes": [
-      {
-        "id": "agents",
-        "title": "Agents",
-        "summary": "Smarter, more capable agents at the core.",
-        "detail": "Agents understand who you are, your team, and where work stands. They produce real artifacts — not just chat replies — and orchestrate other agents when needed."
-      },
-      {
-        "id": "communication",
-        "title": "Communication",
-        "summary": "Conversations where people and agents talk side by side.",
-        "detail": "Group chat brings humans and agents into the same thread, with full shared context. Tag and mention agents like teammates."
-      },
-      {
-        "id": "workspace",
-        "title": "Mutual workspace",
-        "summary": "Shared spaces dedicated to a goal.",
-        "detail": "Containers and initiatives — a single home for everyone working on the same outcome, with the context, history, and artifacts all in one place."
-      },
-      {
-        "id": "workflows",
-        "title": "Workflows",
-        "summary": "Agents embedded in the workflows you already run.",
-        "detail": "Inputs, outputs, and behavior — end to end. People stay in control of exactly what each agent is doing inside the workflows your teams already trust."
-      },
-      {
-        "id": "governance",
-        "title": "Governance",
-        "summary": "Visibility, permissions, and guardrails so adoption is safe.",
-        "detail": "Control what agents can access at the user and team level. Surface the value they deliver. Boundaries that hold — so teams adopt with confidence."
-      }
-    ]
-  }
+  "highlight": "This milestone completes the vision of the AI Work Platform."
 }

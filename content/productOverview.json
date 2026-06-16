@@ -3,158 +3,96 @@
   "lede": "May 6th's milestone focused mostly on our agents. This milestone focuses on the way of working of agents & people — letting our customers embed agents in their day-to-day work with ease and trust.",
   "tabs": [
     {
-      "id": "human-agents",
-      "title": "Human & Agents collaboration",
-      "tagline": "Where people and agents work side by side — on the same goals, in the same place, with shared context.",
+      "id": "collaboration",
+      "title": "Collaboration: People & agents",
+      "tagline": "Agents become an essential part of your team's workflows — collaborating in a shared space, with the communication and context to get real work done together.",
       "cards": [
         {
-          "id": "container",
-          "title": "Container / Initiatives",
-          "description": "A workspace dedicated to a specific shared goal. The home for agents and people working together, with shared context.",
-          "media": { "type": "image", "src": "/product/human-agents/container.png", "alt": "Container — shared workspace" }
+          "id": "workspace-2",
+          "title": "Workspace 2.0",
+          "description": "A shared space where people and agents work from the same context, with in-context group chat and a built-in project-manager agent.",
+          "media": { "type": "image", "src": "/product/collaboration/workspace-2.png", "alt": "Workspace 2.0" }
         },
         {
-          "id": "group-chat",
-          "title": "Group chat",
-          "description": "Conversations where people and agents talk side by side — same place, same context.",
-          "media": { "type": "image", "src": "/product/human-agents/chat.png", "alt": "Group chat" }
+          "id": "collab-agents",
+          "title": "Collaborative agents",
+          "description": "Share your agents with your team, so the whole team benefits from them.",
+          "media": { "type": "image", "src": "/product/collaboration/collab-agents.png", "alt": "Collaborative agents" }
         },
         {
-          "id": "notetaker",
-          "title": "Notetaker",
-          "description": "Desktop app that records meetings without Zoom limitations. Brings an agent to the call with full context to take action items.",
-          "media": { "type": "image", "src": "/product/human-agents/notetaker.png", "alt": "Notetaker — meeting recording" }
+          "id": "agents-in-meetings",
+          "title": "Agents in meetings",
+          "description": "Invite your agents to your meetings, where they pick up context, contribute information, and take action items.",
+          "media": { "type": "image", "src": "/product/collaboration/agents-in-meetings.png", "alt": "Agents in meetings" }
+        }
+      ]
+    },
+    {
+      "id": "better-agents",
+      "title": "Better agents",
+      "tagline": "monday Agents get smarter and more capable — they remember your context, improve over time, and produce more of the deliverables your team needs.",
+      "cards": [
+        {
+          "id": "improved-agents",
+          "title": "Improved agents",
+          "description": "Auto-save, versioning, memory, and better context, so your agents get sharper every time they work.",
+          "media": { "type": "image", "src": "/product/better-agents/improved-agents.png", "alt": "Improved agents" }
+        },
+        {
+          "id": "wider-deliverables",
+          "title": "A wider range of deliverables",
+          "description": "Beyond docs, agents now produce HTML, slides, canvas, and vibe apps.",
+          "media": { "type": "image", "src": "/product/better-agents/wider-deliverables.png", "alt": "Wider range of deliverables" }
         }
       ]
     },
     {
       "id": "ecosystem",
-      "title": "Ecosystem",
-      "tagline": "Your agents, our agents, partner agents. Connect monday to the AI tools your teams already use.",
+      "title": "Connect to ecosystem",
+      "tagline": "Bring your own agents and tools, connect via MCP or open APIs — and get work done from anywhere, with your context always in sync.",
       "cards": [
         {
+          "id": "monday-anywhere",
+          "title": "Work with monday in any tool",
+          "description": "Read, update, and act on monday from the AI tools you already use: Claude, ChatGPT, Cursor, Gemini, Microsoft Copilot, Slack, Make.",
+          "media": { "type": "image", "src": "/product/ecosystem/monday-anywhere.png", "alt": "Work with monday in any tool" }
+        },
+        {
           "id": "byo-agent",
-          "title": "Bring your own agent",
-          "description": "Plug in 3rd-party agents (Claude, OpenAI, more) with full access to your monday context.",
+          "title": "Bring your own agent to monday",
+          "description": "Connect the agents you already use (Claude, Codex, and more) as external agents that become team members — visible presence, assign and @mention.",
           "media": { "type": "image", "src": "/product/ecosystem/byo.png", "alt": "Bring your own agent" }
         },
         {
-          "id": "access-monday",
-          "title": "Access monday from your AI tools",
-          "description": "Use monday from leading AI tools like Make — the platform meets your team where they already work.",
-          "media": { "type": "image", "src": "/product/ecosystem/access.png", "alt": "Access monday from AI tools" }
+          "id": "infra",
+          "title": "Built on extensive AI infrastructure",
+          "description": "It all runs on MCP and open APIs.",
+          "media": { "type": "image", "src": "/product/ecosystem/infra.png", "alt": "Built on MCP and open APIs" }
         }
       ]
     },
     {
-      "id": "agents",
-      "title": "Agents",
-      "tagline": "Everything that makes our agents top-notch: collaboration, context, and a proactive sidekick.",
+      "id": "foundation",
+      "title": "Infra & foundation",
+      "tagline": "The control, context, and infrastructure to run people and agents together — safely, and at scale.",
       "cards": [
         {
-          "id": "collab",
-          "title": "Collaboration on agents",
-          "description": "Tag and mention agents like teammates.",
-          "media": { "type": "image", "src": "/product/agents/collab.png", "alt": "Collaboration on agents" }
+          "id": "govern",
+          "title": "Govern every agent",
+          "description": "Admins get full visibility and control over every agent, monday and external: who can create and use them, granular permissions, and a full audit log.",
+          "media": { "type": "image", "src": "/product/foundation/govern.png", "alt": "Govern every agent" }
         },
         {
-          "id": "versioning",
-          "title": "Autosave & versioning",
-          "description": "Never lose work. Roll back to previous versions.",
-          "media": { "type": "image", "src": "/product/agents/versioning.png", "alt": "Autosave & versioning" }
+          "id": "monday-db-3",
+          "title": "monday DB 3",
+          "description": "Our data platform scales for the hybrid teams of people and agents: up to 1M board items, with faster performance.",
+          "media": { "type": "image", "src": "/product/foundation/monday-db-3.png", "alt": "monday DB 3" }
         },
         {
-          "id": "troubleshooting",
-          "title": "Troubleshooting",
-          "description": "Cut the 7% of credits lost to bad runs. Diagnose and fix in place.",
-          "media": { "type": "image", "src": "/product/agents/troubleshooting.png", "alt": "Troubleshooting" }
-        },
-        {
-          "id": "artifacts",
-          "title": "Expanded artifacts",
-          "description": "Agents produce HTML, docs, and decks — not just chat replies.",
-          "media": { "type": "image", "src": "/product/agents/artifacts.png", "alt": "Expanded artifacts" }
-        },
-        {
-          "id": "mcp",
-          "title": "One-click MCP",
-          "description": "Connect to any MCP server in a single click.",
-          "media": { "type": "image", "src": "/product/agents/mcp.png", "alt": "One-click MCP" }
-        },
-        {
-          "id": "master",
-          "title": "Master agents",
-          "description": "Agents that orchestrate other agents.",
-          "media": { "type": "image", "src": "/product/agents/master.png", "alt": "Master agents" }
-        },
-        {
-          "id": "context",
-          "title": "Context",
-          "description": "Agents understand who you are, your team, and where work stands — they navigate monday with your mindset.",
-          "media": { "type": "image", "src": "/product/agents/context.png", "alt": "Context" }
-        },
-        {
-          "id": "sidekick",
-          "title": "Sidekick",
-          "description": "Proactive in the context of your task. Produces artifacts (HTML, decks). Connects through integrations.",
-          "media": { "type": "image", "src": "/product/agents/sidekick.png", "alt": "Sidekick" }
-        }
-      ]
-    },
-    {
-      "id": "workflows",
-      "title": "AI workflows",
-      "tagline": "Agents embedded in the workflows people already use — with full control.",
-      "cards": [
-        {
-          "id": "control",
-          "title": "Control of agents in workflows",
-          "description": "People stay in control of agents' inputs, outputs, and behavior — exactly what each agent is doing, end to end.",
-          "media": { "type": "image", "src": "/product/workflows/control.png", "alt": "Control of agents in workflows" }
-        }
-      ]
-    },
-    {
-      "id": "governance",
-      "title": "Governance",
-      "tagline": "Visibility, permissions, and guardrails — so adoption is safe.",
-      "cards": [
-        {
-          "id": "permissions",
-          "title": "Permissions & access",
-          "description": "Control what agents can access — both at the user and team level.",
-          "media": { "type": "image", "src": "/product/governance/permissions.png", "alt": "Permissions & access" }
-        },
-        {
-          "id": "visibility",
-          "title": "Visibility to value",
-          "description": "Surface the value agents deliver — visible to admins and team members alike.",
-          "media": { "type": "image", "src": "/product/governance/visibility.png", "alt": "Visibility to value" }
-        },
-        {
-          "id": "guardrails",
-          "title": "Guardrails",
-          "description": "Boundaries that hold. Teams adopt agents with confidence.",
-          "media": { "type": "image", "src": "/product/governance/guardrails.png", "alt": "Guardrails" }
-        }
-      ]
-    },
-    {
-      "id": "vibe",
-      "title": "Vibe",
-      "tagline": "The feel of working with agents on monday — fast, fluent, and genuinely useful.",
-      "cards": [
-        {
-          "id": "vibe-1",
-          "title": "Feature name",
-          "description": "Short one-line description of what makes this part of the vibe.",
-          "media": { "type": "image", "src": "/product/vibe/1.png", "alt": "Vibe feature" }
-        },
-        {
-          "id": "vibe-2",
-          "title": "Feature name",
-          "description": "Short one-line description.",
-          "media": { "type": "image", "src": "/product/vibe/2.png", "alt": "Vibe feature" }
+          "id": "deeper-context",
+          "title": "Deeper context",
+          "description": "monday understands your team and its interactions better, with stronger memory.",
+          "media": { "type": "image", "src": "/product/foundation/deeper-context.png", "alt": "Deeper context" }
         }
       ]
     }

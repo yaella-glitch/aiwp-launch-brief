@@ -3,6 +3,7 @@ import manifestJson from '../content/manifest.json';
 import heroJson from '../content/hero.json';
 import bottomLineJson from '../content/bottomLine.json';
 import backgroundJson from '../content/background.json';
+import gistStoryJson from '../content/gistStory.json';
 import productJson from '../content/productOverview.json';
 import focusJson from '../content/focus.json';
 import customerJson from '../content/customer.json';
@@ -16,6 +17,7 @@ import type {
   HeroContent,
   BottomLineContent,
   BackgroundContent,
+  GistStoryContent,
   ProductOverviewContent,
   FocusContent,
   CustomerContent,
@@ -29,6 +31,7 @@ export const manifest = manifestJson as Manifest;
 export const hero = heroJson as HeroContent;
 export const bottomLine = bottomLineJson as BottomLineContent;
 export const background = backgroundJson as BackgroundContent;
+export const gistStory = gistStoryJson as GistStoryContent;
 export const productOverview = productJson as ProductOverviewContent;
 export const focus = focusJson as FocusContent;
 export const customer = customerJson as CustomerContent;
