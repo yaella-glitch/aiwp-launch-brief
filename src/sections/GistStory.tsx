@@ -21,9 +21,24 @@ export function GistStory() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader title={gistStory.title} lede={gistStory.lede ?? ''} />
 
+        {/* Framed quote — sits above the boxes */}
+        {gistStory.framedQuote && (
+          <ScrollReveal delay={0.05}>
+            <div className="relative mt-16 overflow-hidden rounded-3xl border border-accent/45 bg-gradient-to-br from-accent/10 via-canvas to-canvas p-9 md:p-12">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_15%_0%,rgba(165,138,255,0.12),transparent_55%)]"
+              />
+              <p className="relative font-display text-[clamp(20px,2.4vw,30px)] font-medium leading-[1.35] text-ink">
+                {gistStory.framedQuote}
+              </p>
+            </div>
+          </ScrollReveal>
+        )}
+
         {/* Two side-by-side boxes */}
-        <ScrollReveal delay={0.05}>
-          <div className="mt-20 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+        <ScrollReveal delay={0.1}>
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
             {gistStory.boxes.map((box, i) => (
               <StoryBox key={box.id} box={box} index={i} />
             ))}

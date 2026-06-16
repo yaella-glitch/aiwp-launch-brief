@@ -1,5 +1,19 @@
 {
   "title": "Background.",
-  "story": "Every AI tool today makes one individual a bit more productive. monday's AI Work Platform makes the whole team reach their goal — humans and agents working together, in the same place, on the same goal.",
-  "highlight": "This milestone completes the vision of the AI Work Platform."
+  "story": "AI has made individuals faster, but it hasn't moved organizations — 95% see no real return yet. monday's AI Work Platform puts people and agents in the same place, as one team — sharing context, communicating with each other the way a real team does, and working toward the same outcome.",
+  "highlight": "AI finally compounds for the whole team, not just the individual who is using it.",
+  "carousel": [
+    {
+      "id": "stat-95",
+      "stat": "95%",
+      "caption": "of organizations still haven't seen real return from AI.",
+      "tone": "warning"
+    },
+    {
+      "id": "individual-vs-org",
+      "stat": "1 → team",
+      "caption": "Individual productivity isn't organizational productivity.",
+      "tone": "accent"
+    }
+  ]
 }

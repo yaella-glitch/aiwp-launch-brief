@@ -55,12 +55,23 @@ export interface GistOrbitNode {
   detail: string;
 }
 
+export interface BackgroundCarouselSlide {
+  id: string;
+  /** Headline number / phrase (rendered massive). */
+  stat: string;
+  caption: string;
+  /** Visual tone — 'warning' (amber/rose) or 'accent' (violet). */
+  tone?: 'warning' | 'accent';
+}
+
 export interface BackgroundContent {
   title: string;
   /** Short 2-3 sentence gist of the launch. */
   story: string;
   /** Highlighted closing line (painted-marker accent). */
   highlight: string;
+  /** Side carousel of stat / concept cards. */
+  carousel?: BackgroundCarouselSlide[];
 }
 
 export interface GistStoryBox {
@@ -73,6 +84,8 @@ export interface GistStoryBox {
 export interface GistStoryContent {
   title: string;
   lede?: string;
+  /** Highlighted quote in a frame above the two boxes. */
+  framedQuote?: string;
   /** Two side-by-side boxes that frame the launch narrative. */
   boxes: GistStoryBox[];
   /** Orbit visual that sits below the boxes. */
