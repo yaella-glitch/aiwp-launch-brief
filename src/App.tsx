@@ -10,7 +10,6 @@ import { BottomLine } from '@/sections/BottomLine';
 import { Background } from '@/sections/Background';
 import { ProductOverview } from '@/sections/ProductOverview';
 import { GistStory } from '@/sections/GistStory';
-import { Focus } from '@/sections/Focus';
 import { Customer } from '@/sections/Customer';
 import { Market } from '@/sections/Market';
 import { Positioning } from '@/sections/Positioning';
@@ -62,8 +61,6 @@ function App() {
         return <ProductOverview />;
       case 'gist-story':
         return <GistStory />;
-      case 'focus':
-        return <Focus />;
       case 'customer':
         return <Customer />;
       case 'market':

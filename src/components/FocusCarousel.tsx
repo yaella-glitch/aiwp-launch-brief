@@ -1,48 +1,23 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
-import { EditorialHeader } from '@/components/EditorialHeader';
-import { ScrollReveal } from '@/components/ScrollReveal';
-import { focus } from '@/content';
 import { cn, withBase } from '@/lib/utils';
 import type { FocusItem } from '@/types';
 
 /**
- * What we lead with externally — tablet/device-frame carousel.
+ * Tablet/device-frame carousel — one designed slide visible at a time,
+ * framed in a subtle bezel. Prev / next chevrons sit OUTSIDE the device
+ * left/right; dot indicators below. Auto-advances every 7s; pauses on hover.
  *
- * One designed slide visible at a time, framed in a subtle tablet-style
- * bezel. Prev / next chevrons sit OUTSIDE the device on the left and right.
- * Dot indicators below. Active slide's title + description renders below
- * the device as the dedicated text area.
+ * Used inside the Positioning section ("What we lead with externally").
  */
-export function Focus() {
-  return (
-    <section
-      id="focus"
-      data-section="focus"
-      className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
-    >
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        <EditorialHeader title={focus.title} lede={focus.lede ?? ''} />
-
-        <ScrollReveal delay={0.05}>
-          <div className="mt-20">
-            <FocusCarousel items={focus.items} />
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-function FocusCarousel({ items }: { items: FocusItem[] }) {
+export function FocusCarousel({ items }: { items: FocusItem[] }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
 
   const item = items[index];
 
-  // Auto-advance every 7s; pauses on hover
   useEffect(() => {
     if (paused || items.length <= 1) return;
     const id = window.setTimeout(() => {
@@ -103,7 +78,7 @@ function FocusCarousel({ items }: { items: FocusItem[] }) {
         </div>
       )}
 
-      {/* Arrow buttons — outside the device, vertically centered against the screen */}
+      {/* Arrow buttons — outside the device, vertically centered on the screen */}
       {items.length > 1 && (
         <>
           <ArrowButton direction="prev" onClick={prev} />

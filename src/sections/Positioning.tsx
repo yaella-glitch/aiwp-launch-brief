@@ -2,7 +2,8 @@ import { Check, X } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { MessagingHierarchy } from '@/components/MessagingHierarchy';
-import { positioning } from '@/content';
+import { FocusCarousel } from '@/components/FocusCarousel';
+import { positioning, focus } from '@/content';
 
 /**
  * Positioning & messaging — visual hierarchy of:
@@ -19,8 +20,42 @@ export function Positioning() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader title={positioning.title} lede={positioning.lede} />
 
-        <ScrollReveal delay={0.05}>
-          <div className="mt-20">
+        {/* What we lead with externally — carousel sits ABOVE the hierarchy */}
+        {focus.items.length > 0 && (
+          <>
+            <ScrollReveal delay={0.05}>
+              <div className="mt-20 max-w-3xl">
+                <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+                  What we lead with externally.
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-muted">
+                  {focus.lede}
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.08}>
+              <div className="mt-12">
+                <FocusCarousel items={focus.items} />
+              </div>
+            </ScrollReveal>
+          </>
+        )}
+
+        {/* Messaging hierarchy */}
+        <ScrollReveal delay={0.1}>
+          <div className="mt-24">
+            <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+              Messaging hierarchy.
+            </h3>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              The story we lead with — top of the hierarchy down to the supporting messages.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.12}>
+          <div className="mt-12">
             <MessagingHierarchy
               tagline={positioning.tagline}
               keyMessage={positioning.keyMessage}
