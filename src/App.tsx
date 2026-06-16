@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import { PasswordGate } from '@/components/PasswordGate';
 import { TopBar } from '@/components/TopBar';
 import { Footer } from '@/components/Footer';
@@ -17,8 +19,14 @@ import { Resources } from '@/sections/Resources';
 import { Placeholder } from '@/sections/Placeholder';
 import { manifest } from '@/content';
 
+/** Sections after this one are hidden behind the "Read more" button. */
+const READ_MORE_CUT_AFTER = 'gist-story';
+
 function App() {
   const [audioAvailable, setAudioAvailable] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const moreAnchorRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     let cancelled = false;
     fetch(manifest.siteMeta.audioBriefPath, { method: 'HEAD' })
@@ -40,55 +48,127 @@ function App() {
     if (el) void el.play();
   }
 
-  const renderedSections = manifest.sections
+  function renderSection(id: string, order: number, title: string) {
+    switch (id) {
+      case 'hero':
+        return <Hero />;
+      case 'launch-date':
+        return <LaunchDate />;
+      case 'bottom-line':
+        return <BottomLine />;
+      case 'background':
+        return <Background />;
+      case 'product-overview':
+        return <ProductOverview />;
+      case 'gist-story':
+        return <GistStory />;
+      case 'focus':
+        return <Focus />;
+      case 'customer':
+        return <Customer />;
+      case 'market':
+        return <Market />;
+      case 'positioning':
+        return <Positioning />;
+      case 'launch':
+        return <Launch />;
+      case 'resources':
+        return <Resources />;
+      default:
+        return (
+          <Placeholder
+            id={id}
+            title={title}
+            eyebrow={`Section · ${order.toString().padStart(2, '0')}`}
+          />
+        );
+    }
+  }
+
+  const sections = manifest.sections
     .filter((s) => s.visible)
     .sort((a, b) => a.order - b.order);
 
+  const cutIndex = sections.findIndex((s) => s.id === READ_MORE_CUT_AFTER);
+  const aboveFold = cutIndex >= 0 ? sections.slice(0, cutIndex + 1) : sections;
+  const belowFold = cutIndex >= 0 ? sections.slice(cutIndex + 1) : [];
+
+  function expand() {
+    setShowMore(true);
+    // Smooth-scroll the user to where the hidden content begins.
+    requestAnimationFrame(() => {
+      moreAnchorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
   return (
     <PasswordGate>
-      <TopBar
-        audioAvailable={audioAvailable}
-        onPlayAudio={playAudio}
-      />
+      <TopBar audioAvailable={audioAvailable} onPlayAudio={playAudio} />
 
       <main className="pt-14">
-        {renderedSections.map((s) => {
-          switch (s.id) {
-            case 'hero':
-              return <Hero key={s.id} />;
-            case 'launch-date':
-              return <LaunchDate key={s.id} />;
-            case 'bottom-line':
-              return <BottomLine key={s.id} />;
-            case 'background':
-              return <Background key={s.id} />;
-            case 'product-overview':
-              return <ProductOverview key={s.id} />;
-            case 'gist-story':
-              return <GistStory key={s.id} />;
-            case 'focus':
-              return <Focus key={s.id} />;
-            case 'customer':
-              return <Customer key={s.id} />;
-            case 'market':
-              return <Market key={s.id} />;
-            case 'positioning':
-              return <Positioning key={s.id} />;
-            case 'launch':
-              return <Launch key={s.id} />;
-            case 'resources':
-              return <Resources key={s.id} />;
-            default:
-              return (
-                <Placeholder
-                  key={s.id}
-                  id={s.id}
-                  title={s.title}
-                  eyebrow={`Section · ${s.order.toString().padStart(2, '0')}`}
-                />
-              );
-          }
-        })}
+        {aboveFold.map((s) => (
+          <div key={s.id}>{renderSection(s.id, s.order, s.title)}</div>
+        ))}
+
+        {belowFold.length > 0 && (
+          <>
+            {/* Read-more button — only shown while collapsed */}
+            <AnimatePresence initial={false}>
+              {!showMore && (
+                <motion.div
+                  key="read-more-btn"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative w-full py-16 md:py-20"
+                >
+                  {/* Fade overlay above the button hinting at hidden content */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 -top-24 h-24 bg-gradient-to-t from-canvas to-transparent"
+                  />
+                  <div className="mx-auto flex max-w-[1400px] flex-col items-center px-6 md:px-10 lg:px-16">
+                    <p className="mb-5 max-w-md text-center text-sm leading-relaxed text-muted">
+                      The rest of the brief — who it's for, messaging, competitive,
+                      launch plan, and resources — sits below.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={expand}
+                      className="group inline-flex items-center gap-3 rounded-full border border-accent/40 bg-accent/[0.08] px-6 py-3 text-base font-semibold text-ink transition-all duration-200 hover:border-accent/70 hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+                    >
+                      <span>Read more</span>
+                      <ChevronDown
+                        aria-hidden="true"
+                        className="h-4 w-4 text-accent transition-transform duration-200 group-hover:translate-y-0.5"
+                      />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Anchor for smooth-scroll target */}
+            <div ref={moreAnchorRef} aria-hidden="true" />
+
+            <AnimatePresence initial={false}>
+              {showMore && (
+                <motion.div
+                  key="below-fold"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {belowFold.map((s) => (
+                    <div key={s.id}>{renderSection(s.id, s.order, s.title)}</div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
+        )}
+
         <Footer />
       </main>
 

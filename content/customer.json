@@ -31,24 +31,24 @@
   "useCases": [
     {
       "id": "uc-1",
-      "title": "Use case #1",
-      "scenario": "The customer scenario — short and concrete.",
-      "outcome": "The shift it creates.",
-      "image": "/usecases/uc-1.png"
+      "name": "One flow for lead generation",
+      "pain": "My lead-gen pipeline spans 5 tools (capture, enrichment, SDR agent, Slack, CRM) — keeping data in sync is a nightmare.",
+      "solution": "One workflow connects every platform and agent via MCP; data flows end to end and stays tracked in monday.",
+      "features": ["BYOA", "MCP", "Workflow"]
     },
     {
       "id": "uc-2",
-      "title": "Use case #2",
-      "scenario": "The customer scenario — short and concrete.",
-      "outcome": "The shift it creates.",
-      "image": "/usecases/uc-2.png"
+      "name": "Use case #2",
+      "pain": "Customer pain — short, first-person, quoted from a real conversation.",
+      "solution": "How this launch resolves the pain — one sentence, concrete.",
+      "features": ["Feature A", "Feature B"]
     },
     {
       "id": "uc-3",
-      "title": "Use case #3",
-      "scenario": "The customer scenario — short and concrete.",
-      "outcome": "The shift it creates.",
-      "image": "/usecases/uc-3.png"
+      "name": "Use case #3",
+      "pain": "Customer pain — short, first-person, quoted from a real conversation.",
+      "solution": "How this launch resolves the pain — one sentence, concrete.",
+      "features": ["Feature A", "Feature B"]
     }
   ],
   "beforeAfter": [

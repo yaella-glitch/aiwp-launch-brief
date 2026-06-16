@@ -1,12 +1,13 @@
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { ProductAccordion } from '@/components/ProductAccordion';
+import { ActionLink } from '@/components/ActionLink';
 import { productOverview } from '@/content';
 
 /**
- * What we're launching — title + vertical accordion of 6 domains with a
- * sticky feature preview on the right. Use cases now live under Customer
- * (right after pains & solutions).
+ * What we're launching — title + vertical accordion of feature domains with
+ * a sticky preview on the right. Top-right action links to the full feature
+ * list maintained outside the brief.
  */
 export function ProductOverview() {
   return (
@@ -19,6 +20,7 @@ export function ProductOverview() {
         <EditorialHeader
           title={productOverview.title}
           lede={productOverview.lede}
+          action={<ActionLink href="#" label="Full feature list" />}
         />
 
         <ScrollReveal delay={0.05}>

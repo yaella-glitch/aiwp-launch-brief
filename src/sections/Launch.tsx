@@ -3,6 +3,7 @@ import { User } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
+import { ActionLink } from '@/components/ActionLink';
 import { launch } from '@/content';
 import { cn, withBase } from '@/lib/utils';
 
@@ -29,6 +30,7 @@ export function Launch() {
         <EditorialHeader
           title={launch.title}
           lede={launch.lede}
+          action={<ActionLink href="#" label="Launch board" />}
         />
 
         {/* Goals (2 only) — large, editorial. No header, just the cards. */}

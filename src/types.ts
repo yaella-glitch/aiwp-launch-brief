@@ -101,10 +101,14 @@ export interface CapabilityTab {
 
 export interface UseCase {
   id: string;
-  title: string;
-  scenario: string;
-  outcome: string;
-  image: string;
+  /** Short name of the scenario. */
+  name: string;
+  /** Customer pain — quoted, first-person. */
+  pain: string;
+  /** Solution — how this launch resolves the pain. */
+  solution: string;
+  /** Feature tags that power the solution. */
+  features: string[];
 }
 
 export interface ProductOverviewContent {
