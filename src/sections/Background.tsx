@@ -40,15 +40,17 @@ export function Background() {
               {background.story}
             </motion.p>
 
-            <motion.p
-              initial={reduce ? undefined : { opacity: 0, y: 8 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="mt-8 font-display text-lg font-semibold leading-snug text-ink md:text-xl"
-            >
-              <HighlightText duration={1.4} delay={0.4}>{background.highlight}</HighlightText>
-            </motion.p>
+            {background.highlight && (
+              <motion.p
+                initial={reduce ? undefined : { opacity: 0, y: 8 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="mt-8 font-display text-lg font-semibold leading-snug text-ink md:text-xl"
+              >
+                <HighlightText duration={1.4} delay={0.4}>{background.highlight}</HighlightText>
+              </motion.p>
+            )}
           </div>
 
           {/* Right: slide carousel */}
