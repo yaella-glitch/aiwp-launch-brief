@@ -57,8 +57,10 @@ export interface GistOrbitNode {
 
 export interface BackgroundCarouselSlide {
   id: string;
-  /** Headline number / phrase (rendered massive). */
-  stat: string;
+  /** Layout kind — 'stat' for big number, 'visual' for icon arrangement. */
+  kind: 'stat' | 'visual';
+  /** Headline number / phrase, only when kind === 'stat'. */
+  stat?: string;
   caption: string;
   /** Visual tone — 'warning' (amber/rose) or 'accent' (violet). */
   tone?: 'warning' | 'accent';

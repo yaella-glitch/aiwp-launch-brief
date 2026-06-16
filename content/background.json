@@ -5,13 +5,14 @@
   "carousel": [
     {
       "id": "stat-95",
+      "kind": "stat",
       "stat": "95%",
       "caption": "of organizations still haven't seen real return from AI.",
       "tone": "warning"
     },
     {
       "id": "individual-vs-org",
-      "stat": "1 → team",
+      "kind": "visual",
       "caption": "Individual productivity isn't organizational productivity.",
       "tone": "accent"
     }
