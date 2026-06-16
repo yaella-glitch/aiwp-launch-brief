@@ -57,6 +57,8 @@ export function Customer() {
                     <ImageCompare
                       beforeImage={ba.beforeImage}
                       afterImage={ba.afterImage}
+                      beforeLabel="Before"
+                      afterLabel="After"
                       altBefore={`${ba.theme} — before`}
                       altAfter={`${ba.theme} — after`}
                     />
