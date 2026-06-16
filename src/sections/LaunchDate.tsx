@@ -21,9 +21,8 @@ export function LaunchDate() {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="font-display text-[clamp(28px,4vw,52px)] font-semibold leading-[1.1] tracking-tight text-ink"
         >
-          Product milestone is planned for{' '}
           <span className="bg-gradient-to-br from-violet-200 via-indigo-200 to-sky-300 bg-clip-text text-transparent">
-            {launch.launchDate}.
+            Product milestone is planned for {launch.launchDate}.
           </span>
         </motion.p>
       </div>

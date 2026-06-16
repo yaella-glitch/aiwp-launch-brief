@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { PasswordGate } from '@/components/PasswordGate';
 import { TopBar } from '@/components/TopBar';
 import { Footer } from '@/components/Footer';
@@ -95,7 +95,15 @@ function App() {
 
   function expand() {
     setShowMore(true);
-    // Smooth-scroll the user to where the hidden content begins.
+    // Smooth-scroll to where the hidden content begins.
+    requestAnimationFrame(() => {
+      moreAnchorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function collapse() {
+    setShowMore(false);
+    // Smooth-scroll back to where the Read more button was.
     requestAnimationFrame(() => {
       moreAnchorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
@@ -163,6 +171,23 @@ function App() {
                   {belowFold.map((s) => (
                     <div key={s.id}>{renderSection(s.id, s.order, s.title)}</div>
                   ))}
+
+                  {/* Read less — collapses the back half */}
+                  <div className="w-full py-14 md:py-16">
+                    <div className="mx-auto flex max-w-[1400px] justify-center px-6 md:px-10 lg:px-16">
+                      <button
+                        type="button"
+                        onClick={collapse}
+                        className="group inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-ink/85 transition-all duration-200 hover:border-accent/40 hover:bg-accent/[0.08] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+                      >
+                        <ChevronUp
+                          aria-hidden="true"
+                          className="h-4 w-4 text-muted transition-all duration-200 group-hover:-translate-y-0.5 group-hover:text-accent"
+                        />
+                        <span>Read less</span>
+                      </button>
+                    </div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>

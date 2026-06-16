@@ -4,28 +4,36 @@
   "lede": "Who they are. And what changes for them.",
   "personas": [
     {
-      "id": "persona-1",
+      "id": "decision-maker",
       "kind": "primary",
-      "name": "Primary persona",
-      "role": "Their role",
-      "photo": "/personas/persona-1.png",
-      "description": "A short paragraph describing who they are, what they care about, and what they're trying to get done. Edit me in content/customer.json."
+      "name": "Decision maker",
+      "role": "Buyer / champion inside the org",
+      "photo": "/personas/decision-maker.png",
+      "description": "The person who signs off on adopting monday's AI Work Platform — cares about org-wide ROI, risk, and team adoption."
     },
     {
-      "id": "persona-2",
+      "id": "end-user-technical",
       "kind": "secondary",
-      "name": "Secondary persona",
-      "role": "Their role",
-      "photo": "/personas/persona-2.png",
-      "description": "Short paragraph. Edit me in content/customer.json."
+      "name": "End user — technical",
+      "role": "Engineer, RevOps, automations owner",
+      "photo": "/personas/end-user-technical.png",
+      "description": "Hands-on with agents and integrations. Speaks MCP, APIs, workflows. Wants depth and control."
     },
     {
-      "id": "persona-3",
+      "id": "end-user-business",
       "kind": "secondary",
-      "name": "Secondary persona",
-      "role": "Their role",
-      "photo": "/personas/persona-3.png",
-      "description": "Short paragraph. Edit me in content/customer.json."
+      "name": "End user — business",
+      "role": "PM, marketer, ops, sales",
+      "photo": "/personas/end-user-business.png",
+      "description": "Lives in monday day-to-day. Wants agents that just work and make their week lighter."
+    },
+    {
+      "id": "investor",
+      "kind": "supporting",
+      "name": "Investor",
+      "role": "Analyst / shareholder",
+      "photo": "/personas/investor.png",
+      "description": "Tracking the AI narrative."
     }
   ],
   "useCases": [

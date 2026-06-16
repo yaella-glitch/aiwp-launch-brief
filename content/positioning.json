@@ -8,6 +8,12 @@
     "Secondary message #2 — supporting proof point two.",
     "Secondary message #3 — supporting proof point three."
   ],
+  "writingGuidelines": [
+    "It's part of the AI Work Platform — not separated. Always position it as part of the whole.",
+    "You can (and should) spotlight specific features — just make sure to connect them to the wider story.",
+    "For technical personas, use technical language: MCP, APIs, agents, workflows.",
+    "Use concrete examples. Real customer scenarios beat abstract claims."
+  ],
   "sayDontSay": [
     {
       "topic": "What the launch is",

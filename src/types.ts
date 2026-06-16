@@ -142,12 +142,15 @@ export interface MessagingHierarchyContent {
   keyMessage: string;
   /** Up to 3 supporting / secondary messages. */
   secondaryMessages: string[];
+  /** Writing & content guidelines — sit between the hierarchy and Say/Don't say. */
+  writingGuidelines: string[];
   sayDontSay: Array<{ topic: string; say: string; dontSay: string; why: string }>;
 }
 
 export interface Persona {
   id: string;
-  kind: 'primary' | 'secondary';
+  /** primary = decision maker, secondary = end user, supporting = investor */
+  kind: 'primary' | 'secondary' | 'supporting';
   name: string;
   role: string;
   photo: string;

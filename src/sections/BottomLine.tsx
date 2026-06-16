@@ -4,10 +4,8 @@ import { ScrollReveal } from '@/components/ScrollReveal';
 import { bottomLine } from '@/content';
 
 /**
- * The bottom line — short, scannable list of key takeaways. Sits right after
- * the launch date so readers can orient before diving into the brief.
- *
- * Layout: numbered editorial list with a violet rail down the left.
+ * Executive summary — short, scannable takeaways inside a violet-framed card.
+ * Simple bullet list, one line per point.
  */
 export function BottomLine() {
   const reduce = useReducedMotion();
@@ -21,41 +19,27 @@ export function BottomLine() {
         <EditorialHeader title={bottomLine.title} lede={bottomLine.lede ?? ''} />
 
         <ScrollReveal delay={0.05}>
-          <ol className="relative mt-20 max-w-4xl space-y-6">
-            {/* Violet rail down the left */}
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute left-3 top-3 bottom-3 w-px bg-gradient-to-b from-accent via-accent/40 to-transparent md:left-4"
-            />
-
-            {bottomLine.points.map((point, i) => (
-              <motion.li
-                key={i}
-                initial={reduce ? undefined : { opacity: 0, y: 12 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.7, delay: 0.08 * i, ease: [0.16, 1, 0.3, 1] }}
-                className="relative flex items-start gap-5 pl-10 md:gap-7 md:pl-14"
-              >
-                {/* Node dot on the rail */}
-                <span
-                  aria-hidden="true"
-                  className="absolute left-[7px] top-[10px] h-3 w-3 rounded-full border border-accent/70 bg-accent/40 md:left-[11px] md:top-[12px]"
-                />
-                {/* Horizontal connector tick */}
-                <span
-                  aria-hidden="true"
-                  className="absolute left-3 top-[15px] h-px w-5 bg-accent/40 md:left-4 md:top-[18px] md:w-8"
-                />
-                <span className="shrink-0 font-mono text-xs font-semibold text-muted/70 pt-0.5 md:text-sm">
-                  {(i + 1).toString().padStart(2, '0')}
-                </span>
-                <p className="font-display text-lg leading-relaxed text-ink/90 md:text-xl">
-                  {point}
-                </p>
-              </motion.li>
-            ))}
-          </ol>
+          <div className="relative mt-20 max-w-4xl overflow-hidden rounded-3xl border border-accent/40 bg-gradient-to-br from-accent/10 via-accent/5 to-canvas p-9 md:p-12 shadow-[0_0_60px_-20px_rgba(165,138,255,0.45)]">
+            <div className="absolute inset-0 [background:radial-gradient(circle_at_20%_0%,rgba(165,138,255,0.16),transparent_55%)]" />
+            <ul className="relative space-y-4">
+              {bottomLine.points.map((point, i) => (
+                <motion.li
+                  key={i}
+                  initial={reduce ? undefined : { opacity: 0, x: -8 }}
+                  whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-start gap-3"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="mt-[10px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                  />
+                  <p className="text-base leading-relaxed text-ink/90 md:text-lg">{point}</p>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
         </ScrollReveal>
       </div>
     </section>

@@ -5,6 +5,7 @@ import { ScrollReveal } from '@/components/ScrollReveal';
 import { SpotlightCard } from '@/components/SpotlightCard';
 import { ImageCompare } from '@/components/ImageCompare';
 import { ActionLink } from '@/components/ActionLink';
+import { FlipCard } from '@/components/FlipCard';
 import { customer } from '@/content';
 import { cn, withBase } from '@/lib/utils';
 import type { Persona, UseCase } from '@/types';
@@ -28,14 +29,11 @@ export function Customer() {
           lede={customer.lede}
         />
 
-        {/* Personas — static grid. Primary spans 2/4 (wider + roomier). */}
-        <div className="mt-20 grid grid-cols-1 gap-6 md:grid-cols-4 md:gap-7">
+        {/* Personas — weighted grid: decision maker 40% · end-user technical 25%
+            · end-user business 25% · investor 10% (sums to 20fr). */}
+        <div className="mt-20 grid grid-cols-1 gap-6 md:grid-cols-[8fr_5fr_5fr_2fr] md:gap-6">
           {customer.personas.map((p, i) => (
-            <ScrollReveal
-              key={p.id}
-              delay={0.04 * i}
-              className={cn(p.kind === 'primary' ? 'md:col-span-2' : 'md:col-span-1')}
-            >
+            <ScrollReveal key={p.id} delay={0.04 * i}>
               <PersonaCard persona={p} />
             </ScrollReveal>
           ))}
@@ -93,10 +91,10 @@ export function Customer() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 gap-7 md:grid-cols-3">
               {customer.useCases.map((uc, i) => (
                 <ScrollReveal key={uc.id} delay={0.05 + i * 0.06}>
-                  <UseCaseCard uc={uc} />
+                  <UseCaseBlock uc={uc} />
                 </ScrollReveal>
               ))}
             </div>
@@ -107,35 +105,25 @@ export function Customer() {
   );
 }
 
-function UseCaseCard({ uc }: { uc: UseCase }) {
+function UseCaseBlock({ uc }: { uc: UseCase }) {
   return (
-    <article className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition-colors duration-300 hover:border-accent/30 hover:bg-white/[0.05] md:p-8">
-      {/* Name */}
+    <div className="flex h-full flex-col">
+      {/* Name — sits OUTSIDE the flip card, above */}
       <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">
         {uc.name}
       </h4>
 
-      {/* Pain — quoted, italic, with a violet rail on the left */}
-      <div className="mt-6 border-l-2 border-rose-300/40 pl-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-rose-300/70">
-          Pain
-        </p>
-        <p className="mt-2 text-sm italic leading-relaxed text-muted md:text-base">
-          "{uc.pain}"
-        </p>
+      {/* Flip card — pain on front, solution on back. Hover to flip. */}
+      <div className="relative mt-4 aspect-[3/4] w-full">
+        <FlipCard
+          front={<UseCasePain pain={uc.pain} />}
+          back={<UseCaseSolution solution={uc.solution} />}
+        />
       </div>
 
-      {/* Solution */}
-      <div className="mt-5 border-l-2 border-emerald-300/40 pl-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-300/80">
-          Solution
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-ink/90 md:text-base">{uc.solution}</p>
-      </div>
-
-      {/* Features */}
+      {/* Features — below the card, outside */}
       {uc.features.length > 0 && (
-        <div className="mt-7 flex flex-wrap gap-2">
+        <div className="mt-5 flex flex-wrap gap-2">
           {uc.features.map((f) => (
             <span
               key={f}
@@ -146,30 +134,69 @@ function UseCaseCard({ uc }: { uc: UseCase }) {
           ))}
         </div>
       )}
-    </article>
+    </div>
+  );
+}
+
+function UseCasePain({ pain }: { pain: string }) {
+  return (
+    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-rose-300/25 bg-gradient-to-br from-rose-500/[0.10] via-canvas to-canvas p-7 md:p-8">
+      <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(244,114,182,0.12),transparent_55%)]" />
+      <div className="relative flex h-full flex-col">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-rose-300/80">
+          The pain
+        </p>
+        <p className="mt-6 flex-1 text-base italic leading-relaxed text-ink/90 md:text-lg">
+          "{pain}"
+        </p>
+        <p className="mt-6 text-xs font-medium text-muted/70">Hover to see solution →</p>
+      </div>
+    </div>
+  );
+}
+
+function UseCaseSolution({ solution }: { solution: string }) {
+  return (
+    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-emerald-300/30 bg-gradient-to-br from-emerald-500/[0.10] via-canvas to-canvas p-7 md:p-8">
+      <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(110,231,183,0.12),transparent_55%)]" />
+      <div className="relative flex h-full flex-col">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-emerald-300/85">
+          The solution
+        </p>
+        <p className="mt-6 flex-1 text-base leading-relaxed text-ink/90 md:text-lg">{solution}</p>
+      </div>
+    </div>
   );
 }
 
 function PersonaCard({ persona }: { persona: Persona }) {
   const [imgOk, setImgOk] = useState<boolean | null>(null);
   const isPrimary = persona.kind === 'primary';
+  const isSupporting = persona.kind === 'supporting';
 
   return (
-    <SpotlightCard className={cn('h-full', isPrimary && 'border-accent/25 bg-accent/[0.04]')}>
+    <SpotlightCard
+      className={cn(
+        'h-full',
+        isPrimary && 'border-accent/25 bg-accent/[0.04]',
+        isSupporting && 'border-white/8 bg-white/[0.015]',
+      )}
+    >
       <div
         className={cn(
-          'flex h-full flex-col gap-6',
-          // Primary card: roomier padding for breathing room
-          isPrimary ? 'p-9 md:p-11' : 'p-7 md:p-8',
+          'flex h-full flex-col',
+          isPrimary ? 'gap-6 p-9 md:p-11' : isSupporting ? 'gap-3 p-5 md:p-6' : 'gap-5 p-7 md:p-8',
         )}
       >
-        {/* Photo — bumped from 80px → 112px (primary 128px) */}
+        {/* Photo */}
         <div
           className={cn(
             'relative shrink-0 overflow-hidden rounded-2xl ring-1',
             isPrimary
               ? 'h-32 w-32 ring-accent/40 shadow-[0_0_40px_-12px_rgba(165,138,255,0.55)]'
-              : 'h-28 w-28 ring-white/15',
+              : isSupporting
+                ? 'h-14 w-14 ring-white/12'
+                : 'h-24 w-24 ring-white/15',
           )}
         >
           {imgOk !== false ? (
@@ -182,7 +209,13 @@ function PersonaCard({ persona }: { persona: Persona }) {
             />
           ) : (
             <div className="grid h-full w-full place-items-center bg-gradient-to-br from-violet-500/30 to-indigo-500/20">
-              <User className={cn(isPrimary ? 'h-10 w-10' : 'h-9 w-9', 'text-white/70')} aria-hidden="true" />
+              <User
+                className={cn(
+                  isPrimary ? 'h-10 w-10' : isSupporting ? 'h-5 w-5' : 'h-8 w-8',
+                  'text-white/70',
+                )}
+                aria-hidden="true"
+              />
             </div>
           )}
         </div>
@@ -192,16 +225,21 @@ function PersonaCard({ persona }: { persona: Persona }) {
           <h3
             className={cn(
               'font-display font-semibold text-ink',
-              isPrimary ? 'text-3xl md:text-[32px]' : 'text-2xl',
+              isPrimary ? 'text-3xl md:text-[32px]' : isSupporting ? 'text-base' : 'text-xl md:text-2xl',
             )}
           >
             {persona.name}
           </h3>
-          <p className="mt-1 text-sm text-muted">{persona.role}</p>
+          <p className={cn('mt-1 text-muted', isSupporting ? 'text-xs' : 'text-sm')}>{persona.role}</p>
         </div>
 
         {/* Description */}
-        <p className={cn('leading-relaxed text-muted', isPrimary ? 'text-lg' : 'text-base')}>
+        <p
+          className={cn(
+            'leading-relaxed text-muted',
+            isPrimary ? 'text-lg' : isSupporting ? 'text-xs' : 'text-base',
+          )}
+        >
           {persona.description}
         </p>
       </div>

@@ -29,6 +29,38 @@ export function Positioning() {
           </div>
         </ScrollReveal>
 
+        {/* Writing & content guidelines — sits BEFORE Say / Don't say */}
+        {positioning.writingGuidelines && positioning.writingGuidelines.length > 0 && (
+          <>
+            <ScrollReveal delay={0.12}>
+              <div className="mt-24">
+                <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+                  Writing & content guidelines.
+                </h3>
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+                  Principles for everyone writing about the launch — keep them in mind before any copy goes out.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <ul className="mt-10 max-w-4xl space-y-3">
+                {positioning.writingGuidelines.map((g, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 md:p-6"
+                  >
+                    <span className="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent/40 bg-accent/[0.12] font-mono text-xs font-semibold text-accent">
+                      {i + 1}
+                    </span>
+                    <p className="text-base leading-relaxed text-ink/90 md:text-lg">{g}</p>
+                  </li>
+                ))}
+              </ul>
+            </ScrollReveal>
+          </>
+        )}
+
         {/* Say / Don't Say — language guardrails */}
         <ScrollReveal delay={0.15}>
           <div className="mt-24">
