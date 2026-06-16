@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { ArrowUpRight, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, User, X } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { ImageCompare } from '@/components/ImageCompare';
@@ -100,12 +101,12 @@ function UseCaseBlock({ uc }: { uc: UseCase }) {
   return (
     <div className="flex h-full flex-col">
       {/* Name — sits OUTSIDE the flip card, above */}
-      <h4 className="font-display text-lg font-semibold leading-tight text-ink md:text-xl">
+      <h4 className="font-display text-base font-semibold leading-tight text-ink md:text-lg">
         {uc.name}
       </h4>
 
-      {/* Flip card — pain on front, solution + features on back. Hover to flip. */}
-      <div className="relative mt-3 aspect-[3/4] w-full">
+      {/* Flip card — compact fixed height, no excess space */}
+      <div className="relative mt-3 h-56 w-full">
         <FlipCard
           front={<UseCasePain pain={uc.pain} />}
           back={<UseCaseSolution solution={uc.solution} features={uc.features} />}
@@ -117,16 +118,16 @@ function UseCaseBlock({ uc }: { uc: UseCase }) {
 
 function UseCasePain({ pain }: { pain: string }) {
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-rose-300/25 bg-gradient-to-br from-rose-500/[0.08] via-canvas to-canvas p-6 md:p-7">
+    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-rose-300/25 bg-gradient-to-br from-rose-500/[0.08] via-canvas to-canvas p-4 md:p-5">
       <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(244,114,182,0.10),transparent_55%)]" />
       <div className="relative flex h-full flex-col">
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-rose-300/80">
           The pain
         </p>
-        <p className="mt-5 flex-1 text-sm italic leading-relaxed text-ink/90 md:text-base">
+        <p className="mt-3 flex-1 text-sm italic leading-relaxed text-ink/90">
           "{pain}"
         </p>
-        <p className="mt-5 text-[11px] font-medium text-muted/70">Hover to see solution →</p>
+        <p className="mt-3 text-[10px] font-medium text-muted/70">Hover to see solution →</p>
       </div>
     </div>
   );
@@ -134,20 +135,20 @@ function UseCasePain({ pain }: { pain: string }) {
 
 function UseCaseSolution({ solution, features }: { solution: string; features: string[] }) {
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-emerald-300/30 bg-gradient-to-br from-emerald-500/[0.08] via-canvas to-canvas p-6 md:p-7">
+    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-emerald-300/30 bg-gradient-to-br from-emerald-500/[0.08] via-canvas to-canvas p-4 md:p-5">
       <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(110,231,183,0.10),transparent_55%)]" />
       <div className="relative flex h-full flex-col">
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-emerald-300/85">
           The solution
         </p>
-        <p className="mt-5 flex-1 text-sm leading-relaxed text-ink/90 md:text-base">{solution}</p>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-ink/90">{solution}</p>
 
         {features.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-1.5">
+          <div className="mt-3 flex flex-wrap gap-1.5">
             {features.map((f) => (
               <span
                 key={f}
-                className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-2.5 py-1 text-[11px] font-medium text-ink/85"
+                className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-2 py-0.5 text-[10px] font-medium text-ink/85"
               >
                 {f}
               </span>
@@ -162,40 +163,54 @@ function UseCaseSolution({ solution, features }: { solution: string; features: s
 /* ---------- personas ---------- */
 
 function PersonasGrid() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
   const decisionMaker = customer.personas.find((p) => p.kind === 'primary');
   const endUserTech = customer.personas.find((p) => p.kind === 'end-user-technical');
   const endUserBiz = customer.personas.find((p) => p.kind === 'end-user-business');
   const investor = customer.personas.find((p) => p.kind === 'investor');
 
+  const activePersona = customer.personas.find((p) => p.id === activeId) ?? null;
+
   return (
-    <div className="mt-20 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[1fr_2fr_1fr]">
-      {decisionMaker && (
-        <ScrollReveal>
-          <PersonaCard persona={decisionMaker} />
-        </ScrollReveal>
-      )}
+    <>
+      <div className="mt-20 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[1fr_2fr_1fr]">
+        {decisionMaker && (
+          <ScrollReveal>
+            <PersonaCard persona={decisionMaker} onOpen={setActiveId} />
+          </ScrollReveal>
+        )}
 
-      {(endUserTech || endUserBiz) && (
-        <ScrollReveal delay={0.06}>
-          <EndUserFrame technical={endUserTech} business={endUserBiz} />
-        </ScrollReveal>
-      )}
+        {(endUserTech || endUserBiz) && (
+          <ScrollReveal delay={0.06}>
+            <EndUserFrame
+              technical={endUserTech}
+              business={endUserBiz}
+              onOpen={setActiveId}
+            />
+          </ScrollReveal>
+        )}
 
-      {investor && (
-        <ScrollReveal delay={0.12}>
-          <PersonaCard persona={investor} />
-        </ScrollReveal>
-      )}
-    </div>
+        {investor && (
+          <ScrollReveal delay={0.12}>
+            <PersonaCard persona={investor} onOpen={setActiveId} />
+          </ScrollReveal>
+        )}
+      </div>
+
+      <PersonaModal persona={activePersona} onClose={() => setActiveId(null)} />
+    </>
   );
 }
 
 function EndUserFrame({
   technical,
   business,
+  onOpen,
 }: {
   technical?: Persona;
   business?: Persona;
+  onOpen: (id: string) => void;
 }) {
   return (
     <div className="flex h-full flex-col rounded-3xl border border-white/15 bg-white/[0.015] p-5 md:p-6">
@@ -204,19 +219,24 @@ function EndUserFrame({
         <p className="mt-1 text-xs text-muted">The people who live in monday day to day.</p>
       </div>
       <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2">
-        {technical && <PersonaCard persona={technical} variant="nested" />}
-        {business && <PersonaCard persona={business} variant="nested" />}
+        {technical && <PersonaCard persona={technical} variant="nested" onOpen={onOpen} />}
+        {business && <PersonaCard persona={business} variant="nested" onOpen={onOpen} />}
       </div>
     </div>
   );
 }
 
+/** Minimal persona card — photo, name, role, read-more arrow.
+ *  Full content (whoAreThey, whatTheyCareAbout, messaging goal, features)
+ *  lives in the modal, opened by the arrow. */
 function PersonaCard({
   persona,
   variant = 'full',
+  onOpen,
 }: {
   persona: Persona;
   variant?: 'full' | 'nested';
+  onOpen: (id: string) => void;
 }) {
   const isNested = variant === 'nested';
   return (
@@ -227,9 +247,10 @@ function PersonaCard({
         isNested ? 'p-5' : 'p-6 md:p-7',
       )}
     >
-      {/* Read-more arrow — top-right, icon only */}
+      {/* Read-more arrow — top-right, icon only, opens the modal */}
       <button
         type="button"
+        onClick={() => onOpen(persona.id)}
         aria-label={`Read more about ${persona.name}`}
         className={cn(
           'absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full',
@@ -241,79 +262,14 @@ function PersonaCard({
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
       </button>
 
-      {/* Photo — uniform size across all cards */}
       <PersonaPhoto persona={persona} />
 
-      {/* Name + role */}
       <div className="mt-5">
         <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">
           {persona.name}
         </h4>
         <p className="mt-1 text-sm text-muted">{persona.role}</p>
       </div>
-
-      {/* Who are they */}
-      {persona.whoAreThey.length > 0 && (
-        <div className="mt-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
-            Who are they
-          </p>
-          <ul className="mt-2 space-y-1.5">
-            {persona.whoAreThey.map((line, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm leading-relaxed text-ink/85">
-                <span
-                  aria-hidden="true"
-                  className="mt-[8px] inline-block h-1 w-1 shrink-0 rounded-full bg-accent/70"
-                />
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* What they care about */}
-      {persona.whatTheyCareAbout && (
-        <div className="mt-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
-            What they care about
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-ink/85">
-            {persona.whatTheyCareAbout}
-          </p>
-        </div>
-      )}
-
-      {/* Messaging goal */}
-      {persona.messagingGoal && (
-        <div className="mt-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent/80">
-            Our messaging goal
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-ink/90">
-            {persona.messagingGoal}
-          </p>
-        </div>
-      )}
-
-      {/* Features tags */}
-      {persona.features.length > 0 && (
-        <div className="mt-auto pt-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
-            Features
-          </p>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {persona.features.map((f) => (
-              <span
-                key={f}
-                className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-2.5 py-1 text-[11px] font-medium text-ink/85"
-              >
-                {f}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
     </article>
   );
 }
@@ -336,5 +292,158 @@ function PersonaPhoto({ persona }: { persona: Persona }) {
         </div>
       )}
     </div>
+  );
+}
+
+/** Persona detail modal — opens when the read-more arrow is clicked. */
+function PersonaModal({
+  persona,
+  onClose,
+}: {
+  persona: Persona | null;
+  onClose: () => void;
+}) {
+  const reduce = useReducedMotion();
+
+  // Close on ESC + lock body scroll while open
+  useEffect(() => {
+    if (!persona) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [persona, onClose]);
+
+  return (
+    <AnimatePresence>
+      {persona && (
+        <motion.div
+          key="persona-modal"
+          initial={reduce ? undefined : { opacity: 0 }}
+          animate={reduce ? undefined : { opacity: 1 }}
+          exit={reduce ? undefined : { opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+          onClick={onClose}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${persona.name} — details`}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-canvas/85 backdrop-blur-md" />
+
+          {/* Card */}
+          <motion.div
+            initial={reduce ? undefined : { opacity: 0, y: 20, scale: 0.97 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+            exit={reduce ? undefined : { opacity: 0, y: 12, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-accent/30 bg-canvas shadow-card-lg max-h-[90vh] overflow-y-auto"
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_20%_0%,rgba(165,138,255,0.12),transparent_55%)]"
+            />
+
+            {/* Close button */}
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-canvas/80 text-muted backdrop-blur transition-colors hover:border-accent/50 hover:bg-accent/[0.12] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+
+            {/* Content */}
+            <div className="relative p-8 md:p-10">
+              {/* Header — photo + name + role */}
+              <div className="flex items-start gap-5">
+                <PersonaPhoto persona={persona} />
+                <div className="min-w-0">
+                  <h3 className="font-display text-2xl font-semibold leading-tight text-ink md:text-3xl">
+                    {persona.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-muted md:text-base">{persona.role}</p>
+                </div>
+              </div>
+
+              {/* Who are they */}
+              {persona.whoAreThey.length > 0 && (
+                <div className="mt-8">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+                    Who are they
+                  </p>
+                  <ul className="mt-3 space-y-2">
+                    {persona.whoAreThey.map((line, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 text-sm leading-relaxed text-ink/85 md:text-base"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-[10px] inline-block h-1 w-1 shrink-0 rounded-full bg-accent/70"
+                        />
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* What they care about */}
+              {persona.whatTheyCareAbout && (
+                <div className="mt-7">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+                    What they care about
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-ink/90 md:text-base">
+                    {persona.whatTheyCareAbout}
+                  </p>
+                </div>
+              )}
+
+              {/* Messaging goal */}
+              {persona.messagingGoal && (
+                <div className="mt-7">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent/85">
+                    Our messaging goal
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-ink md:text-base">
+                    {persona.messagingGoal}
+                  </p>
+                </div>
+              )}
+
+              {/* Features tags */}
+              {persona.features.length > 0 && (
+                <div className="mt-7">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+                    Features
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {persona.features.map((f) => (
+                      <span
+                        key={f}
+                        className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-3 py-1 text-xs font-medium text-ink/90 md:text-sm"
+                      >
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
