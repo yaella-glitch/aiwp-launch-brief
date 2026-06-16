@@ -30,7 +30,12 @@ export function Launch() {
         <EditorialHeader
           title={launch.title}
           lede={launch.lede}
-          action={<ActionLink href="#" label="Launch board" />}
+          action={
+            <ActionLink
+              href="https://monday.monday.com/boards/18417328751"
+              label="Launch board"
+            />
+          }
         />
 
         {/* Goals (2 only) — large, editorial. No header, just the cards. */}

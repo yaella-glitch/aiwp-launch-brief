@@ -20,7 +20,12 @@ export function ProductOverview() {
         <EditorialHeader
           title={productOverview.title}
           lede={productOverview.lede}
-          action={<ActionLink href="#" label="Full feature list" />}
+          action={
+            <ActionLink
+              href="https://docs.google.com/document/d/1jgB4HNRdAbo_eZUDHCY5ra2g9Sa7-YXamhCX6emAyGc/edit?tab=t.0"
+              label="Full feature list"
+            />
+          }
         />
 
         <ScrollReveal delay={0.05}>

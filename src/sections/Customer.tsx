@@ -82,7 +82,10 @@ export function Customer() {
                 <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
                   Use cases.
                 </h3>
-                <ActionLink href="#" label="Full use-cases list" />
+                <ActionLink
+                  href="https://v074f041970a6be20bed5f15a6aa79587.cdn2.monday.app/"
+                  label="Full use-cases list"
+                />
               </div>
             </ScrollReveal>
 
