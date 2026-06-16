@@ -74,24 +74,19 @@ export function Customer() {
           </div>
         </div>
 
-        {/* Use cases — text-only cards. Name · pain · solution · features. */}
+        {/* Use cases — flip cards. Pain on front, solution + features on back. */}
         {customer.useCases.length > 0 && (
           <div className="mt-24">
             <ScrollReveal>
-              <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between md:gap-10">
-                <div className="max-w-2xl">
-                  <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
-                    Use cases.
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-muted">
-                    Three scenarios we lead with — pain, solution, and the features that power it.
-                  </p>
-                </div>
+              <div className="flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between md:gap-10">
+                <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
+                  Use cases.
+                </h3>
                 <ActionLink href="#" label="Full use-cases list" />
               </div>
             </ScrollReveal>
 
-            <div className="mt-12 grid grid-cols-1 gap-7 md:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
               {customer.useCases.map((uc, i) => (
                 <ScrollReveal key={uc.id} delay={0.05 + i * 0.06}>
                   <UseCaseBlock uc={uc} />
@@ -109,61 +104,60 @@ function UseCaseBlock({ uc }: { uc: UseCase }) {
   return (
     <div className="flex h-full flex-col">
       {/* Name — sits OUTSIDE the flip card, above */}
-      <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">
+      <h4 className="font-display text-lg font-semibold leading-tight text-ink md:text-xl">
         {uc.name}
       </h4>
 
-      {/* Flip card — pain on front, solution on back. Hover to flip. */}
-      <div className="relative mt-4 aspect-[3/4] w-full">
+      {/* Flip card — pain on front, solution + features on back. Hover to flip. */}
+      <div className="relative mt-3 aspect-[3/4] w-full">
         <FlipCard
           front={<UseCasePain pain={uc.pain} />}
-          back={<UseCaseSolution solution={uc.solution} />}
+          back={<UseCaseSolution solution={uc.solution} features={uc.features} />}
         />
       </div>
-
-      {/* Features — below the card, outside */}
-      {uc.features.length > 0 && (
-        <div className="mt-5 flex flex-wrap gap-2">
-          {uc.features.map((f) => (
-            <span
-              key={f}
-              className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-3 py-1 text-xs font-medium text-ink/85"
-            >
-              {f}
-            </span>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
 
 function UseCasePain({ pain }: { pain: string }) {
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-rose-300/25 bg-gradient-to-br from-rose-500/[0.10] via-canvas to-canvas p-7 md:p-8">
-      <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(244,114,182,0.12),transparent_55%)]" />
+    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-rose-300/25 bg-gradient-to-br from-rose-500/[0.08] via-canvas to-canvas p-6 md:p-7">
+      <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(244,114,182,0.10),transparent_55%)]" />
       <div className="relative flex h-full flex-col">
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-rose-300/80">
           The pain
         </p>
-        <p className="mt-6 flex-1 text-base italic leading-relaxed text-ink/90 md:text-lg">
+        <p className="mt-5 flex-1 text-sm italic leading-relaxed text-ink/90 md:text-base">
           "{pain}"
         </p>
-        <p className="mt-6 text-xs font-medium text-muted/70">Hover to see solution →</p>
+        <p className="mt-5 text-[11px] font-medium text-muted/70">Hover to see solution →</p>
       </div>
     </div>
   );
 }
 
-function UseCaseSolution({ solution }: { solution: string }) {
+function UseCaseSolution({ solution, features }: { solution: string; features: string[] }) {
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-emerald-300/30 bg-gradient-to-br from-emerald-500/[0.10] via-canvas to-canvas p-7 md:p-8">
-      <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(110,231,183,0.12),transparent_55%)]" />
+    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-emerald-300/30 bg-gradient-to-br from-emerald-500/[0.08] via-canvas to-canvas p-6 md:p-7">
+      <div className="absolute inset-0 [background:radial-gradient(circle_at_30%_0%,rgba(110,231,183,0.10),transparent_55%)]" />
       <div className="relative flex h-full flex-col">
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-emerald-300/85">
           The solution
         </p>
-        <p className="mt-6 flex-1 text-base leading-relaxed text-ink/90 md:text-lg">{solution}</p>
+        <p className="mt-5 flex-1 text-sm leading-relaxed text-ink/90 md:text-base">{solution}</p>
+
+        {features.length > 0 && (
+          <div className="mt-5 flex flex-wrap gap-1.5">
+            {features.map((f) => (
+              <span
+                key={f}
+                className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-2.5 py-1 text-[11px] font-medium text-ink/85"
+              >
+                {f}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,11 +1,10 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { bottomLine } from '@/content';
 
 /**
- * Executive summary — short, scannable takeaways inside a violet-framed card.
- * Simple bullet list, one line per point.
+ * The bottom line — short, scannable takeaways inside a single violet-framed
+ * card. Title and bullets share the frame. No subtitle.
  */
 export function BottomLine() {
   const reduce = useReducedMotion();
@@ -16,12 +15,19 @@ export function BottomLine() {
       className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        <EditorialHeader title={bottomLine.title} lede={bottomLine.lede ?? ''} />
+        <ScrollReveal>
+          <div className="relative overflow-hidden rounded-3xl border border-accent/40 bg-white/[0.015] p-9 md:p-12">
+            {/* Very subtle violet glow in the corner — barely there */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_15%_0%,rgba(165,138,255,0.07),transparent_55%)]"
+            />
 
-        <ScrollReveal delay={0.05}>
-          <div className="relative mt-20 max-w-4xl overflow-hidden rounded-3xl border border-accent/40 bg-gradient-to-br from-accent/10 via-accent/5 to-canvas p-9 md:p-12 shadow-[0_0_60px_-20px_rgba(165,138,255,0.45)]">
-            <div className="absolute inset-0 [background:radial-gradient(circle_at_20%_0%,rgba(165,138,255,0.16),transparent_55%)]" />
-            <ul className="relative space-y-4">
+            <h2 className="relative font-display text-[clamp(32px,5vw,60px)] font-bold leading-[1.0] tracking-tight text-ink">
+              {bottomLine.title}
+            </h2>
+
+            <ul className="relative mt-10 space-y-4">
               {bottomLine.points.map((point, i) => (
                 <motion.li
                   key={i}

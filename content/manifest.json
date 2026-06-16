@@ -15,7 +15,7 @@
   "sections": [
     { "id": "hero", "title": "Hero", "icon": "sparkle", "order": 0, "visible": true, "showInRail": false },
     { "id": "launch-date", "title": "Launch date", "icon": "calendar", "order": 1, "visible": true, "showInRail": false },
-    { "id": "bottom-line", "title": "Executive summary", "icon": "list", "order": 2, "visible": true },
+    { "id": "bottom-line", "title": "The bottom line", "icon": "list", "order": 2, "visible": true },
     { "id": "background", "title": "Background", "icon": "book", "order": 3, "visible": true },
     { "id": "focus", "title": "What we lead with externally", "icon": "target", "order": 4, "visible": true },
     { "id": "product-overview", "title": "What we're launching", "icon": "box", "order": 5, "visible": true },
