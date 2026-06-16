@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { ImageIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { focus } from '@/content';
@@ -8,16 +8,12 @@ import { cn, withBase } from '@/lib/utils';
 import type { FocusItem } from '@/types';
 
 /**
- * What we lead with externally — editorial stack.
+ * What we lead with externally — tablet/device-frame carousel.
  *
- * Each emphasis (lead / reinforce / close) gets its own row:
- *   - The designed slide image on one side, free to render at its natural
- *     aspect ratio (no fixed-aspect cropping / letterboxing).
- *   - A dedicated text area on the other side: number label, title,
- *     description, optional talking-points list.
- *   - The sides alternate per row for an editorial rhythm.
- *
- * On mobile each row collapses to image-on-top, text-below.
+ * One designed slide visible at a time, framed in a subtle tablet-style
+ * bezel. Prev / next chevrons sit OUTSIDE the device on the left and right.
+ * Dot indicators below. Active slide's title + description renders below
+ * the device as the dedicated text area.
  */
 export function Focus() {
   return (
@@ -29,94 +25,186 @@ export function Focus() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
         <EditorialHeader title={focus.title} lede={focus.lede ?? ''} />
 
-        <div className="mt-20 space-y-20 md:space-y-28">
-          {focus.items.map((item, i) => (
-            <ScrollReveal key={item.id} delay={0.04 * i}>
-              <FocusRow item={item} index={i} total={focus.items.length} />
-            </ScrollReveal>
-          ))}
-        </div>
+        <ScrollReveal delay={0.05}>
+          <div className="mt-20">
+            <FocusCarousel items={focus.items} />
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
 }
 
-function FocusRow({
-  item,
-  index,
-  total,
-}: {
-  item: FocusItem;
-  index: number;
-  total: number;
-}) {
-  const isImageRight = index % 2 === 1;
+function FocusCarousel({ items }: { items: FocusItem[] }) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const reduce = useReducedMotion();
+
+  const item = items[index];
+
+  // Auto-advance every 7s; pauses on hover
+  useEffect(() => {
+    if (paused || items.length <= 1) return;
+    const id = window.setTimeout(() => {
+      setIndex((i) => (i + 1) % items.length);
+    }, 7000);
+    return () => window.clearTimeout(id);
+  }, [index, paused, items.length]);
+
+  function next() {
+    setIndex((i) => (i + 1) % items.length);
+  }
+  function prev() {
+    setIndex((i) => (i - 1 + items.length) % items.length);
+  }
+
+  if (!item) return null;
+
   return (
-    <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
-      {/* Image — alternates side */}
-      <div className={cn(isImageRight ? 'md:order-2' : 'md:order-1')}>
-        <FocusImage src={item.image} alt={item.title} />
+    <div
+      className="relative w-full px-8 md:px-14"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Device frame — outer bezel */}
+      <div className="relative rounded-[28px] border border-white/15 bg-canvas/40 p-2.5 shadow-[0_30px_120px_-40px_rgba(165,138,255,0.35)] md:p-3">
+        {/* Screen — inner */}
+        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[20px] bg-canvas">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={item.id}
+              initial={reduce ? undefined : { opacity: 0 }}
+              animate={reduce ? undefined : { opacity: 1 }}
+              exit={reduce ? undefined : { opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0"
+            >
+              <SlideImage src={item.image} alt={item.title} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Text column */}
-      <div className={cn(isImageRight ? 'md:order-1' : 'md:order-2')}>
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted/70">
-          {(index + 1).toString().padStart(2, '0')} / {total}
-        </span>
+      {/* Dot indicators — below the device */}
+      {items.length > 1 && (
+        <div className="mt-6 flex justify-center gap-2">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={cn(
+                'h-1.5 rounded-full transition-all duration-300',
+                i === index ? 'w-8 bg-accent' : 'w-1.5 bg-white/25 hover:bg-white/45',
+              )}
+            />
+          ))}
+        </div>
+      )}
 
-        <h3 className="mt-4 font-display text-[clamp(26px,3.4vw,40px)] font-semibold leading-[1.1] tracking-tight text-ink">
-          {item.title}
-        </h3>
+      {/* Dedicated text area — under the dots */}
+      <div className="mx-auto mt-8 max-w-3xl text-center md:mt-10">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`text-${item.id}`}
+            initial={reduce ? undefined : { opacity: 0, y: 8 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            exit={reduce ? undefined : { opacity: 0, y: -4 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-muted/70">
+              {(index + 1).toString().padStart(2, '0')} / {items.length} · {item.title}
+            </span>
+            <p className="mt-4 text-base leading-relaxed text-ink/85 md:text-lg">
+              {item.description}
+            </p>
 
-        <p className="mt-5 text-base leading-relaxed text-muted md:text-lg">
-          {item.description}
-        </p>
-
-        {item.talkingPoints && item.talkingPoints.length > 0 && (
-          <ul className="mt-6 space-y-2.5">
-            {item.talkingPoints.map((point, i) => (
-              <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-ink/85">
-                <span
-                  aria-hidden="true"
-                  className="mt-[10px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                />
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+            {item.talkingPoints && item.talkingPoints.length > 0 && (
+              <ul className="mx-auto mt-5 max-w-xl space-y-2 text-left">
+                {item.talkingPoints.map((p, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-muted md:text-base"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-[10px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                    />
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
+
+      {/* Arrow buttons — outside the device, vertically centered against the screen */}
+      {items.length > 1 && (
+        <>
+          <ArrowButton direction="prev" onClick={prev} />
+          <ArrowButton direction="next" onClick={next} />
+        </>
+      )}
     </div>
   );
 }
 
-function FocusImage({ src, alt }: { src: string; alt: string }) {
-  const reduce = useReducedMotion();
-  const [ok, setOk] = useState<boolean | null>(null);
+function ArrowButton({
+  direction,
+  onClick,
+}: {
+  direction: 'prev' | 'next';
+  onClick: () => void;
+}) {
+  const Icon = direction === 'prev' ? ChevronLeft : ChevronRight;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={direction === 'prev' ? 'Previous slide' : 'Next slide'}
+      className={cn(
+        'group absolute top-[28%] z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full',
+        'border border-white/20 bg-canvas/85 text-ink/85 backdrop-blur',
+        'shadow-[0_0_24px_-8px_rgba(0,0,0,0.6)]',
+        'transition-all duration-200 hover:border-accent/50 hover:bg-accent/10 hover:text-ink',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
+        direction === 'prev' ? 'left-0' : 'right-0',
+      )}
+    >
+      <Icon
+        aria-hidden="true"
+        className={cn(
+          'h-5 w-5 transition-transform duration-200',
+          direction === 'prev' ? 'group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5',
+        )}
+      />
+    </button>
+  );
+}
 
+function SlideImage({ src, alt }: { src: string; alt: string }) {
+  const [ok, setOk] = useState<boolean | null>(null);
   if (ok === false || !src) {
     return (
-      <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-violet-500/10 via-canvas to-canvas">
+      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/12 via-canvas to-canvas">
         <div className="text-center">
-          <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
-            <ImageIcon className="h-5 w-5 text-white/60" aria-hidden="true" />
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 backdrop-blur">
+            <ImageIcon className="h-4 w-4 text-white/60" aria-hidden="true" />
           </span>
-          <p className="mt-3 px-4 font-mono text-[10px] text-white/40">{src}</p>
+          <p className="mt-2 px-4 font-mono text-[10px] text-white/40">{src}</p>
         </div>
       </div>
     );
   }
-
   return (
-    <motion.img
+    <img
       src={withBase(src)}
       alt={alt}
       onLoad={() => setOk(true)}
       onError={() => setOk(false)}
-      initial={reduce ? undefined : { opacity: 0 }}
-      animate={reduce ? undefined : { opacity: ok ? 1 : 0 }}
-      transition={{ duration: 0.6 }}
-      className="block h-auto w-full rounded-3xl border border-white/10 shadow-card-lg"
+      className={cn('h-full w-full object-contain', ok === null && 'opacity-0')}
     />
   );
 }

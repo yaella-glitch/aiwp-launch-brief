@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, User, X } from 'lucide-react';
+import { useState } from 'react';
+import { User } from 'lucide-react';
 import { EditorialHeader } from '@/components/EditorialHeader';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { ImageCompare } from '@/components/ImageCompare';
+import { ArrowRight } from 'lucide-react';
 import { ActionLink } from '@/components/ActionLink';
 import { FlipCard } from '@/components/FlipCard';
 import { customer } from '@/content';
@@ -33,34 +32,41 @@ export function Customer() {
         <PersonasGrid />
 
 
-        {/* Pains & solutions */}
+        {/* Pains & solutions — before / after as TWO side-by-side cards. */}
         <div className="mt-24">
           <ScrollReveal>
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               The pains &amp; solutions.
             </h3>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              What changes for the customer, theme by theme. Drag any handle to compare.
+              What changes for the customer, theme by theme.
             </p>
           </ScrollReveal>
 
-          <div className="h-12" />
-
-          <div className="space-y-16 md:space-y-20">
+          <div className="mt-12 space-y-16 md:space-y-20">
             {customer.beforeAfter.map((ba, i) => (
               <ScrollReveal key={ba.id} delay={0.04 * i}>
-                <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
+                <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10">
+                  {/* Theme description */}
                   <div className="lg:col-span-3">
                     <h4 className="font-display text-xl font-semibold text-ink md:text-2xl">{ba.theme}</h4>
                     <p className="mt-3 text-base leading-relaxed text-muted">{ba.description}</p>
                   </div>
+
+                  {/* Side-by-side: Before → After */}
                   <div className="lg:col-span-9">
-                    <ImageCompare
-                      beforeImage={ba.beforeImage}
-                      afterImage={ba.afterImage}
-                      altBefore={`${ba.theme} — before`}
-                      altAfter={`${ba.theme} — after`}
-                    />
+                    <div className="relative grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 md:gap-6">
+                      <BeforeCard image={ba.beforeImage} theme={ba.theme} />
+                      <AfterCard image={ba.afterImage} theme={ba.theme} />
+
+                      {/* Arrow badge sitting between the two cards on desktop */}
+                      <span
+                        aria-hidden="true"
+                        className="absolute left-1/2 top-1/2 z-10 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-accent/40 bg-canvas shadow-[0_0_24px_-8px_rgba(165,138,255,0.6)] md:grid"
+                      >
+                        <ArrowRight className="h-4 w-4 text-accent" aria-hidden="true" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -94,6 +100,87 @@ export function Customer() {
         )}
       </div>
     </section>
+  );
+}
+
+/* ---------- before / after side-by-side cards ---------- */
+
+function BeforeCard({ image, theme }: { image: string; theme: string }) {
+  return (
+    <PainCard
+      tone="rose"
+      label="Before"
+      image={image}
+      alt={`${theme} — before`}
+    />
+  );
+}
+
+function AfterCard({ image, theme }: { image: string; theme: string }) {
+  return (
+    <PainCard
+      tone="emerald"
+      label="After"
+      image={image}
+      alt={`${theme} — after`}
+    />
+  );
+}
+
+function PainCard({
+  tone,
+  label,
+  image,
+  alt,
+}: {
+  tone: 'rose' | 'emerald';
+  label: string;
+  image: string;
+  alt: string;
+}) {
+  const [ok, setOk] = useState<boolean | null>(null);
+  const borderTone =
+    tone === 'rose' ? 'border-rose-300/25' : 'border-emerald-300/25';
+  const labelTone =
+    tone === 'rose'
+      ? 'border-rose-300/35 bg-rose-500/[0.12] text-rose-200'
+      : 'border-emerald-300/35 bg-emerald-500/[0.12] text-emerald-200';
+
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-3xl border bg-white/[0.02]',
+        borderTone,
+      )}
+    >
+      {/* Label pill — top-left */}
+      <span
+        className={cn(
+          'absolute left-4 top-4 z-10 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em]',
+          labelTone,
+        )}
+      >
+        {label}
+      </span>
+
+      <div className="aspect-[16/10] w-full">
+        {ok === false || !image ? (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-500/8 via-canvas to-canvas">
+            <p className="px-4 text-center font-mono text-[10px] text-white/40">
+              {image}
+            </p>
+          </div>
+        ) : (
+          <img
+            src={withBase(image)}
+            alt={alt}
+            className={cn('h-full w-full object-cover', ok === null && 'opacity-0')}
+            onLoad={() => setOk(true)}
+            onError={() => setOk(false)}
+          />
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -160,290 +247,176 @@ function UseCaseSolution({ solution, features }: { solution: string; features: s
   );
 }
 
-/* ---------- personas ---------- */
+/* ---------- personas — horizontal accordion ---------- */
 
 function PersonasGrid() {
-  const [activeId, setActiveId] = useState<string | null>(null);
-
-  const decisionMaker = customer.personas.find((p) => p.kind === 'primary');
-  const endUserTech = customer.personas.find((p) => p.kind === 'end-user-technical');
-  const endUserBiz = customer.personas.find((p) => p.kind === 'end-user-business');
-  const investor = customer.personas.find((p) => p.kind === 'investor');
-
-  const activePersona = customer.personas.find((p) => p.id === activeId) ?? null;
+  const [active, setActive] = useState(0);
+  const personas = customer.personas;
 
   return (
-    <>
-      <div className="mt-20 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[1fr_2fr_1fr]">
-        {decisionMaker && (
-          <ScrollReveal>
-            <PersonaCard persona={decisionMaker} onOpen={setActiveId} />
-          </ScrollReveal>
-        )}
-
-        {(endUserTech || endUserBiz) && (
-          <ScrollReveal delay={0.06}>
-            <EndUserFrame
-              technical={endUserTech}
-              business={endUserBiz}
-              onOpen={setActiveId}
-            />
-          </ScrollReveal>
-        )}
-
-        {investor && (
-          <ScrollReveal delay={0.12}>
-            <PersonaCard persona={investor} onOpen={setActiveId} />
-          </ScrollReveal>
-        )}
-      </div>
-
-      <PersonaModal persona={activePersona} onClose={() => setActiveId(null)} />
-    </>
-  );
-}
-
-function EndUserFrame({
-  technical,
-  business,
-  onOpen,
-}: {
-  technical?: Persona;
-  business?: Persona;
-  onOpen: (id: string) => void;
-}) {
-  return (
-    <div className="flex h-full flex-col rounded-3xl border border-white/15 bg-white/[0.015] p-5 md:p-6">
-      <div className="mb-5">
-        <h3 className="font-display text-lg font-semibold text-ink">End user</h3>
-        <p className="mt-1 text-xs text-muted">The people who live in monday day to day.</p>
-      </div>
-      <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2">
-        {technical && <PersonaCard persona={technical} variant="nested" onOpen={onOpen} />}
-        {business && <PersonaCard persona={business} variant="nested" onOpen={onOpen} />}
-      </div>
+    <div className="mt-20 flex w-full flex-col gap-3 md:flex-row md:gap-4">
+      {personas.map((persona, i) => (
+        <PersonaPanel
+          key={persona.id}
+          persona={persona}
+          isActive={i === active}
+          onActivate={() => setActive(i)}
+        />
+      ))}
     </div>
   );
 }
 
-/** Minimal persona card — photo, name, role, read-more arrow.
- *  Full content (whoAreThey, whatTheyCareAbout, messaging goal, features)
- *  lives in the modal, opened by the arrow. */
-function PersonaCard({
+function PersonaPanel({
   persona,
-  variant = 'full',
-  onOpen,
+  isActive,
+  onActivate,
 }: {
   persona: Persona;
-  variant?: 'full' | 'nested';
-  onOpen: (id: string) => void;
+  isActive: boolean;
+  onActivate: () => void;
 }) {
-  const isNested = variant === 'nested';
+  const [imgOk, setImgOk] = useState<boolean | null>(null);
+
   return (
-    <article
+    <button
+      type="button"
+      onMouseEnter={onActivate}
+      onFocus={onActivate}
+      onClick={onActivate}
+      aria-expanded={isActive}
+      aria-label={`${persona.name} — ${isActive ? 'expanded' : 'click to expand'}`}
       className={cn(
-        'group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025]',
-        'transition-colors duration-300 hover:border-accent/30 hover:bg-white/[0.04]',
-        isNested ? 'p-5' : 'p-6 md:p-7',
+        'group relative h-[32rem] cursor-pointer overflow-hidden rounded-3xl border text-left',
+        'transition-[flex,border-color] duration-700 ease-cinematic',
+        // Desktop: active grows to flex-[5], inactive to flex-[1]
+        isActive
+          ? 'md:flex-[5] border-accent/40 bg-accent/[0.04]'
+          : 'md:flex-[1] border-white/15 bg-white/[0.025] hover:border-white/25',
+        'w-full',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
       )}
     >
-      {/* Read-more arrow — top-right, icon only, opens the modal */}
-      <button
-        type="button"
-        onClick={() => onOpen(persona.id)}
-        aria-label={`Read more about ${persona.name}`}
-        className={cn(
-          'absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full',
-          'border border-white/15 bg-canvas/60 text-muted',
-          'transition-all duration-200 hover:border-accent/50 hover:bg-accent/[0.12] hover:text-accent',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60',
-        )}
-      >
-        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-      </button>
-
-      <PersonaPhoto persona={persona} />
-
-      <div className="mt-5">
-        <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">
-          {persona.name}
-        </h4>
-        <p className="mt-1 text-sm text-muted">{persona.role}</p>
-      </div>
-    </article>
-  );
-}
-
-function PersonaPhoto({ persona }: { persona: Persona }) {
-  const [imgOk, setImgOk] = useState<boolean | null>(null);
-  return (
-    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl ring-1 ring-white/15">
-      {imgOk !== false ? (
-        <img
-          src={withBase(persona.photo)}
-          alt={persona.name}
-          className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
-          onLoad={() => setImgOk(true)}
-          onError={() => setImgOk(false)}
+      {/* Soft accent glow when active */}
+      {isActive && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_20%_0%,rgba(165,138,255,0.10),transparent_55%)]"
         />
-      ) : (
-        <div className="grid h-full w-full place-items-center bg-gradient-to-br from-violet-500/30 to-indigo-500/20">
-          <User className="h-8 w-8 text-white/70" aria-hidden="true" />
-        </div>
       )}
-    </div>
-  );
-}
 
-/** Persona detail modal — opens when the read-more arrow is clicked. */
-function PersonaModal({
-  persona,
-  onClose,
-}: {
-  persona: Persona | null;
-  onClose: () => void;
-}) {
-  const reduce = useReducedMotion();
-
-  // Close on ESC + lock body scroll while open
-  useEffect(() => {
-    if (!persona) return;
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose();
-    }
-    document.addEventListener('keydown', onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [persona, onClose]);
-
-  return (
-    <AnimatePresence>
-      {persona && (
-        <motion.div
-          key="persona-modal"
-          initial={reduce ? undefined : { opacity: 0 }}
-          animate={reduce ? undefined : { opacity: 1 }}
-          exit={reduce ? undefined : { opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
-          onClick={onClose}
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${persona.name} — details`}
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-canvas/85 backdrop-blur-md" />
-
-          {/* Card */}
-          <motion.div
-            initial={reduce ? undefined : { opacity: 0, y: 20, scale: 0.97 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? undefined : { opacity: 0, y: 12, scale: 0.98 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-accent/30 bg-canvas shadow-card-lg max-h-[90vh] overflow-y-auto"
-          >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_20%_0%,rgba(165,138,255,0.12),transparent_55%)]"
+      <div className="relative flex h-full flex-col p-6 md:p-7">
+        {/* Photo — same size everywhere */}
+        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl ring-1 ring-white/15">
+          {imgOk !== false ? (
+            <img
+              src={withBase(persona.photo)}
+              alt={persona.name}
+              className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
+              onLoad={() => setImgOk(true)}
+              onError={() => setImgOk(false)}
             />
-
-            {/* Close button */}
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close"
-              className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-canvas/80 text-muted backdrop-blur transition-colors hover:border-accent/50 hover:bg-accent/[0.12] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
-            >
-              <X className="h-4 w-4" aria-hidden="true" />
-            </button>
-
-            {/* Content */}
-            <div className="relative p-8 md:p-10">
-              {/* Header — photo + name + role */}
-              <div className="flex items-start gap-5">
-                <PersonaPhoto persona={persona} />
-                <div className="min-w-0">
-                  <h3 className="font-display text-2xl font-semibold leading-tight text-ink md:text-3xl">
-                    {persona.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted md:text-base">{persona.role}</p>
-                </div>
-              </div>
-
-              {/* Who are they */}
-              {persona.whoAreThey.length > 0 && (
-                <div className="mt-8">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
-                    Who are they
-                  </p>
-                  <ul className="mt-3 space-y-2">
-                    {persona.whoAreThey.map((line, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 text-sm leading-relaxed text-ink/85 md:text-base"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-[10px] inline-block h-1 w-1 shrink-0 rounded-full bg-accent/70"
-                        />
-                        <span>{line}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* What they care about */}
-              {persona.whatTheyCareAbout && (
-                <div className="mt-7">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
-                    What they care about
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-ink/90 md:text-base">
-                    {persona.whatTheyCareAbout}
-                  </p>
-                </div>
-              )}
-
-              {/* Messaging goal */}
-              {persona.messagingGoal && (
-                <div className="mt-7">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent/85">
-                    Our messaging goal
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-ink md:text-base">
-                    {persona.messagingGoal}
-                  </p>
-                </div>
-              )}
-
-              {/* Features tags */}
-              {persona.features.length > 0 && (
-                <div className="mt-7">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
-                    Features
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {persona.features.map((f) => (
-                      <span
-                        key={f}
-                        className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-3 py-1 text-xs font-medium text-ink/90 md:text-sm"
-                      >
-                        {f}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+          ) : (
+            <div className="grid h-full w-full place-items-center bg-gradient-to-br from-violet-500/30 to-indigo-500/20">
+              <User className="h-7 w-7 text-white/70" aria-hidden="true" />
             </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          )}
+        </div>
+
+        {/* Name + role */}
+        <div className="mt-5 min-w-0">
+          <h4
+            className={cn(
+              'font-display font-semibold leading-tight text-ink',
+              isActive ? 'text-xl md:text-2xl' : 'text-base md:text-lg',
+            )}
+          >
+            {persona.name}
+          </h4>
+          <p
+            className={cn(
+              'mt-1 text-muted transition-opacity duration-300',
+              isActive ? 'text-sm opacity-100' : 'text-xs opacity-90',
+            )}
+          >
+            {persona.role}
+          </p>
+        </div>
+
+        {/* Rich content — only when active (fades in) */}
+        <div
+          className={cn(
+            'mt-6 flex-1 space-y-5 overflow-y-auto pr-1 transition-opacity duration-500',
+            isActive ? 'opacity-100' : 'pointer-events-none opacity-0',
+          )}
+        >
+          {/* Who are they */}
+          {persona.whoAreThey.length > 0 && (
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+                Who are they
+              </p>
+              <ul className="mt-2 space-y-1.5">
+                {persona.whoAreThey.map((line, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-sm leading-relaxed text-ink/85"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-[8px] inline-block h-1 w-1 shrink-0 rounded-full bg-accent/70"
+                    />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* What they care about */}
+          {persona.whatTheyCareAbout && (
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+                What they care about
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink/85">
+                {persona.whatTheyCareAbout}
+              </p>
+            </div>
+          )}
+
+          {/* Messaging goal */}
+          {persona.messagingGoal && (
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent/85">
+                Our messaging goal
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink">
+                {persona.messagingGoal}
+              </p>
+            </div>
+          )}
+
+          {/* Features tags */}
+          {persona.features.length > 0 && (
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted/70">
+                Features
+              </p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {persona.features.map((f) => (
+                  <span
+                    key={f}
+                    className="inline-flex items-center rounded-full border border-accent/30 bg-accent/[0.08] px-2.5 py-1 text-[11px] font-medium text-ink/90"
+                  >
+                    {f}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </button>
   );
 }
