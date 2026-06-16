@@ -6,19 +6,34 @@
       "id": "lead",
       "title": "What we lead with",
       "image": "/emphasis/emphasis-1.png",
-      "description": "First message — short, punchy, customer-true."
+      "description": "Our opening move — the message that has to land first. Punchy, customer-true, and built to stop the scroll.",
+      "talkingPoints": [
+        "Write the talking points that PMM should hit first when introducing the launch.",
+        "Use this space for proof you want everyone to repeat.",
+        "Edit in content/focus.json."
+      ]
     },
     {
       "id": "reinforce",
       "title": "What we reinforce",
       "image": "/emphasis/emphasis-2.png",
-      "description": "Second message — reinforces the lead with concrete proof."
+      "description": "The proof that backs the opening — capabilities, customer evidence, and the specifics that make the lead credible.",
+      "talkingPoints": [
+        "List the concrete proof points that reinforce the opening.",
+        "Examples / customer scenarios live here.",
+        "Edit in content/focus.json."
+      ]
     },
     {
       "id": "close",
       "title": "What we close with",
       "image": "/emphasis/emphasis-3.png",
-      "description": "Third message — emotional resonance, the takeaway."
+      "description": "The emotional takeaway — the line we want them carrying out the door.",
+      "talkingPoints": [
+        "What's the lasting impression we want?",
+        "What's the line that should echo in every email/ad/social post?",
+        "Edit in content/focus.json."
+      ]
     }
   ]
 }

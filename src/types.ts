@@ -143,6 +143,8 @@ export interface FocusItem {
   title: string;
   description: string;
   image: string;
+  /** Optional bullet list — talking points / supporting notes. */
+  talkingPoints?: string[];
 }
 
 export interface FocusContent {
