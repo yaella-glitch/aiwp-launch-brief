@@ -10,8 +10,14 @@
         {
           "id": "workspace-2",
           "title": "Workspace 2.0",
-          "description": "A shared space where people and agents work from the same context, with in-context group chat and a built-in project-manager agent.",
+          "description": "A shared space where people and agents work from the same context, with a built-in project-manager agent.",
           "media": { "type": "image", "src": "/product/collaboration/workspace-2.png", "alt": "Workspace 2.0" }
+        },
+        {
+          "id": "shared-chat",
+          "title": "Shared chat",
+          "description": "In-context group chat across people and agents — same place, same context, no thread-hopping.",
+          "media": { "type": "image", "src": "/product/collaboration/shared-chat.png", "alt": "Shared chat" }
         },
         {
           "id": "collab-agents",
