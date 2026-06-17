@@ -23,10 +23,7 @@ export function Customer() {
       className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        <EditorialHeader
-          title="Who it's for."
-          lede={customer.lede}
-        />
+        <EditorialHeader title="Who it's for." lede="" />
 
         {/* Personas — 3 slots: Decision maker | End user (frame w/ 2 inside) | Investor */}
         <PersonasGrid />
@@ -38,9 +35,6 @@ export function Customer() {
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               The pains &amp; solutions.
             </h3>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              What changes for the customer, theme by theme. Drag any handle to compare.
-            </p>
           </ScrollReveal>
 
           <div className="h-12" />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
 import { cn, withBase } from '@/lib/utils';
@@ -13,18 +13,11 @@ import type { FocusItem } from '@/types';
  */
 export function FocusCarousel({ items }: { items: FocusItem[] }) {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
 
   const item = items[index];
 
-  useEffect(() => {
-    if (paused || items.length <= 1) return;
-    const id = window.setTimeout(() => {
-      setIndex((i) => (i + 1) % items.length);
-    }, 7000);
-    return () => window.clearTimeout(id);
-  }, [index, paused, items.length]);
+  // Auto-advance disabled by design — slide only changes on user interaction.
 
   function next() {
     setIndex((i) => (i + 1) % items.length);
@@ -36,11 +29,7 @@ export function FocusCarousel({ items }: { items: FocusItem[] }) {
   if (!item) return null;
 
   return (
-    <div
-      className="relative w-full px-8 md:px-14"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div className="relative w-full px-8 md:px-14">
       {/* Device frame — outer bezel */}
       <div className="relative rounded-[28px] border border-white/15 bg-canvas/40 p-2.5 shadow-[0_30px_120px_-40px_rgba(165,138,255,0.35)] md:p-3">
         {/* Screen — inner */}

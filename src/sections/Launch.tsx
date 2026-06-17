@@ -60,9 +60,6 @@ export function Launch() {
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Assets &amp; owners.
             </h3>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              Everything we're shipping — and who owns each.
-            </p>
           </div>
         </ScrollReveal>
 

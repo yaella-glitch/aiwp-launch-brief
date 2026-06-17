@@ -36,12 +36,15 @@ export function MessagingHierarchy({
 
       {/* Tagline — top of hierarchy */}
       <Row level="tagline" reduce={!!reduce} delay={0}>
+        <span className="block font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-accent/85">
+          Tagline
+        </span>
         <motion.h3
           initial={reduce ? undefined : { opacity: 0, y: 12, filter: 'blur(8px)' }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-[clamp(36px,6vw,84px)] font-bold leading-[1.0] tracking-[-0.02em] text-ink"
+          className="mt-3 font-display text-[clamp(36px,6vw,84px)] font-bold leading-[1.0] tracking-[-0.02em] text-ink"
         >
           <span className="bg-gradient-to-br from-violet-200 via-indigo-200 to-sky-300 bg-clip-text text-transparent">
             {tagline}

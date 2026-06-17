@@ -6,7 +6,8 @@ import type { BackgroundCarouselSlide } from '@/types';
 
 interface BackgroundCarouselProps {
   slides: BackgroundCarouselSlide[];
-  /** Auto-advance interval in ms. 0 disables. */
+  /** Auto-advance interval in ms. 0 (default) disables — slide only changes
+   *  when the user clicks the arrow or a dot indicator. */
   autoAdvanceMs?: number;
   className?: string;
 }
@@ -23,7 +24,7 @@ interface BackgroundCarouselProps {
  */
 export function BackgroundCarousel({
   slides,
-  autoAdvanceMs = 6000,
+  autoAdvanceMs = 0,
   className,
 }: BackgroundCarouselProps) {
   const [index, setIndex] = useState(0);

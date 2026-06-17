@@ -74,17 +74,17 @@
     },
     {
       "id": "uc-2",
-      "name": "Use case #2",
-      "pain": "Customer pain — short, first-person, quoted from a real conversation.",
-      "solution": "How this launch resolves the pain — one sentence, concrete.",
-      "features": ["Feature A", "Feature B"]
+      "name": "One shared agent, not five \"mini-mes\"",
+      "pain": "My team, our agents & the work are scattered across chats, docs & tools.",
+      "solution": "Workspace 2.0 is the shared container — people & agents in one space, in-context group chat across both, with a built-in agent moderator.",
+      "features": ["Shared workspace", "Chat", "Moderator agent"]
     },
     {
       "id": "uc-3",
-      "name": "Use case #3",
-      "pain": "Customer pain — short, first-person, quoted from a real conversation.",
-      "solution": "How this launch resolves the pain — one sentence, concrete.",
-      "features": ["Feature A", "Feature B"]
+      "name": "Bring your own agent to the team",
+      "pain": "We already built agents in Claude, but it's not adopted and lacks context.",
+      "solution": "Bring it into monday as a teammate with a visible identity anyone can mention or assign, running on real data within its permissions.",
+      "features": ["Bring your own agents", "Collaborative agents", "Trust"]
     }
   ],
   "beforeAfter": [

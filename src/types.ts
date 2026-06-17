@@ -153,6 +153,15 @@ export interface FocusContent {
   items: FocusItem[];
 }
 
+export interface Differentiator {
+  id: string;
+  title: string;
+  /** Short positioning statement — the one-liner. */
+  positioning: string;
+  /** Longer explanation paragraph. */
+  description: string;
+}
+
 export interface MessagingHierarchyContent {
   title: string;
   lede: string;
@@ -162,9 +171,11 @@ export interface MessagingHierarchyContent {
   keyMessage: string;
   /** Up to 3 supporting / secondary messages. */
   secondaryMessages: string[];
+  /** Two main differentiator pillars (AI accessibility, Trust, etc.). */
+  differentiators?: Differentiator[];
   /** Writing & content guidelines — sit between the hierarchy and Say/Don't say. */
   writingGuidelines: string[];
-  sayDontSay: Array<{ topic: string; say: string; dontSay: string; why: string }>;
+  sayDontSay: Array<{ topic: string; say: string; dontSay: string; why?: string }>;
 }
 
 export interface Persona {

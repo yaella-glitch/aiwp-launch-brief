@@ -18,7 +18,7 @@ export function Positioning() {
       className="relative w-full overflow-hidden py-20 md:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 lg:px-16">
-        <EditorialHeader title={positioning.title} lede={positioning.lede} />
+        <EditorialHeader title={positioning.title} lede="" />
 
         {/* What we lead with externally — carousel sits ABOVE the hierarchy */}
         {focus.items.length > 0 && (
@@ -28,9 +28,6 @@ export function Positioning() {
                 <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
                   What we lead with externally.
                 </h3>
-                <p className="mt-4 text-base leading-relaxed text-muted">
-                  {focus.lede}
-                </p>
               </div>
             </ScrollReveal>
 
@@ -48,9 +45,6 @@ export function Positioning() {
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Messaging hierarchy.
             </h3>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              The story we lead with — top of the hierarchy down to the supporting messages.
-            </p>
           </div>
         </ScrollReveal>
 
@@ -64,7 +58,37 @@ export function Positioning() {
           </div>
         </ScrollReveal>
 
-        {/* Writing & content guidelines — sits BEFORE Say / Don't say */}
+        {/* Differentiators — pillars under the hierarchy */}
+        {positioning.differentiators && positioning.differentiators.length > 0 && (
+          <ScrollReveal delay={0.14}>
+            <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
+              {positioning.differentiators.map((d) => (
+                <div
+                  key={d.id}
+                  className="relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/[0.06] via-canvas to-canvas p-7 md:p-9"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 [background:radial-gradient(circle_at_20%_0%,rgba(165,138,255,0.10),transparent_55%)]"
+                  />
+                  <div className="relative">
+                    <h4 className="font-display text-xl font-semibold leading-tight text-ink md:text-2xl">
+                      {d.title}
+                    </h4>
+                    <p className="mt-3 font-display text-base font-medium leading-snug text-ink/95 md:text-lg">
+                      {d.positioning}
+                    </p>
+                    <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">
+                      {d.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        )}
+
+        {/* Writing & content guidelines */}
         {positioning.writingGuidelines && positioning.writingGuidelines.length > 0 && (
           <>
             <ScrollReveal delay={0.12}>
@@ -72,9 +96,6 @@ export function Positioning() {
                 <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
                   Writing & content guidelines.
                 </h3>
-                <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-                  Principles for everyone writing about the launch — keep them in mind before any copy goes out.
-                </p>
               </div>
             </ScrollReveal>
 
@@ -96,15 +117,12 @@ export function Positioning() {
           </>
         )}
 
-        {/* Say / Don't Say — language guardrails */}
+        {/* Say / Don't Say — language guardrails (no "Why" lines anymore) */}
         <ScrollReveal delay={0.15}>
           <div className="mt-24">
             <h3 className="font-display text-[clamp(28px,4vw,44px)] font-semibold tracking-tight text-ink">
               Say. Don't say.
             </h3>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-              Language guardrails for everyone telling this story.
-            </p>
           </div>
         </ScrollReveal>
 
@@ -118,23 +136,17 @@ export function Positioning() {
                     <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
                     <div>
                       <h5 className="font-display text-base font-semibold text-emerald-300">Say</h5>
-                      <p className="mt-2 text-base leading-relaxed text-ink">"{s.say}"</p>
+                      <p className="mt-2 text-base leading-relaxed text-ink">{s.say}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 rounded-xl border border-rose-400/25 bg-rose-400/[0.05] p-5">
                     <X className="mt-1 h-4 w-4 shrink-0 text-rose-300" aria-hidden="true" />
                     <div>
                       <h5 className="font-display text-base font-semibold text-rose-300">Don't say</h5>
-                      <p className="mt-2 text-base leading-relaxed text-ink/85">"{s.dontSay}"</p>
+                      <p className="mt-2 text-base leading-relaxed text-ink/85">{s.dontSay}</p>
                     </div>
                   </div>
                 </div>
-                {s.why && (
-                  <p className="mt-4 text-sm italic text-muted">
-                    <span className="font-semibold not-italic text-ink/70">Why · </span>
-                    {s.why}
-                  </p>
-                )}
               </div>
             </ScrollReveal>
           ))}

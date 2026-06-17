@@ -5,12 +5,12 @@
   "launchDate": "July 1, 2026",
   "goals": [
     {
-      "title": "Goal one",
-      "description": "A short, customer-true ambition for this launch. Edit me in content/launch.json."
+      "title": "Position monday.com as a key player in the AI ecosystem",
+      "description": ""
     },
     {
-      "title": "Goal two",
-      "description": "A short, customer-true ambition for this launch. Edit me in content/launch.json."
+      "title": "AI ARR & potentially new ICP",
+      "description": ""
     }
   ],
   "deliverables": [

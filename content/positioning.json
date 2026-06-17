@@ -1,12 +1,26 @@
 {
-  "title": "Messaging hierarchy.",
-  "lede": "The story we lead with — top of the hierarchy down to the supporting messages.",
-  "tagline": "The official launch tagline.",
-  "keyMessage": "The single key message — the one thing they should walk away with.",
+  "title": "Messaging.",
+  "lede": "",
+  "tagline": "People & agents as one team, to achieve business outcomes.",
+  "keyMessage": "Multiply organization impact from AI, beyond just individual's output.",
   "secondaryMessages": [
-    "Secondary message #1 — supporting proof point one.",
-    "Secondary message #2 — supporting proof point two.",
-    "Secondary message #3 — supporting proof point three."
+    "Collaborate people & agents in a shared workspace.",
+    "Bring your own agents to monday, or access monday directly from other AI tools.",
+    "Agents do even more work for you than before — HTML, decks, collaborative."
+  ],
+  "differentiators": [
+    {
+      "id": "ai-accessibility",
+      "title": "AI accessibility",
+      "positioning": "From complex AI capabilities to simple products anyone can use.",
+      "description": "monday turns those capabilities into simple products built into real work, so anyone can put advanced AI to use — no technical skill required."
+    },
+    {
+      "id": "trust",
+      "title": "Trust",
+      "positioning": "Control that holds as people and agents multiply.",
+      "description": "Bring it into one system with clear identities and boundaries — for every human and agent — so admins keep control even as work scales."
+    }
   ],
   "writingGuidelines": [
     "It's part of the AI Work Platform — not separated. Always position it as part of the whole.",
@@ -16,22 +30,16 @@
   ],
   "sayDontSay": [
     {
-      "topic": "What the launch is",
-      "say": "An evolution of monday's AI work platform.",
-      "dontSay": "A new product / a relaunch.",
-      "why": "It's a continuation, not a reset."
+      "topic": "Platform name",
+      "say": "AI Work Platform",
+      "dontSay": "monday AI · Work management",
+      "why": ""
     },
     {
-      "topic": "Who does the work",
-      "say": "Humans and agents working together.",
-      "dontSay": "Agents replace your team.",
-      "why": "Augmentation, not replacement."
-    },
-    {
-      "topic": "Where work happens",
-      "say": "In one shared container.",
-      "dontSay": "In dozens of disconnected tools.",
-      "why": "Unification is the value proposition."
+      "topic": "Bring your agent",
+      "say": "External agents · Claude agents · Cursor agents",
+      "dontSay": "3rd-party agents · LLM agents",
+      "why": ""
     }
   ]
 }
