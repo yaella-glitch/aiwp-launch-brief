@@ -254,10 +254,11 @@ export interface ResourcesContent {
 
 export interface LaunchDeliverable {
   name: string;
-  channel: string;
   due: string;
   status: string;
-  owner: { name: string; function: string; photo: string };
+  owner: { name: string; function?: string; photo?: string };
+  /** Optional secondary contributor. */
+  collaborator?: { name: string; function?: string; photo?: string };
 }
 
 export interface LaunchContent {

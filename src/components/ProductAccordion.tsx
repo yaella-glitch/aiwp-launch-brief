@@ -24,9 +24,12 @@ interface ProductAccordionProps {
 
 export function ProductAccordion({ tabs }: ProductAccordionProps) {
   const reduce = useReducedMotion();
-  // Start with all rows closed — user opens what they want.
-  const [openId, setOpenId] = useState<string>('');
-  const [activeFeatureId, setActiveFeatureId] = useState<string>('');
+  // Start with the first domain open so the preview shows a feature
+  // by default — empty right-pane felt like a broken state.
+  const [openId, setOpenId] = useState<string>(tabs[0]?.id ?? '');
+  const [activeFeatureId, setActiveFeatureId] = useState<string>(
+    tabs[0]?.cards[0]?.id ?? '',
+  );
 
   // Resolve the currently active feature (for the right preview). Null when
   // nothing is open.

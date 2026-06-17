@@ -15,39 +15,70 @@
   ],
   "deliverables": [
     {
-      "name": "Landing page",
-      "channel": "Web",
-      "due": "Jun 24",
+      "name": "Launch blog",
+      "due": "Launch day",
       "status": "todo",
-      "owner": { "name": "Owner name", "function": "PMM", "photo": "/owners/owner-1.png" }
+      "owner": { "name": "Shaked H" },
+      "collaborator": { "name": "Noy O" }
     },
     {
-      "name": "Launch blog post",
-      "channel": "Content",
-      "due": "Jun 26",
+      "name": "Update product webpages (agents, MCP)",
+      "due": "Launch day & gradual",
       "status": "todo",
-      "owner": { "name": "Owner name", "function": "Content", "photo": "/owners/owner-2.png" }
+      "owner": { "name": "Lior" },
+      "collaborator": { "name": "Lital" }
     },
     {
-      "name": "Social hero campaign",
-      "channel": "Social",
-      "due": "Jun 28",
+      "name": "Launch videos (2x)",
+      "due": "Launch day",
       "status": "todo",
-      "owner": { "name": "Owner name", "function": "Social", "photo": "/owners/owner-3.png" }
+      "owner": { "name": "Aviv D" },
+      "collaborator": { "name": "Lior" }
     },
     {
-      "name": "PR pitch & embargo",
-      "channel": "PR",
-      "due": "Jun 24",
+      "name": "Executive posts",
+      "due": "Launch day",
       "status": "todo",
-      "owner": { "name": "Owner name", "function": "PR", "photo": "/owners/owner-4.png" }
+      "owner": { "name": "Or" },
+      "collaborator": { "name": "Lior" }
     },
     {
-      "name": "Sales enablement deck",
-      "channel": "Enablement",
-      "due": "Jun 27",
+      "name": "Social media posts",
+      "due": "Launch day",
       "status": "todo",
-      "owner": { "name": "Owner name", "function": "Enablement", "photo": "/owners/owner-5.png" }
+      "owner": { "name": "Esh" }
+    },
+    {
+      "name": "Demo videos",
+      "due": "Release week",
+      "status": "todo",
+      "owner": { "name": "Shaked" },
+      "collaborator": { "name": "Aviv" }
+    },
+    {
+      "name": "In-product notifications",
+      "due": "Product readiness",
+      "status": "todo",
+      "owner": { "name": "Rotem" }
+    },
+    {
+      "name": "Email blast",
+      "due": "Product readiness",
+      "status": "todo",
+      "owner": { "name": "Shira" }
+    },
+    {
+      "name": "Sales collateral",
+      "due": "Launch day",
+      "status": "todo",
+      "owner": { "name": "Rotem" }
+    },
+    {
+      "name": "Acquisition funnels scoping",
+      "due": "Product readiness",
+      "status": "todo",
+      "owner": { "name": "Reut" },
+      "collaborator": { "name": "Lior" }
     }
   ],
   "expectations": [

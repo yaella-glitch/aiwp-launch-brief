@@ -69,8 +69,8 @@ export function Launch() {
               <thead className="bg-white/[0.04] text-muted">
                 <tr>
                   <th className="px-5 py-4 text-eyebrow font-medium uppercase tracking-wide">Asset</th>
-                  <th className="hidden px-5 py-4 text-eyebrow font-medium uppercase tracking-wide md:table-cell">Channel</th>
                   <th className="px-5 py-4 text-eyebrow font-medium uppercase tracking-wide">Owner</th>
+                  <th className="hidden px-5 py-4 text-eyebrow font-medium uppercase tracking-wide md:table-cell">Collaborator</th>
                   <th className="hidden px-5 py-4 text-eyebrow font-medium uppercase tracking-wide md:table-cell">Due</th>
                   <th className="px-5 py-4 text-eyebrow font-medium uppercase tracking-wide">Status</th>
                 </tr>
@@ -82,9 +82,11 @@ export function Launch() {
                     className="border-t border-white/5 transition-colors duration-200 hover:bg-white/[0.03]"
                   >
                     <td className="px-5 py-4 font-display text-base font-medium text-ink">{d.name}</td>
-                    <td className="hidden px-5 py-4 text-muted md:table-cell">{d.channel}</td>
                     <td className="px-5 py-4">
                       <OwnerCell owner={d.owner} />
+                    </td>
+                    <td className="hidden px-5 py-4 md:table-cell">
+                      {d.collaborator ? <OwnerCell owner={d.collaborator} /> : <span className="text-muted/40">—</span>}
                     </td>
                     <td className="hidden px-5 py-4 text-muted md:table-cell">{d.due}</td>
                     <td className="px-5 py-4">
@@ -153,14 +155,15 @@ export function Launch() {
   );
 }
 
-function OwnerCell({ owner }: { owner: { name: string; function: string; photo: string } }) {
+function OwnerCell({ owner }: { owner: { name: string; function?: string; photo?: string } }) {
   const [imgOk, setImgOk] = useState<boolean | null>(null);
+  const hasPhoto = !!owner.photo;
   return (
     <div className="flex items-center gap-3">
       <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 ring-1 ring-white/15">
-        {imgOk !== false ? (
+        {hasPhoto && imgOk !== false ? (
           <img
-            src={withBase(owner.photo)}
+            src={withBase(owner.photo!)}
             alt={owner.name}
             className={cn('h-full w-full object-cover', imgOk === null && 'opacity-0')}
             onLoad={() => setImgOk(true)}
@@ -174,7 +177,9 @@ function OwnerCell({ owner }: { owner: { name: string; function: string; photo: 
       </span>
       <div className="min-w-0">
         <p className="truncate text-sm font-medium text-ink leading-tight">{owner.name}</p>
-        <p className="text-[10px] uppercase tracking-wide text-muted">{owner.function}</p>
+        {owner.function && (
+          <p className="text-[10px] uppercase tracking-wide text-muted">{owner.function}</p>
+        )}
       </div>
     </div>
   );
